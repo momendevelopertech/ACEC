@@ -3,6 +3,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
@@ -38,7 +39,7 @@ export default async function LocaleLayout({
             <body>
                 <NextIntlClientProvider messages={messages}>
                     <CustomCursor />
-                    {children}
+                    <PageTransitionWrapper>{children}</PageTransitionWrapper>
                 </NextIntlClientProvider>
             </body>
         </html>
