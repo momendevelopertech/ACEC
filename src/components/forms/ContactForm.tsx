@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
+import { sendContactForm } from "@/lib/contactFormService";
 
 export function ContactForm() {
     const t = useTranslations("contact");
     const locale = useLocale();
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -25,17 +27,28 @@ export function ContactForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("loading");
+        setErrorMessage("");
+
         try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+            // Send only required fields to Supabase
+            const response = await sendContactForm({
+                name: formData.name,
+                email: formData.email,
+                message: formData.message,
             });
-            if (!res.ok) throw new Error("Failed");
-            setStatus("success");
-            setFormData({ name: "", email: "", phone: "", message: "", service_interest: "" });
-        } catch {
+
+            if (response.success) {
+                setStatus("success");
+                setFormData({ name: "", email: "", phone: "", message: "", service_interest: "" });
+                // Reset success message after 5 seconds
+                setTimeout(() => setStatus("idle"), 5000);
+            } else {
+                setStatus("error");
+                setErrorMessage(response.error || "Failed to submit contact form");
+            }
+        } catch (err) {
             setStatus("error");
+            setErrorMessage(err instanceof Error ? err.message : "An unexpected error occurred");
         }
     };
 
@@ -169,7 +182,7 @@ export function ContactForm() {
                         textAlign: "center",
                     }}
                 >
-                    ✕ {t("error")}
+                    ✕ {errorMessage || t("error")}
                 </div>
             )}
 
