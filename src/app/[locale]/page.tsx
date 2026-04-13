@@ -7,6 +7,7 @@ import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { WhySection } from "@/components/sections/WhySection";
 import { CTASection } from "@/components/sections/CTASection";
+import { ClientsSection } from "@/components/sections/ClientsSection";
 
 export default function HomePage() {
     return (
@@ -19,6 +20,7 @@ export default function HomePage() {
                 <ProjectsSection />
                 <AboutSection />
                 <WhySection />
+                <ClientsSection />
                 <CTASection />
             </main>
             <Footer />

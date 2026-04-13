@@ -7,6 +7,7 @@ export function Footer() {
     const t = useTranslations("footer");
     const nav = useTranslations("nav");
     const locale = useLocale();
+    const isArabic = locale === "ar";
 
     const currentYear = new Date().getFullYear();
 
@@ -17,34 +18,71 @@ export function Footer() {
         { href: `/${locale}/contact`, label: nav("contact") },
     ];
 
+    const contactDetails = [
+        {
+            icon: "📍",
+            title: isArabic ? "العنوان" : "Address",
+            value: isArabic
+                ? "شارع عمر بن عبدالعزيز، ح الزهراء، الرياض، المملكة العربية السعودية"
+                : "Omar Bin Abdulaziz Street, Al Zahraa District, Riyadh, Saudi Arabia",
+            href: null,
+        },
+        {
+            icon: "📞",
+            title: isArabic ? "الهاتف" : "Phone",
+            value: "+966 500 037 049",
+            href: "tel:+966500037049",
+        },
+        {
+            icon: "💬",
+            title: "WhatsApp",
+            value: "+966 500 037 049",
+            href: "https://wa.me/966500037049",
+        },
+        {
+            icon: "📧",
+            title: isArabic ? "البريد الإلكتروني" : "Email",
+            value: "info@ac-ec.com.sa",
+            href: "mailto:info@ac-ec.com.sa",
+        },
+        {
+            icon: "🕐",
+            title: isArabic ? "ساعات العمل" : "Working Hours",
+            value: isArabic
+                ? "الأحد إلى الخميس، 9:00 ص - 6:00 م"
+                : "Sunday to Thursday, 9:00 AM - 6:00 PM",
+            href: null,
+        },
+    ];
+
     return (
         <footer
             style={{
                 background: "var(--color-surface)",
                 borderTop: "1px solid var(--color-border)",
-                padding: "4rem 1.5rem 2rem",
+                padding: "5rem 1.5rem 3rem",
             }}
         >
             <div className="container-custom">
                 <div
                     style={{
                         display: "grid",
-                        gridTemplateColumns: "2fr 1fr 1fr",
-                        gap: "3rem",
-                        marginBottom: "3rem",
+                        gridTemplateColumns: "1.5fr 1fr 2fr",
+                        gap: "4rem",
+                        marginBottom: "4rem",
                     }}
                     className="footer-grid"
                 >
-                    {/* Brand */}
+                    {/* Brand Section */}
                     <div>
                         <Link
                             href={`/${locale}`}
-                            style={{ textDecoration: "none", display: "inline-block", marginBottom: "1.25rem" }}
+                            style={{ textDecoration: "none", display: "inline-block", marginBottom: "1.5rem" }}
                         >
                             <span
                                 style={{
                                     fontFamily: "var(--font-heading)",
-                                    fontSize: "2rem",
+                                    fontSize: "1.75rem",
                                     fontWeight: 700,
                                     background:
                                         "linear-gradient(135deg, #c9a84c 0%, #e8c97a 50%, #c9a84c 100%)",
@@ -59,35 +97,39 @@ export function Footer() {
                         <p
                             style={{
                                 color: "var(--color-muted)",
-                                fontSize: "0.9rem",
-                                lineHeight: 1.7,
-                                maxWidth: "300px",
+                                fontSize: "0.875rem",
+                                lineHeight: 1.8,
                                 marginBottom: "1.5rem",
                             }}
                         >
-                            {t("company")}
-                        </p>
-                        <p
-                            style={{
-                                color: "var(--color-muted)",
-                                fontSize: "0.875rem",
-                                lineHeight: 1.6,
-                            }}
-                        >
-                            {t("description")}
+                            {isArabic
+                                ? "مكتب الميثاق العربي للاستشارات الهندسية وهندسة السلامة"
+                                : "Arab Charter Engineering Consultancy & Safety Engineering"}
                         </p>
 
-                        {/* Social links placeholder */}
-                        <div
-                            style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}
-                        >
-                            {["twitter", "linkedin", "whatsapp"].map((platform) => (
+                        {/* Social links */}
+                        <div style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}>
+                            {[
+                                {
+                                    name: "WhatsApp",
+                                    icon: "W",
+                                    href: "https://wa.me/966500037049",
+                                    color: "#25D366",
+                                },
+                                { name: "phone", icon: "☎", href: "tel:+966500037049" },
+                                {
+                                    name: "email",
+                                    icon: "✉",
+                                    href: "mailto:info@ac-ec.com.sa",
+                                },
+                            ].map((social) => (
                                 <a
-                                    key={platform}
-                                    href="#"
+                                    key={social.name}
+                                    href={social.href}
+                                    title={social.name}
                                     style={{
-                                        width: "38px",
-                                        height: "38px",
+                                        width: "40px",
+                                        height: "40px",
                                         borderRadius: "50%",
                                         background: "rgba(201, 168, 76, 0.08)",
                                         border: "1px solid rgba(201, 168, 76, 0.15)",
@@ -96,13 +138,28 @@ export function Footer() {
                                         justifyContent: "center",
                                         color: "var(--color-muted)",
                                         textDecoration: "none",
-                                        transition: "all 0.2s",
-                                        fontSize: "0.75rem",
-                                        fontWeight: 700,
+                                        transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                                        fontSize: "0.875rem",
+                                        fontWeight: 600,
                                     }}
                                     className="social-btn"
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.background =
+                                            "rgba(201, 168, 76, 0.18)";
+                                        e.currentTarget.style.borderColor = "var(--color-gold)";
+                                        e.currentTarget.style.color = "var(--color-gold)";
+                                        e.currentTarget.style.transform = "translateY(-2px)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.background =
+                                            "rgba(201, 168, 76, 0.08)";
+                                        e.currentTarget.style.borderColor =
+                                            "rgba(201, 168, 76, 0.15)";
+                                        e.currentTarget.style.color = "var(--color-muted)";
+                                        e.currentTarget.style.transform = "translateY(0)";
+                                    }}
                                 >
-                                    {platform[0].toUpperCase()}
+                                    {social.icon}
                                 </a>
                             ))}
                         </div>
@@ -115,14 +172,14 @@ export function Footer() {
                                 color: "var(--color-gold)",
                                 fontSize: "0.75rem",
                                 fontWeight: 600,
-                                letterSpacing: "0.15em",
+                                letterSpacing: "0.2em",
                                 textTransform: "uppercase",
                                 marginBottom: "1.5rem",
                             }}
                         >
-                            {t("quickLinks")}
+                            {isArabic ? "الروابط السريعة" : "Quick Links"}
                         </h3>
-                        <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                        <nav style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
@@ -131,9 +188,16 @@ export function Footer() {
                                         color: "var(--color-muted)",
                                         textDecoration: "none",
                                         fontSize: "0.9rem",
-                                        transition: "color 0.2s",
+                                        transition: "all 0.2s",
                                     }}
-                                    className="footer-link"
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.color = "var(--color-white)";
+                                        e.currentTarget.style.paddingInlineStart = "4px";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.color = "var(--color-muted)";
+                                        e.currentTarget.style.paddingInlineStart = "0";
+                                    }}
                                 >
                                     {link.label}
                                 </Link>
@@ -141,49 +205,98 @@ export function Footer() {
                         </nav>
                     </div>
 
-                    {/* Contact */}
+                    {/* Contact Info */}
                     <div>
                         <h3
                             style={{
                                 color: "var(--color-gold)",
                                 fontSize: "0.75rem",
                                 fontWeight: 600,
-                                letterSpacing: "0.15em",
+                                letterSpacing: "0.2em",
                                 textTransform: "uppercase",
                                 marginBottom: "1.5rem",
                             }}
                         >
-                            {t("contactInfo")}
+                            {isArabic ? "معلومات التواصل" : "Contact Info"}
                         </h3>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-                            {[
-                                { icon: "📧", text: "info@ac-ec.com.sa" },
-                                { icon: "🌐", text: "ac-ec.com.sa" },
-                                { icon: "📍", text: locale === "ar" ? "المملكة العربية السعودية" : "Saudi Arabia" },
-                            ].map((item) => (
+                        <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                            {contactDetails.map((item) => (
                                 <div
-                                    key={item.text}
+                                    key={item.title}
                                     style={{
                                         display: "flex",
-                                        alignItems: "center",
-                                        gap: "0.75rem",
-                                        color: "var(--color-muted)",
-                                        fontSize: "0.875rem",
+                                        gap: "0.875rem",
+                                        alignItems: isArabic ? "flex-end" : "flex-start",
                                     }}
                                 >
-                                    <span>{item.icon}</span>
-                                    <span>{item.text}</span>
+                                    <span
+                                        style={{
+                                            fontSize: "1rem",
+                                            flexShrink: 0,
+                                            display: "inline-flex",
+                                        }}
+                                    >
+                                        {item.icon}
+                                    </span>
+                                    <div style={{ flex: 1 }}>
+                                        <div
+                                            style={{
+                                                fontSize: "0.7rem",
+                                                color: "var(--color-gold)",
+                                                fontWeight: 600,
+                                                letterSpacing: "0.1em",
+                                                textTransform: "uppercase",
+                                                marginBottom: "0.25rem",
+                                            }}
+                                        >
+                                            {item.title}
+                                        </div>
+                                        {item.href ? (
+                                            <a
+                                                href={item.href}
+                                                style={{
+                                                    color: "var(--color-white)",
+                                                    textDecoration: "none",
+                                                    fontSize: "0.875rem",
+                                                    transition: "color 0.2s",
+                                                    display: "inline-block",
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.color =
+                                                        "var(--color-gold)";
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.color =
+                                                        "var(--color-white)";
+                                                }}
+                                            >
+                                                {item.value}
+                                            </a>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    color: "var(--color-white)",
+                                                    fontSize: "0.875rem",
+                                                    display: "block",
+                                                    lineHeight: 1.5,
+                                                }}
+                                            >
+                                                {item.value}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
 
+                {/* Divider */}
+                <div style={{ borderTop: "1px solid var(--color-border)", margin: "3rem 0" }} />
+
                 {/* Bottom bar */}
                 <div
                     style={{
-                        borderTop: "1px solid var(--color-border)",
-                        paddingTop: "1.5rem",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
@@ -192,21 +305,25 @@ export function Footer() {
                     }}
                 >
                     <p style={{ color: "var(--color-muted)", fontSize: "0.8125rem" }}>
-                        © {currentYear} ACEC — {t("rights")}
+                        © {currentYear} ACEC —{" "}
+                        {isArabic
+                            ? "جميع الحقوق محفوظة"
+                            : "All rights reserved"}
                     </p>
-                    <p style={{ color: "rgba(107, 107, 122, 0.5)", fontSize: "0.75rem" }}>
-                        ac-ec.com.sa
+                    <p style={{ color: "var(--color-muted)", fontSize: "0.8125rem" }}>
+                        {isArabic ? "تصميم وتطوير متقدم" : "Advanced Design & Development"}
                     </p>
                 </div>
             </div>
 
             <style>{`
-        .footer-link:hover { color: var(--color-white) !important; }
-        .social-btn:hover {
-          background: rgba(201, 168, 76, 0.18) !important;
-          border-color: var(--color-gold) !important;
-          color: var(--color-gold) !important;
+        @media (max-width: 1024px) {
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
         }
+        
         @media (max-width: 768px) {
           .footer-grid {
             grid-template-columns: 1fr !important;
