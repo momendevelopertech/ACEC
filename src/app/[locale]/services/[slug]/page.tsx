@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ServiceDetailClient } from "./ServiceDetailClient";
 import { getServiceBySlug, getAllServiceSlugs } from "@/lib/services";
+import { routing } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{
@@ -38,18 +39,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export function generateStaticParams() {
   const slugs = getAllServiceSlugs();
+  const locales = routing.locales;
 
-  return slugs.map((slug) => ({
-    locale,
-    slug,
-  }));
+  return locales.flatMap((locale) =>
+    slugs.map((slug) => ({
+      locale,
+      slug,
+    }))
+  );
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
