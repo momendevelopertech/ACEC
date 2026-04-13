@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 export function Footer() {
     const t = useTranslations("footer");
@@ -75,25 +76,9 @@ export function Footer() {
                 >
                     {/* Brand Section */}
                     <div>
-                        <Link
-                            href={`/${locale}`}
-                            style={{ textDecoration: "none", display: "inline-block", marginBottom: "1.5rem" }}
-                        >
-                            <span
-                                style={{
-                                    fontFamily: "var(--font-heading)",
-                                    fontSize: "1.75rem",
-                                    fontWeight: 700,
-                                    background:
-                                        "linear-gradient(135deg, #c9a84c 0%, #e8c97a 50%, #c9a84c 100%)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                }}
-                            >
-                                ACEC
-                            </span>
-                        </Link>
+                        <div style={{ marginBottom: "1.5rem" }}>
+                            <Logo size="md" showSubtitle={true} href={`/${locale}`} />
+                        </div>
                         <p
                             style={{
                                 color: "var(--color-muted)",

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Logo } from "./Logo";
 
 export function Navbar() {
     const t = useTranslations("nav");
@@ -62,52 +63,7 @@ export function Navbar() {
                 }}
             >
                 {/* Logo */}
-                <Link
-                    href={`/${locale}`}
-                    style={{
-                        textDecoration: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.75rem",
-                    }}
-                >
-                    {/* Logo text fallback */}
-                    <span
-                        style={{
-                            fontFamily: "var(--font-heading)",
-                            fontSize: "1.75rem",
-                            fontWeight: 700,
-                            background:
-                                "linear-gradient(135deg, #c9a84c 0%, #e8c97a 50%, #c9a84c 100%)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
-                            letterSpacing: "0.1em",
-                        }}
-                    >
-                        ACEC
-                    </span>
-                    <div
-                        style={{
-                            width: "1px",
-                            height: "24px",
-                            background: "rgba(201, 168, 76, 0.3)",
-                        }}
-                    />
-                    <span
-                        style={{
-                            fontSize: "0.6rem",
-                            fontWeight: 600,
-                            color: "var(--color-muted)",
-                            lineHeight: 1.2,
-                            maxWidth: "100px",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                        }}
-                    >
-                        {isRTL ? "الميثاق العربي\nللاستشارات الهندسية" : "Arab Charter\nEngineering Consultants"}
-                    </span>
-                </Link>
+                <Logo size="md" showSubtitle={true} href={`/${locale}`} />
 
                 {/* Desktop Nav */}
                 <nav

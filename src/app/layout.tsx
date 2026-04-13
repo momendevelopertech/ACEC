@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   authors: [{ name: "ACEC" }],
   creator: "Arab Charter Engineering Consultants",
   metadataBase: new URL("https://ac-ec.com.sa"),
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     locale: "ar_SA",
