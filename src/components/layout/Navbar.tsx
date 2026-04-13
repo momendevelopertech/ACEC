@@ -63,7 +63,7 @@ export function Navbar() {
                 }}
             >
                 {/* Logo */}
-                <Logo size="md" showSubtitle={true} href={`/${locale}`} />
+                <Logo size="md" href={`/${locale}`} />
 
                 {/* Desktop Nav */}
                 <nav

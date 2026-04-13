@@ -8,59 +8,59 @@ export function ClientsSection() {
     const locale = useLocale();
     const isArabic = locale === "ar";
 
-    // Client logos - using placeholder URLs
+    // Client logos - using relevant imagery for each client
     const clients = [
         {
             name: "Dr. Sulaiman Al Habib",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=200&h=100&fit=crop",
         },
         {
             name: "Deemah",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1578887746787-51bd2290db94?w=200&h=100&fit=crop",
         },
         {
             name: "McDonald's",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1599599810694-b5ac4dd1bfd9?w=200&h=100&fit=crop",
         },
         {
             name: "Pepsico",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1586328957529-c5150e45c925?w=200&h=100&fit=crop",
         },
         {
             name: "Leejam",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=200&h=100&fit=crop",
         },
         {
             name: "STC",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=200&h=100&fit=crop",
         },
         {
             name: "SRMG",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=200&h=100&fit=crop",
         },
         {
             name: "Amlak",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=200&h=100&fit=crop",
         },
         {
             name: "Flyadeal",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1552886906-6d0d394e15d0?w=200&h=100&fit=crop",
         },
         {
             name: "Floward",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=200&h=100&fit=crop",
         },
         {
             name: "Gulf Aluminum",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=200&h=100&fit=crop",
         },
         {
             name: "SME Marketplace",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1460925895917-adf4e5a93a0d?w=200&h=100&fit=crop",
         },
         {
             name: "Hataba",
-            logo: "https://images.unsplash.com/photo-1599529783358-2c3acd326128?w=200&h=100&fit=crop",
+            logo: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=200&h=100&fit=crop",
         },
     ];
 

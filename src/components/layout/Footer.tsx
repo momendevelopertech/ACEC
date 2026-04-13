@@ -77,7 +77,7 @@ export function Footer() {
                     {/* Brand Section */}
                     <div>
                         <div style={{ marginBottom: "1.5rem" }}>
-                            <Logo size="md" showSubtitle={true} href={`/${locale}`} />
+                            <Logo size="md" href={`/${locale}`} />
                         </div>
                         <p
                             style={{
