@@ -9,22 +9,21 @@ export function CustomCursor() {
 
     useEffect(() => {
         const detector = () => {
-            const finePointer = window.matchMedia("(pointer: fine)").matches;
-            const hoverSupported = window.matchMedia("(hover: hover)").matches;
-            const hasTouch = (navigator.maxTouchPoints ?? 0) > 0 || "ontouchstart" in window;
-            setEnabled(finePointer && hoverSupported && !hasTouch);
+            const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+            const noHover = window.matchMedia("(hover: none)").matches;
+            setEnabled(!isCoarse && !noHover);
         };
 
         detector();
 
-        const pointerQuery = window.matchMedia("(pointer: fine)");
-        const hoverQuery = window.matchMedia("(hover: hover)");
+        const coarseQuery = window.matchMedia("(pointer: coarse)");
+        const hoverQuery = window.matchMedia("(hover: none)");
 
-        pointerQuery.addEventListener("change", detector);
+        coarseQuery.addEventListener("change", detector);
         hoverQuery.addEventListener("change", detector);
 
         return () => {
-            pointerQuery.removeEventListener("change", detector);
+            coarseQuery.removeEventListener("change", detector);
             hoverQuery.removeEventListener("change", detector);
         };
     }, []);
