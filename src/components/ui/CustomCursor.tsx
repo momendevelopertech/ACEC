@@ -11,8 +11,7 @@ export function CustomCursor() {
         const detector = () => {
             const finePointer = window.matchMedia("(pointer: fine)").matches;
             const hoverSupported = window.matchMedia("(hover: hover)").matches;
-            const nav = navigator as Navigator & { msMaxTouchPoints?: number };
-            const hasTouch = nav.maxTouchPoints > 0 || (nav.msMaxTouchPoints ?? 0) > 0;
+            const hasTouch = (navigator.maxTouchPoints ?? 0) > 0 || "ontouchstart" in window;
             setEnabled(finePointer && hoverSupported && !hasTouch);
         };
 
@@ -20,6 +19,7 @@ export function CustomCursor() {
 
         const pointerQuery = window.matchMedia("(pointer: fine)");
         const hoverQuery = window.matchMedia("(hover: hover)");
+
         pointerQuery.addEventListener("change", detector);
         hoverQuery.addEventListener("change", detector);
 
