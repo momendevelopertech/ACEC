@@ -1,14 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function CustomCursor() {
     const dotRef = useRef<HTMLDivElement>(null);
     const ringRef = useRef<HTMLDivElement>(null);
+    const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
-        // Only on desktop
-        if (window.matchMedia("(hover: none)").matches) return;
+        const desktopQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+        const updateEnabled = () => setEnabled(desktopQuery.matches);
+        updateEnabled();
+        desktopQuery.addEventListener("change", updateEnabled);
+        return () => desktopQuery.removeEventListener("change", updateEnabled);
+    }, []);
+
+    useEffect(() => {
+        if (!enabled) return;
 
         const dot = dotRef.current;
         const ring = ringRef.current;
@@ -18,6 +26,7 @@ export function CustomCursor() {
         let mouseY = 0;
         let ringX = 0;
         let ringY = 0;
+        let animationFrame = 0;
 
         const onMouseMove = (e: MouseEvent) => {
             mouseX = e.clientX;
@@ -29,48 +38,58 @@ export function CustomCursor() {
             ringX += (mouseX - ringX - 20) * 0.12;
             ringY += (mouseY - ringY - 20) * 0.12;
             ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
-            requestAnimationFrame(animate);
+            animationFrame = requestAnimationFrame(animate);
         };
 
         const onMouseEnterInteractive = () => {
-            if (ring) {
-                ring.style.width = "60px";
-                ring.style.height = "60px";
-                ring.style.borderColor = "rgba(201, 168, 76, 0.9)";
-            }
+            ring.style.width = "60px";
+            ring.style.height = "60px";
+            ring.style.borderColor = "rgba(201, 168, 76, 0.9)";
         };
 
         const onMouseLeaveInteractive = () => {
-            if (ring) {
-                ring.style.width = "40px";
-                ring.style.height = "40px";
-                ring.style.borderColor = "rgba(201, 168, 76, 0.6)";
-            }
+            ring.style.width = "40px";
+            ring.style.height = "40px";
+            ring.style.borderColor = "rgba(201, 168, 76, 0.6)";
         };
 
+        const handledElements = new Set<Element>();
         const addListeners = () => {
-            const interactives = document.querySelectorAll(
-                "a, button, [data-magnetic]"
-            );
-            interactives.forEach((el) => {
-                el.addEventListener("mouseenter", onMouseEnterInteractive);
-                el.addEventListener("mouseleave", onMouseLeaveInteractive);
+            document.querySelectorAll("a, button, [data-magnetic]").forEach((el) => {
+                if (!handledElements.has(el)) {
+                    el.addEventListener("mouseenter", onMouseEnterInteractive);
+                    el.addEventListener("mouseleave", onMouseLeaveInteractive);
+                    handledElements.add(el);
+                }
             });
         };
 
-        window.addEventListener("mousemove", onMouseMove);
-        animate();
-        addListeners();
+        const removeListeners = () => {
+            handledElements.forEach((el) => {
+                el.removeEventListener("mouseenter", onMouseEnterInteractive);
+                el.removeEventListener("mouseleave", onMouseLeaveInteractive);
+            });
+            handledElements.clear();
+        };
 
-        // Re-add listeners on DOM mutation (for dynamically added elements)
+        window.addEventListener("mousemove", onMouseMove);
+        addListeners();
+        animate();
+
         const observer = new MutationObserver(addListeners);
         observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
             window.removeEventListener("mousemove", onMouseMove);
+            removeListeners();
             observer.disconnect();
+            cancelAnimationFrame(animationFrame);
         };
-    }, []);
+    }, [enabled]);
+
+    if (!enabled) {
+        return null;
+    }
 
     return (
         <>

@@ -13,12 +13,21 @@ export function Navbar() {
     const router = useRouter();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const isRTL = locale === "ar";
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(max-width: 767px)");
+        const update = () => setIsMobile(mediaQuery.matches);
+        update();
+        mediaQuery.addEventListener("change", update);
+        return () => mediaQuery.removeEventListener("change", update);
     }, []);
 
     const switchLocale = () => {
@@ -44,7 +53,7 @@ export function Navbar() {
                 right: 0,
                 zIndex: 1000,
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-                padding: scrolled ? "0.75rem 1.5rem" : "1.25rem 1.5rem",
+                padding: scrolled ? "0.75rem 1rem" : "1rem 1rem",
                 background: scrolled
                     ? "rgba(10, 10, 15, 0.9)"
                     : "transparent",
@@ -60,13 +69,15 @@ export function Navbar() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    gap: "1rem",
-                    flexWrap: "wrap",
+                    gap: "0.85rem",
+                    flexWrap: "nowrap",
+                    minHeight: isMobile ? "3.6rem" : "auto",
+                    width: "100%",
                 }}
             >
                 {/* Logo */}
-                <div style={{ display: "flex", alignItems: "center", gap: "1rem", minWidth: 0 }}>
-                    <Logo size="md" href={`/${locale}`} />
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", minWidth: 0 }}>
+                    <Logo size={isMobile ? "sm" : "md"} href={`/${locale}`} />
                 </div>
 
                 {/* Desktop Nav */}
@@ -101,7 +112,7 @@ export function Navbar() {
                 </nav>
 
                 {/* Right side actions */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", justifyContent: "flex-end", minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "nowrap", justifyContent: "flex-end", minWidth: 0 }}>
                     {/* Language switcher */}
                     <button
                         onClick={switchLocale}
@@ -148,7 +159,7 @@ export function Navbar() {
                             justifyContent: "center",
                         }}
                         className="show-mobile"
-                        aria-label={menuOpen ? t("closeMenu") : t("openMenu")}
+                        aria-label={menuOpen ? (locale === "ar" ? "إغلاق" : "Close") : (locale === "ar" ? "افتح" : "Open")}
                     >
                         {[0, 1, 2].map((i) => (
                             <span
@@ -189,12 +200,35 @@ export function Navbar() {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "2rem",
-                    paddingTop: "6rem",
+                    paddingTop: "5rem",
+                    paddingInline: "1.25rem",
                     transition: "opacity 0.4s, visibility 0.4s",
                     opacity: menuOpen ? 1 : 0,
                     visibility: menuOpen ? "visible" : "hidden",
                 }}
             >
+                <button
+                    onClick={() => setMenuOpen(false)}
+                    style={{
+                        position: "absolute",
+                        top: "1rem",
+                        right: "1rem",
+                        width: "2.8rem",
+                        height: "2.8rem",
+                        borderRadius: "999px",
+                        border: "1px solid rgba(255, 255, 255, 0.15)",
+                        background: "rgba(255, 255, 255, 0.08)",
+                        color: "var(--color-white)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "1.25rem",
+                        cursor: "pointer",
+                    }}
+                    aria-label={locale === "ar" ? "إغلاق القائمة" : "Close menu"}
+                >
+                    ×
+                </button>
                 {navLinks.map((link, i) => (
                     <Link
                         key={link.href}

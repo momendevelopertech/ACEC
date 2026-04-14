@@ -253,7 +253,8 @@ body::before {
   position: fixed;
   pointer-events: none;
   z-index: 10000;
-  transition: transform 0.1s;
+  transition: none;
+  will-change: transform;
   mix-blend-mode: difference;
 }
 
@@ -265,7 +266,15 @@ body::before {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.15s, width 0.3s, height 0.3s, border-color 0.3s;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+  will-change: transform;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
 }
 
 /* Animated gradient background for sections */
