@@ -137,6 +137,9 @@ export function PageLoader() {
           color: rgba(255,255,255,0.85);
           letter-spacing: 0.12em;
           text-transform: uppercase;
+          opacity: 0;
+          transform: translateY(10px);
+          animation: loaderTagIn 0.8s ease-out 0.15s forwards;
         }
 
         .loader-bar {
@@ -162,6 +165,13 @@ export function PageLoader() {
           to {
             opacity: 1;
             transform: scale(1);
+          }
+        }
+
+        @keyframes loaderTagIn {
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
 
