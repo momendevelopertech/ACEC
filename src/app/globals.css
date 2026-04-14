@@ -251,10 +251,13 @@ body::before {
   background: #c9a84c;
   border-radius: 50%;
   position: fixed;
+  left: 50%;
+  top: 50%;
   pointer-events: none;
   z-index: 10000;
-  transition: transform 0.05s ease-out;
-  will-change: transform;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease-out, background 0.2s ease;
+  will-change: transform, background;
   box-shadow: 0 0 12px rgba(201, 168, 76, 0.75);
 }
 
@@ -264,10 +267,13 @@ body::before {
   border: 1px solid rgba(201, 168, 76, 0.9);
   border-radius: 50%;
   position: fixed;
+  left: 50%;
+  top: 50%;
   pointer-events: none;
   z-index: 9999;
+  transform: translate(-50%, -50%);
   transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.15s ease-out;
-  will-change: transform;
+  will-change: transform, width, height, border-color;
   box-shadow: 0 0 14px rgba(201, 168, 76, 0.35);
 }
 
