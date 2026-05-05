@@ -7,6 +7,8 @@ import { ServiceDetailClient } from "./ServiceDetailClient";
 import { getServiceBySlug, getAllServiceSlugs } from "@/lib/services";
 import { routing } from "@/i18n/routing";
 
+export const dynamicParams = false;
+
 type Props = {
   params: Promise<{
     locale: string;
