@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ACEC - Static Export Deployment Guide (cPanel)
 
-## Getting Started
+This project is configured for **Next.js static export** and can be deployed on shared hosting (cPanel) without a Node.js runtime.
 
-First, run the development server:
+## 1) Create environment file
+
+Create `.env.local` at the project root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_API_BASE=https://api.example.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> `NEXT_PUBLIC_API_BASE` is required because the contact form now sends requests to an external backend endpoint (`/api/v1/contact`) instead of using Next.js API routes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 2) Install dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+```
 
-## Learn More
+## 3) Build static output
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This generates the static site in `out/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 4) Verify generated static files
 
-## Deploy on Vercel
+Confirm these files exist after build:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `out/ar/index.html`
+- `out/en/index.html`
+- `out/ar/services/consulting/index.html`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 5) Upload to cPanel
+
+1. Open your hosting file manager or FTP.
+2. Upload the **contents of `out/`** into `public_html/`.
+3. Upload rewrite rules file to `public_html/.htaccess`.
+
+A deployment copy is provided at:
+
+- `.htaccess`
+- `deployment/.htaccess`
+
+## 6) Optional local static preview
+
+```bash
+npx serve out
+```
+
+Then open the URL shown by `serve`.
+
+## Notes
+
+- This static export setup does not use Next.js server runtime.
+- Internal App Router API routes are removed.
+- Dynamic routes are pre-generated during build via `generateStaticParams`.
