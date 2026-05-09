@@ -7,27 +7,28 @@ import Image from "next/image";
 interface LogoProps {
   size?: "sm" | "md" | "lg";
   href?: string;
+  className?: string;
 }
 
-export function Logo({ size = "md", href }: LogoProps) {
+export function Logo({ size = "md", href, className = "" }: LogoProps) {
   const locale = useLocale();
 
   const sizeMap = {
-    sm: { width: 170, height: 60 },
-    md: { width: 280, height: 100 },
-    lg: { width: 340, height: 120 },
+    sm: { width: 160, height: 50 },
+    md: { width: 220, height: 70 },
+    lg: { width: 280, height: 90 },
   };
 
   const dimensions = sizeMap[size];
 
   const content = (
     <Image
-      src="/acec-logo.svg"
-      alt="ACEC Logo"
+      src="/images/logo.svg"
+      alt="ACEC - Arab Charter Engineering Consultants"
       width={dimensions.width}
       height={dimensions.height}
       priority
-      className="transition-opacity duration-200 hover:opacity-80"
+      className={`transition-opacity duration-200 hover:opacity-80 ${className}`}
       style={{
         width: "auto",
         height: dimensions.height,
@@ -40,7 +41,8 @@ export function Logo({ size = "md", href }: LogoProps) {
     return (
       <Link
         href={href}
-        className="inline-flex items-center text-decoration-none"
+        className="inline-flex items-center no-underline"
+        aria-label="ACEC Home"
       >
         {content}
       </Link>

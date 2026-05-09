@@ -160,7 +160,7 @@ export function ProjectsSection() {
             className="about-image"
           >
             <img
-              src="/images/project-architecture.svg"
+              src="/images/project-architecture-1.svg"
               alt="ACEC projects illustration"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />

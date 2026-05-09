@@ -82,7 +82,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
             <p
               style={{
                 fontSize: "1.1rem",
-                color: "rgba(255, 255, 255, 0.7)",
+                color: "rgba(var(--color-text-rgb), 0.7)",
                 maxWidth: "600px",
                 margin: "0 auto",
                 lineHeight: 1.7,
@@ -115,8 +115,8 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
                       justifyContent: "center",
                       padding: "2rem",
                       borderRadius: "var(--radius-lg)",
-                      background: "rgba(18, 18, 26, 0.6)",
-                      border: "1px solid rgba(201, 168, 76, 0.1)",
+                      background: "rgba(var(--color-surface-rgb), 0.6)",
+                      border: "1px solid rgba(var(--color-gold-rgb), 0.1)",
                       backdropFilter: "blur(10px)",
                       transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
                       cursor: "pointer",
@@ -131,7 +131,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
                         position: "absolute",
                         inset: 0,
                         background:
-                          "linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, transparent 100%)",
+                          "linear-gradient(135deg, rgba(var(--color-gold-rgb), 0.1) 0%, transparent 100%)",
                         opacity: 0,
                         transition: "opacity 0.3s",
                         pointerEvents: "none",
@@ -212,15 +212,15 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
                   alignItems: "center",
                   gap: "0.75rem",
                   padding: "0.875rem 2.5rem",
-                  background: "linear-gradient(135deg, #c9a84c 0%, #e8c547 100%)",
+                  background: "linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%)",
                   border: "none",
                   borderRadius: "0.5rem",
-                  color: "#1a1a1a",
+                  color: "var(--color-bg)",
                   fontWeight: 600,
                   fontSize: "1rem",
                   cursor: "pointer",
                   textDecoration: "none",
-                  boxShadow: "0 4px 15px rgba(201, 168, 76, 0.3)",
+                  boxShadow: "0 4px 15px rgba(var(--color-gold-rgb), 0.3)",
                   transition: "all 0.3s",
                 }}
               >

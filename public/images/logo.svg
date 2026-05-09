@@ -1,17 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
-  <!-- ACEC text logo placeholder -->
-  <text x="10" y="42" 
-    font-family="Georgia, serif" 
-    font-size="36" 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 90" fill="none">
+  <!-- Background decorative line -->
+  <line x1="0" y1="85" x2="180" y2="85" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+  
+  <!-- ACEC Text -->
+  <text x="5" y="55" 
+    font-family="Georgia, 'Times New Roman', serif" 
+    font-size="48" 
     font-weight="700" 
     fill="#c9a84c"
-    letter-spacing="4">ACEC</text>
-  <!-- Decorative underline -->
-  <line x1="10" y1="48" x2="130" y2="48" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
-  <!-- Small tagline -->
-  <text x="10" y="58" 
-    font-family="Arial, sans-serif" 
-    font-size="7" 
+    letter-spacing="3">ACEC</text>
+  
+  <!-- Full company name -->
+  <text x="5" y="75" 
+    font-family="Arial, Helvetica, sans-serif" 
+    font-size="9" 
+    font-weight="400" 
     fill="#6b6b7a"
-    letter-spacing="1">ARAB CHARTER ENGINEERING CONSULTANTS</text>
+    letter-spacing="2">ARAB CHARTER ENGINEERING CONSULTANTS</text>
+  
+  <!-- Decorative accent dots -->
+  <circle cx="200" cy="45" r="4" fill="#c9a84c" opacity="0.8"/>
+  <circle cx="215" cy="45" r="4" fill="#c9a84c" opacity="0.6"/>
+  <circle cx="230" cy="45" r="4" fill="#c9a84c" opacity="0.4"/>
+  
+  <!-- Architecture element -->
+  <g transform="translate(250, 20)">
+    <!-- Tower base -->
+    <rect x="5" y="30" width="20" height="35" fill="#c9a84c" opacity="0.7"/>
+    <!-- Tower middle -->
+    <rect x="10" y="15" width="10" height="20" fill="#c9a84c" opacity="0.85"/>
+    <!-- Tower top -->
+    <rect x="13" y="5" width="4" height="12" fill="#c9a84c" opacity="1"/>
+    <!-- Grid pattern -->
+    <line x1="8" y1="35" x2="22" y2="35" stroke="#0a0a0f" stroke-width="1" opacity="0.3"/>
+    <line x1="8" y1="45" x2="22" y2="45" stroke="#0a0a0f" stroke-width="1" opacity="0.3"/>
+    <line x1="8" y1="55" x2="22" y2="55" stroke="#0a0a0f" stroke-width="1" opacity="0.3"/>
+  </g>
 </svg>
