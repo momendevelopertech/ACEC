@@ -3,13 +3,47 @@
 import { useLocale } from "next-intl";
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+
+interface Client {
+  id: number;
+  name_ar: string;
+  name_en: string;
+  logo: string;
+  website: string;
+  order: number;
+  is_active: string;
+}
 
 export function ClientsSection() {
     const locale = useLocale();
     const isArabic = locale === "ar";
+    const [clients, setClients] = useState<Client[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    // Client logos - using relevant imagery for each client
-    const clients = [
+    useEffect(() => {
+        async function fetchClients() {
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/clients`);
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.success && json.data) {
+                        setClients(json.data);
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to fetch clients:", e);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchClients();
+    }, []);
+
+    // Default clients for demo
+    const defaultClients = [
         { name: "Dr. Sulaiman Al Habib", logo: "/images/client-logo.svg" },
         { name: "Deemah", logo: "/images/client-logo.svg" },
         { name: "McDonald's", logo: "/images/client-logo.svg" },
@@ -18,12 +52,14 @@ export function ClientsSection() {
         { name: "STC", logo: "/images/client-logo.svg" },
         { name: "SRMG", logo: "/images/client-logo.svg" },
         { name: "Amlak", logo: "/images/client-logo.svg" },
-        { name: "Flyadeal", logo: "/images/client-logo.svg" },
-        { name: "Floward", logo: "/images/client-logo.svg" },
-        { name: "Gulf Aluminum", logo: "/images/client-logo.svg" },
-        { name: "SME Marketplace", logo: "/images/client-logo.svg" },
-        { name: "Hataba", logo: "/images/client-logo.svg" },
     ];
+
+    const displayClients = clients.length > 0 
+        ? clients.map((c: Client) => ({ 
+            name: isArabic ? c.name_ar : c.name_en, 
+            logo: c.logo ? `${API_BASE}/storage/${c.logo}` : "/images/client-logo.svg" 
+        }))
+        : defaultClients;
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -117,9 +153,9 @@ export function ClientsSection() {
                     }}
                     className="clients-grid"
                 >
-                    {clients.map((client) => (
+                    {displayClients.map((client, idx) => (
                         <motion.div
-                            key={client.name}
+                            key={idx}
                             variants={itemVariants}
                             style={{
                                 display: "flex",
@@ -241,10 +277,10 @@ export function ClientsSection() {
                             alignItems: "center",
                             gap: "0.75rem",
                             padding: "0.875rem 2.5rem",
-                            background: "linear-gradient(135deg, #c9a84c 0%, #e8c547 100%)",
+                            background: "linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%)",
                             border: "none",
                             borderRadius: "0.5rem",
-                            color: "#1a1a1a",
+                            color: "var(--color-bg)",
                             fontWeight: 600,
                             fontSize: "1rem",
                             cursor: "pointer",
