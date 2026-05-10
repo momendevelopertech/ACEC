@@ -95,25 +95,56 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 ---
 
+## Pre-flight Checks
+
+Before running `start-project.bat`, verify all tools are in your PATH:
+
+```cmd
+where php
+where composer
+where node
+where npm
+```
+
+Each should return a path. If any say "not found", add them to your PATH or use Laragon.
+
+### Common PATH issues with Laragon
+
+Laragon adds its tools to PATH only inside its own terminal. To make them available system-wide:
+
+1. Open Laragon → Menu → Tools → Path Manager
+2. Add: `C:\laragon\bin\php\php-8.3.x` (adjust version)
+3. Add: `C:\laragon\bin\composer`
+4. Add: `C:\laragon\bin\nodejs\node-20`
+5. Restart your computer
+
 ## Troubleshooting
+
+### Script says "Tool not found" but it's installed
+
+Run `where <tool>` in CMD. If not found, the tool is not in your system PATH.
+The script relies on PATH — it does not hardcode Laragon paths.
 
 ### Port already in use
 
-```bash
-# Check what's on port 3000
+```cmd
 netstat -ano | findstr :3000
-
-# Check what's on port 8000
 netstat -ano | findstr :8000
 ```
 
-Then kill the process with `taskkill /f /pid <PID>` or use `stop-project.bat`.
+The rightmost column is the PID. Kill it:
+
+```cmd
+taskkill /f /pid <PID>
+```
+
+Or just run `stop-project.bat`.
 
 ### Database connection refused
 
 1. Make sure MySQL is running (check Laragon tray icon or Services)
-2. Verify credentials in `backend/.env`:
-   ```
+2. Verify credentials in `backend\.env`:
+   ```ini
    DB_CONNECTION=mysql
    DB_HOST=localhost
    DB_PORT=3306
@@ -122,24 +153,28 @@ Then kill the process with `taskkill /f /pid <PID>` or use `stop-project.bat`.
    DB_PASSWORD=
    ```
 3. Create the database if it doesn't exist:
-   ```bash
+   ```cmd
    mysql -u root -e "CREATE DATABASE IF NOT EXISTS acec_dashboard"
    ```
 
 ### Composer out of memory
 
-```bash
-# Increase memory limit
+```cmd
 php -d memory_limit=-1 composer install
 ```
 
 ### npm install fails
 
-```bash
-# Clear npm cache and retry
+```cmd
 npm cache clean --force
 npm install
 ```
+
+If it still fails, delete `node_modules` and `package-lock.json`, then retry.
+
+### Windows blocks the script (SmartScreen / Defender)
+
+Right-click the `.bat` file → Properties → check "Unblock" → Apply.
 
 ### Blank page or API errors
 
