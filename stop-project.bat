@@ -3,11 +3,11 @@ setlocal enabledelayedexpansion
 
 :: ============================================================================
 ::  ACEC — Stop Local Servers
-::  Kills only processes started by this project
+::  Fully Laragon-aware.  Kills only this project's processes.
 ::  Targets:
-::     1. CMD windows whose titles match ACEC-BACKEND-* / ACEC-FRONTEND-*
-::     2. Processes listening on port 8000 (Laravel)
-::     3. Processes listening on port 3000 (Next.js)
+::     1. CMD windows whose title matches ACEC-Backend-58A2 / ACEC-Frontend-7C4B
+::     2. The specific PID listening on port 8000 (Laravel)
+::     3. The specific PID listening on port 3000 (Next.js)
 :: ============================================================================
 
 set "C_INFO=[INFO]"
@@ -21,23 +21,22 @@ echo.
 
 :: -------------------------------------------------
 ::  1. Close our server windows by unique title
-::     This is the safest kill — it only affects
-::     CMD windows that were opened by start-project.bat
+::     Only matches windows started by start-project.bat
 :: -------------------------------------------------
 echo %C_INFO% Closing ACEC server windows...
 
 taskkill /f /fi "WINDOWTITLE eq ACEC-Backend-58A2" >nul 2>&1
-if not errorlevel 1 ( echo %C_OK%   Backend window closed ) else ( echo %C_INFO%   No backend window found )
+if not errorlevel 1 ( echo %C_OK%   Backend window closed ) else ( echo %C_INFO%   No backend window open )
 
 taskkill /f /fi "WINDOWTITLE eq ACEC-Frontend-7C4B" >nul 2>&1
-if not errorlevel 1 ( echo %C_OK%   Frontend window closed ) else ( echo %C_INFO%   No frontend window found )
+if not errorlevel 1 ( echo %C_OK%   Frontend window closed ) else ( echo %C_INFO%   No frontend window open )
 
 echo.
 
 :: -------------------------------------------------
-::  2. Kill process listening on port 8000 (Laravel)
-::     We find the PID from netstat output, then kill
-::     only that specific process — not all php.exe.
+::  2. Kill the process listening on port 8000
+::     Finds the PID from netstat — kills only that PID,
+::     not all php.exe processes on the system.
 :: -------------------------------------------------
 echo %C_INFO% Releasing port 8000 (Laravel)...
 
@@ -51,9 +50,9 @@ for /f "tokens=5" %%a in ('
 if defined PID_8000 (
     taskkill /f /pid "!PID_8000!" >nul 2>&1
     if not errorlevel 1 (
-        echo %C_OK%   Process !PID_8000! killed (port 8000)
+        echo %C_OK%   Process !PID_8000! killed ^(port 8000^)
     ) else (
-        echo %C_WARN% Could not kill process on port 8000 — try closing it manually
+        echo %C_WARN% Could not kill PID !PID_8000! — try closing it manually
     )
 ) else (
     echo %C_INFO%   No process found on port 8000
@@ -62,7 +61,7 @@ if defined PID_8000 (
 echo.
 
 :: -------------------------------------------------
-::  3. Kill process listening on port 3000 (Next.js)
+::  3. Kill the process listening on port 3000
 :: -------------------------------------------------
 echo %C_INFO% Releasing port 3000 (Next.js)...
 
@@ -76,9 +75,9 @@ for /f "tokens=5" %%b in ('
 if defined PID_3000 (
     taskkill /f /pid "!PID_3000!" >nul 2>&1
     if not errorlevel 1 (
-        echo %C_OK%   Process !PID_3000! killed (port 3000)
+        echo %C_OK%   Process !PID_3000! killed ^(port 3000^)
     ) else (
-        echo %C_WARN% Could not kill process on port 3000 — try closing it manually
+        echo %C_WARN% Could not kill PID !PID_3000! — try closing it manually
     )
 ) else (
     echo %C_INFO%   No process found on port 3000

@@ -2,17 +2,17 @@
 
 Run the full ACEC project (Next.js frontend + Laravel backend) on your Windows machine.
 
-## System Requirements
+## Requirements
 
-| Tool      | Minimum Version | How to Check       |
-| --------- | --------------- | ------------------ |
-| PHP       | 8.3+            | `php -v`           |
-| Composer  | 2.x             | `composer --version` |
-| Node.js   | 18+             | `node -v`          |
-| npm       | 9+              | `npm -v`           |
-| MySQL     | 5.7+ / 8.x      | `mysql --version`  |
+| Tool | Notes |
+|------|-------|
+| [Laragon](https://laragon.org/download/) **required** | Bundles PHP, Composer, MySQL, Node.js. Install then add PHP, Node.js, Composer via Laragon's Quick Add. |
+| PHP 8.3+ | Added via Laragon → Menu → PHP → Quick Add |
+| Composer | Added via Laragon → Menu → Tools → Quick Add |
+| Node.js 18+ | Added via Laragon → Menu → Node.js → Quick Add |
+| MySQL | Included with Laragon, starts automatically |
 
-> **Recommended:** Use [Laragon](https://laragon.org/) — it bundles PHP, Composer, MySQL, and Nginx/Apache.
+> The `start-project.bat` script auto-detects your Laragon installation at `C:\laragon` or `D:\laragon`. It finds the latest PHP, Composer, and Node.js versions automatically — **no system PATH configuration needed**.
 
 ---
 
@@ -20,17 +20,15 @@ Run the full ACEC project (Next.js frontend + Laravel backend) on your Windows m
 
 Just double-click **`start-project.bat`** in the project root.
 
-**Phase 1 — Setup (main window):**
-1. Copy `backend/.env.example` → `backend/.env` (if missing)
-2. Run `composer install` (if vendor is missing)
-3. Generate Laravel `APP_KEY` (if not set)
-4. Run `php artisan migrate --force`
-5. Run `npm install` (if node_modules is missing)
-
-**Phase 2 — Launch (separate CMD windows):**
-6. Opens backend window → Laravel at **http://127.0.0.1:8000**
-7. Opens frontend window → Next.js at **http://localhost:3000**
-8. Opens browser automatically
+| Phase | What happens |
+|-------|-------------|
+| **0** | Auto-detect Laragon, find PHP 8.x, Composer, Node.js, npm |
+| **1** | Copy `.env`, run `composer install`, generate `APP_KEY`, run `migrate` |
+| **2** | Run `npm install` |
+| **3** | Check ports 8000 and 3000 are free |
+| **4** | Open backend CMD → Laravel at **http://127.0.0.1:8000** |
+|  | Open frontend CMD → Next.js at **http://localhost:3000** |
+|  | Open browser automatically |
 
 To stop: run **`stop-project.bat`** (kills processes on ports 3000 and 8000, closes server windows).
 
@@ -95,28 +93,36 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 ---
 
-## Pre-flight Checks
+## Understanding How the Script Works
 
-Before running `start-project.bat`, verify all tools are in your PATH:
+`start-project.bat` does **not** depend on your Windows system PATH. Instead it:
 
-```cmd
-where php
-where composer
-where node
-where npm
-```
+1. Looks for Laragon at `C:\laragon` or `D:\laragon`
+2. Scans `laragon\bin\php\` for the highest PHP version (e.g. `php-8.3.6`)
+3. Finds `composer.phar` in `laragon\bin\composer\`
+4. Scans `laragon\bin\nodejs\` for the highest Node.js version
+5. Finds `npm.cmd` alongside Node.js
+6. Uses **full explicit paths** (`C:\laragon\bin\php\php-8.3.6\php.exe`) for every command
 
-Each should return a path. If any say "not found", add them to your PATH or use Laragon.
+This means Laragon's PHP, Composer, and Node.js **do not need to be in your system PATH**.
 
-### Common PATH issues with Laragon
+## Common Issues
 
-Laragon adds its tools to PATH only inside its own terminal. To make them available system-wide:
+### "Laragon not found"
 
-1. Open Laragon → Menu → Tools → Path Manager
-2. Add: `C:\laragon\bin\php\php-8.3.x` (adjust version)
-3. Add: `C:\laragon\bin\composer`
-4. Add: `C:\laragon\bin\nodejs\node-20`
-5. Restart your computer
+The script checks `C:\laragon` and `D:\laragon`. If yours is elsewhere, edit `start-project.bat` and add your path to the `for %%p in (...)` loop at the top.
+
+### "No PHP installation found"
+
+Open Laragon → Menu → PHP → Quick Add → select a PHP 8.x version.
+
+### "No Node.js installation found"
+
+Open Laragon → Menu → Node.js → Quick Add → select a version.
+
+### "npm not found"
+
+npm ships with Node.js. If missing, reinstall Node.js via Laragon.
 
 ## Troubleshooting
 
