@@ -18,18 +18,21 @@ Run the full ACEC project (Next.js frontend + Laravel backend) on your Windows m
 
 ## One-Click Start (Windows)
 
-Just double-click **`start-project.bat`** in the project root. It will:
+Just double-click **`start-project.bat`** in the project root.
 
-1. Copy `.env.example` → `.env` for the backend (if missing)
+**Phase 1 — Setup (main window):**
+1. Copy `backend/.env.example` → `backend/.env` (if missing)
 2. Run `composer install` (if vendor is missing)
-3. Generate `APP_KEY` (if not set)
+3. Generate Laravel `APP_KEY` (if not set)
 4. Run `php artisan migrate --force`
-5. Start the Laravel backend at **http://127.0.0.1:8000**
-6. Install npm dependencies (if node_modules is missing)
-7. Start the Next.js frontend at **http://localhost:3000**
-8. Open your browser automatically
+5. Run `npm install` (if node_modules is missing)
 
-To stop: run **`stop-project.bat`** or close the server windows.
+**Phase 2 — Launch (separate CMD windows):**
+6. Opens backend window → Laravel at **http://127.0.0.1:8000**
+7. Opens frontend window → Next.js at **http://localhost:3000**
+8. Opens browser automatically
+
+To stop: run **`stop-project.bat`** (kills processes on ports 3000 and 8000, closes server windows).
 
 ---
 

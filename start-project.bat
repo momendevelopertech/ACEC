@@ -3,112 +3,116 @@ setlocal enabledelayedexpansion
 
 :: ============================================
 ::  ACEC — One-Click Local Run Script
+::  Windows CMD — Robust path-safe launcher
 :: ============================================
 
 set "ROOT_DIR=%~dp0"
-set "BACKEND_DIR=%ROOT_DIR%backend"
+:: Strip trailing backslash so we can build paths cleanly
+if "!ROOT_DIR:~-1!"=="\" set "ROOT_DIR=!ROOT_DIR:~0,-1!"
+set "BACKEND_DIR=!ROOT_DIR!\backend"
 
-:: -------------------------------------------------
-::  Start Backend in a new CMD window
-:: -------------------------------------------------
-start "ACEC — Backend" cmd /c "
-    cd /d \"%BACKEND_DIR%\"
-    echo [INFO] Checking backend setup...
+:: ===================== BACKEND SETUP =====================
+cd /d "!BACKEND_DIR!" 2>nul
+if errorlevel 1 (
+    echo [ERROR] Backend directory not found: !BACKEND_DIR!
+    echo [ERROR] Make sure this script is placed in the project root.
+    pause
+    exit /b 1
+)
 
-    :: 1. Copy .env if missing
-    if not exist \".env\" (
-        echo [INFO] .env not found — copying from .env.example...
-        copy \".env.example\" \".env\" >nul
-        if errorlevel 1 (
-            echo [ERROR] Failed to copy .env.example — check permissions.
-            pause & exit /b 1
-        )
-        echo [SUCCESS] .env created from .env.example
-    ) else (
-        echo [INFO] .env found
-    )
+echo [INFO] Checking backend setup...
+echo.
 
-    :: 2. Install Composer dependencies if vendor missing
-    if not exist \"vendor\artisan\" (
-        echo [INFO] vendor not found — running composer install...
-        call composer install --no-interaction --prefer-dist
-        if errorlevel 1 (
-            echo [ERROR] composer install failed — check PHP / Composer setup.
-            pause & exit /b 1
-        )
-        echo [SUCCESS] Composer dependencies installed
-    ) else (
-        echo [INFO] vendor found
-    )
-
-    :: 3. Generate APP_KEY if not set
-    php -r \"echo env('APP_KEY', '');\" 2>nul | findstr /r \".\" >nul
+:: 1. Copy .env if missing
+if not exist ".env" (
+    echo [INFO] .env not found — creating from .env.example...
+    copy ".env.example" ".env" >nul
     if errorlevel 1 (
-        echo [INFO] APP_KEY is empty — generating key...
-        call php artisan key:generate --force
-        if errorlevel 1 (
-            echo [ERROR] Failed to generate APP_KEY.
-            pause & exit /b 1
-        )
-        echo [SUCCESS] APP_KEY generated
-    ) else (
-        echo [INFO] APP_KEY found
-    )
-
-    :: 4. Run migrations
-    echo [INFO] Running database migrations...
-    call php artisan migrate --force
-    if errorlevel 1 (
-        echo [WARN] Migrations failed — check DB connection in .env
-    ) else (
-        echo [SUCCESS] Migrations applied
-    )
-
-    :: 5. Start Laravel dev server
-    echo [SUCCESS] Backend ready — starting server at http://127.0.0.1:8000
-    call php artisan serve --host=127.0.0.1 --port=8000
-    if errorlevel 1 (
-        echo [ERROR] Failed to start PHP server — port 8000 may be in use.
+        echo [ERROR] Failed to create .env from .env.example
         pause
+        exit /b 1
     )
-"
+    echo [SUCCESS] .env created
+) else (
+    echo [INFO] .env found
+)
 
-:: Brief pause to let backend start initializing
+:: 2. Install Composer dependencies if vendor missing
+if not exist "vendor\autoload.php" (
+    echo [INFO] Running composer install...
+    call composer install --no-interaction --prefer-dist
+    if errorlevel 1 (
+        echo [ERROR] composer install failed — is PHP / Composer installed?
+        pause
+        exit /b 1
+    )
+    echo [SUCCESS] Composer dependencies installed
+) else (
+    echo [INFO] vendor found
+)
+
+:: 3. Generate APP_KEY if not set
+php artisan key:generate --force >nul 2>&1
+echo [INFO] APP_KEY checked
+
+:: 4. Run database migrations
+echo [INFO] Running database migrations...
+php artisan migrate --force
+if errorlevel 1 (
+    echo [WARN] Migrations failed — check your database connection in backend\.env
+) else (
+    echo [SUCCESS] Migrations applied
+)
+
+echo.
+
+:: ===================== FRONTEND SETUP =====================
+cd /d "!ROOT_DIR!" 2>nul
+
+echo [INFO] Checking frontend setup...
+echo.
+
+:: 1. Install npm dependencies if node_modules missing
+if not exist "node_modules" (
+    echo [INFO] Running npm install...
+    call npm install
+    if errorlevel 1 (
+        echo [ERROR] npm install failed — is Node.js installed?
+        pause
+        exit /b 1
+    )
+    echo [SUCCESS] npm dependencies installed
+) else (
+    echo [INFO] node_modules found
+)
+
+echo.
+
+:: ===================== LAUNCH SERVERS =====================
+echo [INFO] Starting servers in separate windows...
+echo.
+
+:: GUIDs / unique markers so taskkill can target only our processes
+set "BACKEND_MARKER=ACEC-BACKEND-58A2"
+set "FRONTEND_MARKER=ACEC-FRONTEND-7C4B"
+
+:: Start Backend — use cmd /s /c with "" for inner quotes
+:: This pattern is the ONLY reliable way to pass quoted paths through cmd /c in Windows
+start "%BACKEND_MARKER%" cmd /s /c "cd /d ""!BACKEND_DIR!"" && title ACEC — Backend && php artisan serve --host=127.0.0.1 --port=8000"
+
+:: Brief pause so the backend can begin initializing
 timeout /t 3 /nobreak >nul
 
-:: -------------------------------------------------
-::  Start Frontend in a new CMD window
-:: -------------------------------------------------
-start "ACEC — Frontend" cmd /c "
-    cd /d \"%ROOT_DIR%\"
-    echo [INFO] Checking frontend setup...
+:: Start Frontend
+start "%FRONTEND_MARKER%" cmd /s /c "cd /d ""!ROOT_DIR!"" && title ACEC — Frontend && npm run dev"
 
-    :: 1. Install npm dependencies if node_modules missing
-    if not exist \"node_modules\\.package-lock.json\" (
-        echo [INFO] node_modules not found — running npm install...
-        call npm install
-        if errorlevel 1 (
-            echo [ERROR] npm install failed — check Node.js setup.
-            pause & exit /b 1
-        )
-        echo [SUCCESS] npm dependencies installed
-    ) else (
-        echo [INFO] node_modules found
-    )
+:: Wait briefly, then open browser
+timeout /t 5 /nobreak >nul
 
-    :: 2. Start Next.js dev server
-    echo [SUCCESS] Frontend ready — starting dev server at http://localhost:3000
-    call npm run dev
-    if errorlevel 1 (
-        echo [ERROR] Failed to start Next.js — port 3000 may be in use.
-        pause
-    )
-"
-
-:: Wait for servers to start, then open browser
-timeout /t 6 /nobreak >nul
 echo [SUCCESS] Opening browser at http://localhost:3000
 start "" http://localhost:3000
-echo [INFO] Both servers should be starting up.
+
+echo.
 echo [INFO] Close this window or use stop-project.bat to stop all servers.
+echo.
 pause
