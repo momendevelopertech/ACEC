@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
 export const metadata: Metadata = {
   title: {
@@ -40,13 +43,46 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+async function getActiveTheme() {
+  try {
+    const res = await fetch(`${API_BASE}/api/themes/active`, {
+      next: { revalidate: 60 },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && json.data) return json.data;
+    }
+  } catch {
+    // fallback to CSS defaults
+  }
+  return null;
+}
+
+function themeToCssVars(theme: any): string {
+  if (!theme?.colors) return '';
+  const colors = theme.colors as Record<string, string>;
+  return Object.entries(colors)
+    .map(([key, value]) => `--${key.replace(/_/g, '-')}: ${value};`)
+    .join(' ');
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
+  const theme = await getActiveTheme();
+  const cssVars = theme ? themeToCssVars(theme) : '';
+
   return (
-    <html suppressHydrationWarning>
+    <html lang={locale} dir={dir} data-theme={theme?.slug ?? 'dark-professional'} suppressHydrationWarning>
+      <head>
+        {cssVars && <style id="theme-vars">{`:root { ${cssVars} }`}</style>}
+      </head>
       <body>{children}</body>
     </html>
   );

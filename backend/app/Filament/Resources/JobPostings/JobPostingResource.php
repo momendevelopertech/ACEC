@@ -19,10 +19,22 @@ class JobPostingResource extends Resource
     protected static ?string $model = JobPosting::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
-    protected static ?string $navigationLabel = 'Job Postings';
-    protected static ?string $modelLabel = 'Job Posting';
-    protected static ?string $pluralModelLabel = 'Job Postings';
     protected static ?int $navigationSort = 8;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.job_postings');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.job_postings');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.job_postings');
+    }
 
     public static function form(Schema $schema): Schema
     {

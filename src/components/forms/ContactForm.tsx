@@ -14,6 +14,7 @@ export function ContactForm() {
         name: "",
         email: "",
         phone: "",
+        subject: "",
         message: "",
         service_interest: "",
     });
@@ -34,6 +35,7 @@ export function ContactForm() {
                 name: formData.name,
                 email: formData.email,
                 phone: formData.phone,
+                subject: formData.subject,
                 message: formData.message,
                 service_type: formData.service_interest,
                 lang: locale,
@@ -41,7 +43,7 @@ export function ContactForm() {
 
             if (response.success) {
                 setStatus("success");
-                setFormData({ name: "", email: "", phone: "", message: "", service_interest: "" });
+                setFormData({ name: "", email: "", phone: "", subject: "", message: "", service_interest: "" });
                 // Reset success message after 5 seconds
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
@@ -100,6 +102,22 @@ export function ContactForm() {
                         className="form-input"
                     />
                 </div>
+            </div>
+
+            {/* Subject */}
+            <div>
+                <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                    {t("subject")}
+                </label>
+                <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    placeholder={t("subject")}
+                    className="form-input"
+                />
             </div>
 
             {/* Phone */}

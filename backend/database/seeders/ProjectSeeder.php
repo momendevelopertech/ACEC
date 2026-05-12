@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProjectSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     public function run(): void
     {
         DB::table('projects')->truncate();
@@ -124,7 +127,10 @@ class ProjectSeeder extends Seeder
         ];
 
         foreach ($projects as $project) {
+            $slug = $project['slug'];
+            $imagePath = $this->generatePlaceholderImage("models/projects/{$slug}.jpg", "project-{$slug}");
             DB::table('projects')->insert(array_merge($project, [
+                'image' => $imagePath,
                 'meta_title_ar' => $project['title_ar'] . ' | مكتب الميثاق العربي',
                 'meta_title_en' => $project['title_en'] . ' | ACEC',
                 'created_at' => now(),

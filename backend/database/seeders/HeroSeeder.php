@@ -2,14 +2,20 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class HeroSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     public function run(): void
     {
         DB::table('hero_sections')->truncate();
+
+        $arImage = $this->generatePlaceholderImage('models/hero/ar.jpg', 'hero-ar', 1920, 800);
+        $enImage = $this->generatePlaceholderImage('models/hero/en.jpg', 'hero-en', 1920, 800);
 
         DB::table('hero_sections')->insert([
             [
@@ -21,6 +27,7 @@ class HeroSeeder extends Seeder
                 'stat2_number' => '15+', 'stat2_label' => 'سنة خبرة',
                 'stat3_number' => '30+', 'stat3_label' => 'عميل',
                 'stat4_number' => '6', 'stat4_label' => 'خدمات متخصصة',
+                'image' => $arImage,
                 'cta1_text' => 'احجز استشارة',
                 'cta1_link' => '/ar/contact',
                 'cta2_text' => 'تعرف على خدماتنا',
@@ -37,6 +44,7 @@ class HeroSeeder extends Seeder
                 'stat2_number' => '15+', 'stat2_label' => 'Years Experience',
                 'stat3_number' => '30+', 'stat3_label' => 'Clients',
                 'stat4_number' => '6', 'stat4_label' => 'Specialized Services',
+                'image' => $enImage,
                 'cta1_text' => 'Book Consultation',
                 'cta1_link' => '/en/contact',
                 'cta2_text' => 'Our Services',

@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class ServiceSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     public function run(): void
     {
         DB::table('services')->truncate();
@@ -117,7 +120,9 @@ class ServiceSeeder extends Seeder
         ];
 
         foreach ($services as $service) {
+            $imagePath = $this->generatePlaceholderImage("models/services/{$service['slug']}.jpg", "service-{$service['slug']}");
             DB::table('services')->insert(array_merge($service, [
+                'image' => $imagePath,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]));

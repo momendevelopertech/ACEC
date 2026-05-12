@@ -9,64 +9,97 @@ class ThemeSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create default theme if none exists
-        if (Theme::count() === 0) {
-            Theme::create([
-                'name' => 'Default Gold & Dark',
-                'name_ar' => 'الذهبي الداكن الافتراضي',
-                'slug' => 'default-gold-dark',
+        if (Theme::count() > 0) return;
+
+        $themes = [
+            [
+                'name' => 'Dark Professional',
+                'name_ar' => 'الاحترافي الداكن',
+                'slug' => 'dark-professional',
                 'is_active' => true,
                 'colors' => [
-                    'primary' => '#1a3c5e',
-                    'secondary' => '#c9a84c',
-                    'background' => '#0a0a0f',
-                    'surface' => '#12121a',
-                    'text' => '#f5f5f0',
-                    'text_muted' => '#6b6b7a',
-                    'header_bg' => '#0a0a0f',
-                    'footer_bg' => '#12121a',
-                    'button_primary' => '#c9a84c',
-                    'button_secondary' => '#1a3c5e',
-                    'border' => '#1e1e2e',
-                    'card_bg' => '#12121a',
+                    'bg_primary'     => '#0D1B2A',
+                    'bg_secondary'   => '#1A2B3C',
+                    'bg_card'        => '#162234',
+                    'bg_section_alt' => '#111E2C',
+                    'text_primary'   => '#F5F0E8',
+                    'text_secondary' => '#B0A090',
+                    'text_muted'     => '#6B7A8D',
+                    'accent'         => '#C9A84C',
+                    'accent_hover'   => '#E0BC6A',
+                    'accent_text'    => '#0D1B2A',
+                    'border'         => '#2A3D52',
+                    'navbar_bg'      => '#0D1B2A',
+                    'navbar_text'    => '#F5F0E8',
+                    'button_bg'      => '#C9A84C',
+                    'button_text'    => '#0D1B2A',
+                    'button_hover'   => '#E0BC6A',
+                    'card_bg'        => '#162234',
+                    'card_border'    => '#2A3D52',
+                    'footer_bg'      => '#080F18',
+                    'footer_text'    => '#B0A090',
                 ],
-                'typography' => [
-                    'font_ar' => 'Tajawal, Cairo, sans-serif',
-                    'font_en' => 'Inter, system-ui, sans-serif',
-                ],
-                'layout' => [
-                    'border_radius' => 'md',
-                ],
-            ]);
-
-            // Create a light theme
-            Theme::create([
-                'name' => 'Light Professional',
-                'name_ar' => 'الفاتح المهني',
-                'slug' => 'light-professional',
+            ],
+            [
+                'name' => 'Classic Blue',
+                'name_ar' => 'الأزرق الكلاسيكي',
+                'slug' => 'classic-blue',
                 'is_active' => false,
                 'colors' => [
-                    'primary' => '#1a3c5e',
-                    'secondary' => '#c9a84c',
-                    'background' => '#ffffff',
-                    'surface' => '#f0f4f8',
-                    'text' => '#1a1a2e',
-                    'text_muted' => '#6b7280',
-                    'header_bg' => '#ffffff',
-                    'footer_bg' => '#f0f4f8',
-                    'button_primary' => '#c9a84c',
-                    'button_secondary' => '#1a3c5e',
-                    'border' => '#e5e7eb',
-                    'card_bg' => '#ffffff',
+                    'bg_primary'     => '#0A1628',
+                    'bg_secondary'   => '#132743',
+                    'bg_card'        => '#0F1F38',
+                    'bg_section_alt' => '#0C1A2E',
+                    'text_primary'   => '#ECF0F5',
+                    'text_secondary' => '#9BB0CC',
+                    'text_muted'     => '#5A7A9A',
+                    'accent'         => '#4A90D9',
+                    'accent_hover'   => '#6AADF0',
+                    'accent_text'    => '#FFFFFF',
+                    'border'         => '#1E3A5C',
+                    'navbar_bg'      => '#0A1628',
+                    'navbar_text'    => '#ECF0F5',
+                    'button_bg'      => '#4A90D9',
+                    'button_text'    => '#FFFFFF',
+                    'button_hover'   => '#6AADF0',
+                    'card_bg'        => '#0F1F38',
+                    'card_border'    => '#1E3A5C',
+                    'footer_bg'      => '#060E1A',
+                    'footer_text'    => '#9BB0CC',
                 ],
-                'typography' => [
-                    'font_ar' => 'Tajawal, Cairo, sans-serif',
-                    'font_en' => 'Inter, system-ui, sans-serif',
+            ],
+            [
+                'name' => 'Modern Green',
+                'name_ar' => 'الأخضر الحديث',
+                'slug' => 'modern-green',
+                'is_active' => false,
+                'colors' => [
+                    'bg_primary'     => '#0F1F14',
+                    'bg_secondary'   => '#1A2E20',
+                    'bg_card'        => '#142618',
+                    'bg_section_alt' => '#0F1F14',
+                    'text_primary'   => '#E8F0E8',
+                    'text_secondary' => '#A0B8A0',
+                    'text_muted'     => '#5A7A5A',
+                    'accent'         => '#4CAF50',
+                    'accent_hover'   => '#6BCF6F',
+                    'accent_text'    => '#FFFFFF',
+                    'border'         => '#1E3A24',
+                    'navbar_bg'      => '#0F1F14',
+                    'navbar_text'    => '#E8F0E8',
+                    'button_bg'      => '#4CAF50',
+                    'button_text'    => '#FFFFFF',
+                    'button_hover'   => '#6BCF6F',
+                    'card_bg'        => '#142618',
+                    'card_border'    => '#1E3A24',
+                    'footer_bg'      => '#080F0A',
+                    'footer_text'    => '#A0B8A0',
                 ],
-                'layout' => [
-                    'border_radius' => 'md',
-                ],
-            ]);
+            ],
+        ];
+
+        foreach ($themes as $t) {
+            Theme::create($t);
         }
     }
 }

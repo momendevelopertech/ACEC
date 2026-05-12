@@ -14,6 +14,7 @@ export function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [moreOpen, setMoreOpen] = useState(false);
     const isRTL = locale === "ar";
 
     useEffect(() => {
@@ -64,9 +65,7 @@ export function Navbar() {
                 zIndex: 1000,
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                 padding: scrolled ? "0.75rem 1rem" : "1rem 1rem",
-                background: scrolled
-                    ? "var(--color-header-bg)"
-                    : "transparent",
+                background: "var(--color-header-bg)",
                 backdropFilter: scrolled ? "blur(24px)" : "none",
                 borderBottom: scrolled
                     ? "1px solid var(--color-border-gold)"
@@ -97,6 +96,7 @@ export function Navbar() {
                         alignItems: "center",
                         gap: "0.5rem",
                         flexWrap: "wrap",
+                        position: "relative",
                     }}
                     className="hidden-mobile"
                 >
@@ -119,6 +119,61 @@ export function Navbar() {
                             {link.label}
                         </Link>
                     ))}
+                    {/* More dropdown for secondary links */}
+                    <div style={{ position: "relative" }} className="more-dropdown hidden-mobile">
+                        <button
+                            onClick={() => setMoreOpen(!moreOpen)}
+                            style={{
+                                background: "var(--color-gold-dim)",
+                                border: "1px solid var(--color-border-gold)",
+                                borderRadius: "9999px",
+                                color: "var(--color-text)",
+                                fontSize: "0.95rem",
+                                fontWeight: 600,
+                                padding: "0.5rem 1rem",
+                                cursor: "pointer",
+                                transition: "all 0.2s",
+                            }}
+                            aria-haspopup="true"
+                            aria-expanded={moreOpen}
+                        >
+                            {t("more")}
+                        </button>
+                        {moreOpen && (
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        top: "100%",
+                                        [isRTL ? "right" : "left"]: 0,
+                                    background: "var(--color-bg)",
+                                    border: "1px solid var(--color-border)",
+                                    borderRadius: "0.5rem",
+                                    padding: "0.5rem",
+                                    marginTop: "0.25rem",
+                                    zIndex: 1000,
+                                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                                }}
+                            >
+                                {secondaryNavLinks.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        style={{
+                                            display: "block",
+                                            color: "var(--color-text)",
+                                            textDecoration: "none",
+                                            padding: "0.25rem 0.5rem",
+                                            fontSize: "0.9rem",
+                                        }}
+                                        className="nav-link"
+                                        onClick={() => setMoreOpen(false)}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </nav>
 
                 {/* Right side actions */}

@@ -12,6 +12,15 @@ set "C_OK=[SUCCESS]"
 set "C_WARN=[WARN]"
 set "C_ERR=[ERROR]"
 
+:: -------------------------------------------------
+::  VERBOSE mode — set VERBOSE=1 to print expanded
+::  launch commands before execution
+:: -------------------------------------------------
+if defined VERBOSE (
+    echo %C_INFO% [VERBOSE] mode enabled — expanded launch commands will be shown
+    echo.
+)
+
 :: ---------- path setup ----------
 set "SCRIPT_DIR=%~dp0"
 if "!SCRIPT_DIR:~-1!"=="\" set "SCRIPT_DIR=!SCRIPT_DIR:~0,-1!"
@@ -70,7 +79,10 @@ if not defined PHP_EXE (
     exit /b 1
 )
 echo %C_INFO% PHP      : !PHP_EXE!
-for /f "tokens=2 delims= " %%v in ('"!PHP_EXE!" -v 2^>nul ^| findstr /R "^PHP"') do echo %C_INFO% PHP version: %%v
+"%PHP_EXE%" -v 2>nul | findstr /R "^PHP" > %TEMP%\acec_pv.tmp
+set /p _pv=<%TEMP%\acec_pv.tmp
+if defined _pv echo %C_INFO% PHP version: !_pv!
+del %TEMP%\acec_pv.tmp 2>nul
 
 :: -------------------------------------------------
 ::  Detect Composer
@@ -114,7 +126,10 @@ if not defined NODE_EXE (
     exit /b 1
 )
 echo %C_INFO% Node.js  : !NODE_EXE!
-for /f "tokens=1 delims=v" %%v in ('"!NODE_EXE!" -v 2^>nul') do echo %C_INFO% Node version: %%v
+"%NODE_EXE%" -v > %TEMP%\acec_nv.tmp 2>nul
+set /p _nv=<%TEMP%\acec_nv.tmp
+if defined _nv echo %C_INFO% Node version: !_nv!
+del %TEMP%\acec_nv.tmp 2>nul
 
 :: Detect npm — co-located with node.exe or in separate bin\npm
 if exist "!NODE_DIR!\npm.cmd" (
@@ -145,7 +160,7 @@ echo.
 if not exist "!ARTISAN!" (
     echo %C_ERR% Backend artisan not found at:
     echo %C_ERR%   !ARTISAN!
-    echo %C_ERR% Run this script from the project root (next to backend/).
+    echo %C_ERR% Run this script from the project root -- next to backend/.
     pause
     exit /b 1
 )
@@ -301,26 +316,51 @@ set "BACKEND_WIN=ACEC-Backend-58A2"
 set "FRONTEND_WIN=ACEC-Frontend-7C4B"
 
 :: ------------------------------------------------------------------
-::  Nested-quote rule for cmd /s /c:
-::    /s strips the outermost " pair.
-::    Inside the string, "" becomes a literal ".
-::    This is the ONLY reliable way to pass paths with spaces through
-::    a cmd /c argument.  Backslash escaping (\") is Unix-only.
+::  Multi-line cmd /s /k with ^ continuation:
+::    cmd /s /k keeps the window open after the command completes
+::      so errors are visible.
+::    /s strips the outermost " pair; inside the string, "" becomes ".
+::    ^ at end of line escapes the newline — the batch parser joins
+::      the lines into one logical line.
+::    %%PATH%% is the batch-file escape for a literal %PATH%, so the
+::      child CMD expands its own %PATH% at runtime, not the parent's.
+::    call ""npm.cmd"" is required because npm.cmd is a batch file
+::      and must be invoked with call from another batch context.
 :: ------------------------------------------------------------------
 
-:: Start Laravel backend
+:: ---- start backend ----
 echo %C_INFO% Starting Laravel backend...
 echo %C_INFO%   http://127.0.0.1:8000
 
-start "!BACKEND_WIN!" cmd /s /c "set PATH=!PHP_DIR!;!PATH! && cd /d ""!BACKEND_DIR!"" && title !BACKEND_WIN! && ""!PHP_EXE!"" artisan serve --host=127.0.0.1 --port=8000"
+if defined VERBOSE (
+    echo %C_INFO% [VERBOSE] Backend launch command:
+    echo cd /d "!BACKEND_DIR!" ^&^& set PATH=!PHP_DIR!;%%%%PATH%%%% ^&^& title !BACKEND_WIN! ^&^& "!PHP_EXE!" artisan serve --host=127.0.0.1 --port=8000
+    echo.
+)
+
+start "!BACKEND_WIN!" cmd /s /k ^
+"cd /d ""!BACKEND_DIR!"" && ^
+set PATH=!PHP_DIR!;%%PATH%% && ^
+title !BACKEND_WIN! && ^
+""!PHP_EXE!"" artisan serve --host=127.0.0.1 --port=8000"
 
 timeout /t 3 /nobreak >nul
 
-:: Start Next.js frontend
+:: ---- start frontend ----
 echo %C_INFO% Starting Next.js frontend...
 echo %C_INFO%   http://localhost:3000
 
-start "!FRONTEND_WIN!" cmd /s /c "set PATH=!NODE_DIR!;!PATH! && cd /d ""!SCRIPT_DIR!"" && title !FRONTEND_WIN! && ""!NPM_CMD!"" run dev"
+if defined VERBOSE (
+    echo %C_INFO% [VERBOSE] Frontend launch command:
+    echo cd /d "!SCRIPT_DIR!" ^&^& set PATH=!NODE_DIR!;%%%%PATH%%%% ^&^& title !FRONTEND_WIN! ^&^& call "!NPM_CMD!" run dev
+    echo.
+)
+
+start "!FRONTEND_WIN!" cmd /s /k ^
+"cd /d ""!SCRIPT_DIR!"" && ^
+set PATH=!NODE_DIR!;%%PATH%% && ^
+title !FRONTEND_WIN! && ^
+call ""!NPM_CMD!"" run dev"
 
 timeout /t 5 /nobreak >nul
 

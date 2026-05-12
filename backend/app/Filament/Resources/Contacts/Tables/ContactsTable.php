@@ -17,15 +17,16 @@ class ContactsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('email')->searchable(),
-                TextColumn::make('subject')->limit(30),
-                BadgeColumn::make('service_type')->color('gray'),
-                TextColumn::make('lang')->badge()->color(fn ($state) => $state === 'ar' ? 'warning' : 'info'),
-                IconColumn::make('is_read')->boolean()->label('Read'),
-                IconColumn::make('is_replied')->boolean()->label('Replied'),
-                TextColumn::make('created_at')->dateTime()->sortable(),
+                TextColumn::make('name')->label(__('admin.col_name'))->searchable()->sortable(),
+                TextColumn::make('email')->label(__('admin.col_email'))->searchable(),
+                TextColumn::make('subject')->label(__('admin.col_subject'))->limit(30),
+                BadgeColumn::make('service_type')->label(__('admin.col_service'))->color('gray'),
+                TextColumn::make('lang')->label(__('admin.col_lang'))->badge()->color(fn ($state) => $state === 'ar' ? 'warning' : 'info'),
+                IconColumn::make('is_read')->label(__('admin.col_read'))->boolean(),
+                IconColumn::make('is_replied')->label(__('admin.col_replied'))->boolean(),
+                TextColumn::make('created_at')->label(__('admin.col_received'))->dateTime()->sortable(),
             ])
+            ->stackedOnMobile()
             ->defaultSort('created_at', 'desc')
             ->filters([
                 TernaryFilter::make('is_read'),

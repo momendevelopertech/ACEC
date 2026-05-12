@@ -144,7 +144,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                     >
                       {member.image ? (
                         <img
-                          src={member.image}
+                          src={`${API_BASE}/storage/${member.image}`}
                           alt={member.name}
                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />

@@ -2,27 +2,30 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AcecDatabaseSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         // 1. Admin User
-        DB::table('users')->insert([
-            'name' => 'Admin User',
-            'email' => 'admin@ac-ec.com.sa',
-            'password' => Hash::make('ACEC@2024Admin'),
-            'role' => 'admin',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        \App\Models\User::updateOrCreate(
+            ['email' => 'admin@ac-ec.com.sa'],
+            [
+                'name' => 'Admin ACEC',
+                'password' => bcrypt('password123'),
+                'role' => 'admin',
+                'email_verified_at' => now(),
+                'avatar' => $this->generatePlaceholderImage('models/users/admin-avatar.jpg', 'admin-avatar', 200, 200),
+            ]
+        );
 
         // 2. Settings
         $settings = [
@@ -38,75 +41,135 @@ class AcecDatabaseSeeder extends Seeder
         ];
         
         foreach($settings as $setting) {
-            DB::table('settings')->insert(array_merge($setting, ['created_at' => now(), 'updated_at' => now()]));
+            DB::table('settings')->updateOrInsert(
+                ['key' => $setting['key']],
+                array_merge($setting, ['updated_at' => now()])
+            );
         }
 
         // 3. Themes
-        DB::table('themes')->insert([
-            [
-                'name' => 'Classic Blue',
-                'name_ar' => 'الأزرق الكلاسيكي',
-                'slug' => 'classic-blue',
-                'is_active' => true,
-                'colors' => json_encode(['primary' => '#1a3c5e', 'secondary' => '#c9a84c', 'background' => '#ffffff', 'text' => '#1a1a2e', 'accent' => '#f0f4f8']),
-                'typography' => json_encode(['font_ar' => 'Cairo', 'font_en' => 'Inter']),
-                'layout' => json_encode(['border_radius' => 'md']),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        $themes = [
             [
                 'name' => 'Dark Professional',
                 'name_ar' => 'الاحترافي الداكن',
                 'slug' => 'dark-professional',
+                'is_active' => true,
+                'colors' => json_encode([
+                    'bg_primary'     => '#0D1B2A',
+                    'bg_secondary'   => '#1A2B3C',
+                    'bg_card'        => '#162234',
+                    'bg_section_alt' => '#111E2C',
+                    'text_primary'   => '#F5F0E8',
+                    'text_dark'      => '#0D1B2A',
+                    'text_secondary' => '#B0A090',
+                    'text_muted'     => '#6B7A8D',
+                    'accent'         => '#C9A84C',
+                    'accent_hover'   => '#E0BC6A',
+                    'accent_text'    => '#0D1B2A',
+                    'border'         => '#2A3D52',
+                    'navbar_bg'      => '#0D1B2A',
+                    'navbar_text'    => '#F5F0E8',
+                    'button_bg'      => '#C9A84C',
+                    'button_text'    => '#0D1B2A',
+                    'button_hover'   => '#E0BC6A',
+                    'card_bg'        => '#162234',
+                    'card_border'    => '#2A3D52',
+                    'footer_bg'      => '#080F18',
+                    'footer_text'    => '#B0A090',
+                ]),
+                'typography' => json_encode(['font_ar' => 'Tajawal, Cairo, sans-serif', 'font_en' => 'Inter, system-ui, sans-serif']),
+                'layout' => json_encode(['border_radius' => 'md']),
+            ],
+            [
+                'name' => 'Classic Blue',
+                'name_ar' => 'الأزرق الكلاسيكي',
+                'slug' => 'classic-blue',
                 'is_active' => false,
-                'colors' => json_encode(['primary' => '#1a1a2e', 'secondary' => '#c9a84c', 'background' => '#121212', 'text' => '#f0f4f8', 'accent' => '#1a3c5e']),
-                'typography' => json_encode(['font_ar' => 'Cairo', 'font_en' => 'Inter']),
-                'layout' => json_encode(['border_radius' => 'sm']),
-                'created_at' => now(),
-                'updated_at' => now(),
+                'colors' => json_encode([
+                    'bg_primary'     => '#0A1628',
+                    'bg_secondary'   => '#132743',
+                    'bg_card'        => '#0F1F38',
+                    'bg_section_alt' => '#0C1A2E',
+                    'text_primary'   => '#ECF0F5',
+                    'text_dark'      => '#0A1628',
+                    'text_secondary' => '#9BB0CC',
+                    'text_muted'     => '#5A7A9A',
+                    'accent'         => '#4A90D9',
+                    'accent_hover'   => '#6AADF0',
+                    'accent_text'    => '#FFFFFF',
+                    'border'         => '#1E3A5C',
+                    'navbar_bg'      => '#0A1628',
+                    'navbar_text'    => '#ECF0F5',
+                    'button_bg'      => '#4A90D9',
+                    'button_text'    => '#FFFFFF',
+                    'button_hover'   => '#6AADF0',
+                    'card_bg'        => '#0F1F38',
+                    'card_border'    => '#1E3A5C',
+                    'footer_bg'      => '#060E1A',
+                    'footer_text'    => '#9BB0CC',
+                ]),
+                'typography' => json_encode(['font_ar' => 'Cairo, sans-serif', 'font_en' => 'Inter, system-ui, sans-serif']),
+                'layout' => json_encode(['border_radius' => 'md']),
             ],
             [
                 'name' => 'Modern Green',
                 'name_ar' => 'الأخضر الحديث',
                 'slug' => 'modern-green',
                 'is_active' => false,
-                'colors' => json_encode(['primary' => '#2e7d32', 'secondary' => '#c9a84c', 'background' => '#f9fbf9', 'text' => '#1b2a1c', 'accent' => '#e8f5e9']),
-                'typography' => json_encode(['font_ar' => 'Tajawal', 'font_en' => 'Poppins']),
+                'colors' => json_encode([
+                    'bg_primary'     => '#0F1F14',
+                    'bg_secondary'   => '#1A2E20',
+                    'bg_card'        => '#142618',
+                    'bg_section_alt' => '#0F1F14',
+                    'text_primary'   => '#E8F0E8',
+                    'text_dark'      => '#0F1F14',
+                    'text_secondary' => '#A0B8A0',
+                    'text_muted'     => '#5A7A5A',
+                    'accent'         => '#4CAF50',
+                    'accent_hover'   => '#6BCF6F',
+                    'accent_text'    => '#FFFFFF',
+                    'border'         => '#1E3A24',
+                    'navbar_bg'      => '#0F1F14',
+                    'navbar_text'    => '#E8F0E8',
+                    'button_bg'      => '#4CAF50',
+                    'button_text'    => '#FFFFFF',
+                    'button_hover'   => '#6BCF6F',
+                    'card_bg'        => '#142618',
+                    'card_border'    => '#1E3A24',
+                    'footer_bg'      => '#080F0A',
+                    'footer_text'    => '#A0B8A0',
+                ]),
+                'typography' => json_encode(['font_ar' => 'Tajawal, sans-serif', 'font_en' => 'Poppins, system-ui, sans-serif']),
                 'layout' => json_encode(['border_radius' => 'lg']),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+            ],
+        ];
+
+        foreach ($themes as $theme) {
+            DB::table('themes')->updateOrInsert(
+                ['slug' => $theme['slug']],
+                array_merge($theme, ['updated_at' => now()])
+            );
+        }
 
         // 4. Hero Section
-        DB::table('hero_sections')->insert([
-            [
-                'lang' => 'en',
-                'title' => 'Building the Future with Exceptional Engineering',
-                'subtitle' => 'Excellence in Engineering & Safety',
-                'description' => 'Delivering innovative and sustainable engineering solutions with the highest standards of quality and safety.',
-                'stat1_number' => '50+', 'stat1_label' => 'Projects',
-                'stat2_number' => '15+', 'stat2_label' => 'Years',
-                'stat3_number' => '30+', 'stat3_label' => 'Clients',
-                'stat4_number' => '100%', 'stat4_label' => 'Commitment',
-                'cta1_text' => 'Book Consultation', 'cta1_link' => '/contact',
-                'cta2_text' => 'Our Projects', 'cta2_link' => '/projects',
-                'created_at' => now(), 'updated_at' => now(),
-            ],
-            [
-                'lang' => 'ar',
-                'title' => 'نبني المستقبل بهندسة استثنائية',
-                'subtitle' => 'التميز في الهندسة والسلامة',
-                'description' => 'نقدم حلولاً هندسية مبتكرة ومستدامة بأعلى معايير الجودة والسلامة.',
-                'stat1_number' => '+50', 'stat1_label' => 'مشروع',
-                'stat2_number' => '+15', 'stat2_label' => 'سنة خبرة',
-                'stat3_number' => '+30', 'stat3_label' => 'عميل',
-                'stat4_number' => '%100', 'stat4_label' => 'التزام',
-                'cta1_text' => 'احجز استشارة', 'cta1_link' => '/contact',
-                'cta2_text' => 'مشاريعنا', 'cta2_link' => '/projects',
-                'created_at' => now(), 'updated_at' => now(),
-            ]
-        ]);
+        foreach (['en', 'ar'] as $lang) {
+            DB::table('hero_sections')->updateOrInsert(
+                ['lang' => $lang],
+                [
+                    'title' => $lang === 'en' ? 'Building the Future with Exceptional Engineering' : 'نبني المستقبل بهندسة استثنائية',
+                    'subtitle' => $lang === 'en' ? 'Excellence in Engineering & Safety' : 'التميز في الهندسة والسلامة',
+                    'description' => $lang === 'en' ? 'Delivering innovative and sustainable engineering solutions with the highest standards of quality and safety.' : 'نقدم حلولاً هندسية مبتكرة ومستدامة بأعلى معايير الجودة والسلامة.',
+                    'stat1_number' => $lang === 'en' ? '50+' : '+50', 'stat1_label' => $lang === 'en' ? 'Projects' : 'مشروع',
+                    'stat2_number' => $lang === 'en' ? '15+' : '+15', 'stat2_label' => $lang === 'en' ? 'Years' : 'سنة خبرة',
+                    'stat3_number' => $lang === 'en' ? '30+' : '+30', 'stat3_label' => $lang === 'en' ? 'Clients' : 'عميل',
+                    'stat4_number' => $lang === 'en' ? '100%' : '%100', 'stat4_label' => $lang === 'en' ? 'Commitment' : 'التزام',
+                    'image' => $this->generatePlaceholderImage("models/hero/{$lang}.jpg", "hero-{$lang}", 1920, 800),
+                    'cta1_text' => $lang === 'en' ? 'Book Consultation' : 'احجز استشارة', 'cta1_link' => '/contact',
+                    'cta2_text' => $lang === 'en' ? 'Our Projects' : 'مشاريعنا', 'cta2_link' => '/projects',
+                    'updated_at' => now(),
+                ]
+            );
+        }
 
         // 5. Services
         $services = [
@@ -119,29 +182,32 @@ class AcecDatabaseSeeder extends Seeder
         ];
         
         foreach($services as $i => $s) {
-            DB::table('services')->insert([
-                'slug' => $s['slug'],
-                'icon' => $s['icon'],
-                'title_ar' => $s['title_ar'],
-                'title_en' => $s['title_en'],
-                'description_ar' => $s['desc_ar'],
-                'description_en' => $s['desc_en'],
-                'order' => $i,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            $slug = $s['slug'];
+            $imagePath = $this->generatePlaceholderImage("models/services/{$slug}.jpg", "service-{$slug}");
+            DB::table('services')->updateOrInsert(
+                ['slug' => $s['slug']],
+                [
+                    'icon' => $s['icon'],
+                    'title_ar' => $s['title_ar'],
+                    'title_en' => $s['title_en'],
+                    'description_ar' => $s['desc_ar'],
+                    'description_en' => $s['desc_en'],
+                    'image' => $imagePath,
+                    'order' => $i,
+                    'updated_at' => now(),
+                ]
+            );
         }
 
         // 6. Clients
         $clients = ['Dr. Sulaiman Al Habib', 'McDonald\'s', 'PepsiCo', 'STC', 'Leejam', 'Deemah', 'SRMG', 'Amlak', 'Flyadeal', 'Floward', 'Gulf Aluminum', 'SME Marketplace', 'Hataba'];
         foreach($clients as $i => $c) {
-            DB::table('clients')->insert([
-                'name_ar' => $c,
-                'name_en' => $c,
-                'order' => $i,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            $slug = \Illuminate\Support\Str::slug($c);
+            $logoPath = $this->generatePlaceholderImage("models/clients/{$slug}.jpg", "client-{$slug}");
+            DB::table('clients')->updateOrInsert(
+                ['name_en' => $c],
+                ['name_ar' => $c, 'logo' => $logoPath, 'order' => $i, 'updated_at' => now()]
+            );
         }
         
         // 7. Sections Config
@@ -157,15 +223,10 @@ class AcecDatabaseSeeder extends Seeder
         ];
         
         foreach($sections as $i => $s) {
-            DB::table('sections_config')->insert([
-                'section_key' => $s['key'],
-                'name_en' => $s['name_en'],
-                'name_ar' => $s['name_ar'],
-                'order' => $i,
-                'is_visible' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            DB::table('sections_config')->updateOrInsert(
+                ['section_key' => $s['key']],
+                ['name_en' => $s['name_en'], 'name_ar' => $s['name_ar'], 'order' => $i, 'is_visible' => true, 'updated_at' => now()]
+            );
         }
     }
 }

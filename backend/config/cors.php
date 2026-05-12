@@ -6,6 +6,7 @@ return [
     'allowed_origins' => [
         'http://localhost:3000',
         'http://localhost:3001',
+        'http://localhost:8000',
         'https://ac-ec.com.sa',
         'https://test.ac-ec.com.sa',
         'https://www.ac-ec.com.sa',

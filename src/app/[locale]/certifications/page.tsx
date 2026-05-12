@@ -110,7 +110,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                       }}
                     >
                       {cert.image ? (
-                        <img src={cert.image} alt={cert.name} style={{ width: "40px", height: "40px" }} />
+                        <img src={`${API_BASE}/storage/${cert.image}`} alt={cert.name} style={{ width: "40px", height: "40px" }} />
                       ) : (
                         ""
                       )}

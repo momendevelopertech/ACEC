@@ -15,26 +15,42 @@ class TeamMemberForm
         return $schema
             ->components([
                 TextInput::make('name_ar')
+                    ->label(__('admin.col_name_ar'))
                     ->required(),
                 TextInput::make('name_en')
+                    ->label(__('admin.col_name_en'))
                     ->required(),
-                TextInput::make('position_ar'),
-                TextInput::make('position_en'),
+                TextInput::make('position_ar')
+                    ->label(__('admin.col_position_ar')),
+                TextInput::make('position_en')
+                    ->label(__('admin.col_position_en')),
                 Textarea::make('bio_ar')
+                    ->label(__('admin.col_bio_ar'))
                     ->columnSpanFull(),
                 Textarea::make('bio_en')
+                    ->label(__('admin.col_bio_en'))
                     ->columnSpanFull(),
                 FileUpload::make('image')
-                    ->image(),
+                    ->label(__('admin.col_image'))
+                    ->image()
+                    ->disk('public')
+                    ->directory('models/team-members')
+                    ->maxSize(2048)
+                    ->imageEditor()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
                 TextInput::make('email')
-                    ->label('Email address')
-                    ->email(),
-                TextInput::make('linkedin'),
+                    ->label(__('admin.col_email'))
+                    ->email()
+                    ->extraAttributes(['dir' => 'ltr']),
+                TextInput::make('linkedin')
+                    ->label(__('admin.col_linkedin')),
                 TextInput::make('order')
+                    ->label(__('admin.col_order'))
                     ->required()
                     ->numeric()
                     ->default(0),
                 Toggle::make('is_active')
+                    ->label(__('admin.col_is_active'))
                     ->required(),
             ]);
     }

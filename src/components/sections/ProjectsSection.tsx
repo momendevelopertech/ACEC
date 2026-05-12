@@ -7,319 +7,50 @@ import { motion, useInView } from "framer-motion";
 
 export interface Project {
   id: number;
-  title_ar: string;
-  title_en: string;
-  description_ar: string;
-  description_en: string;
-  image: string;
+  slug: string;
+  title: string;
+  description: string;
+  image: string | null;
   category: string;
+  year: number;
+  is_featured: boolean;
   location: string;
   client: string;
-  year: string;
-  area: string;
-  slug: string;
 }
 
-export function ProjectsSection() {
-  const t = useTranslations("projects");
-  const locale = useLocale();
-  const ref = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+const categoryKeys = [
+  { key: "all", label: { ar: "الكل", en: "All" } },
+  { key: "residential", label: { ar: "سكني", en: "Residential" } },
+  { key: "commercial", label: { ar: "تجاري", en: "Commercial" } },
+  { key: "industrial", label: { ar: "صناعي", en: "Industrial" } },
+  { key: "education", label: { ar: "تعليمي", en: "Education" } },
+  { key: "healthcare", label: { ar: "صحي", en: "Healthcare" } },
+  { key: "interior", label: { ar: "داخلي", en: "Interior" } },
+];
 
-  const isRTL = locale === "ar";
-
-  useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
-    fetch(`${API_BASE}/api/v1/projects/${locale}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.success && data.data) {
-          setProjects(data.data);
-        }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [locale]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (scrollRef.current?.offsetLeft || 0));
-    setScrollLeft(scrollRef.current?.scrollLeft || 0);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - (scrollRef.current.offsetLeft || 0);
-    const walk = (x - startX) * 1.5;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const scroll = (dir: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const amount = 400;
-    scrollRef.current.scrollLeft += dir === "left" ? -amount : amount;
-  };
-
-  return (
-    <section
-      ref={ref}
-      className="section-padding"
-      id="projects"
-            style={{
-                position: "relative",
-                background:
-                    "linear-gradient(135deg, rgba(var(--color-accent-rgb), 0.05) 0%, transparent 100%)",
-            }}
-    >
-      <div className="container-custom">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "3rem",
-            alignItems: "center",
-          }}
-          className="about-grid"
-        >
-          {/* Text side */}
-          <div style={{ order: isRTL ? 2 : 1 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="section-label"
-              style={{ marginBottom: "1rem" }}
-            >
-              {t("title")}
-            </motion.div>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(2rem, 3.5vw, 3rem)",
-                fontWeight: 700,
-                color: "var(--color-text)",
-                lineHeight: 1.2,
-                marginBottom: "1.5rem",
-              }}
-            >
-              {t("subtitle")}
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              style={{
-                fontSize: "1rem",
-                color: "var(--color-text-muted)",
-                lineHeight: 1.8,
-                marginBottom: "2.5rem",
-              }}
-            >
-              {t("description")}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              style={{ marginTop: "2rem" }}
-            >
-              <Link
-                href={`/${locale}/projects`}
-                className="magnetic-btn magnetic-btn-primary"
-              >
-                {t("viewAll")}
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Image side */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{
-              order: isRTL ? 1 : 2,
-              position: "relative",
-              height: "500px",
-              borderRadius: "var(--radius-xl)",
-              overflow: "hidden",
-            }}
-            className="about-image"
-          >
-            <img
-              src="/images/project-architecture-1.svg"
-              alt="ACEC projects illustration"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-                <div
-                    style={{
-                        position: "absolute",
-                        inset: 0,
-                        background:
-                            "linear-gradient(135deg, rgba(var(--color-bg-rgb),0.3) 0%, transparent 60%)",
-                    }}
-                />
-
-                {/* Floating badge */}
-                <div
-                    style={{
-                        position: "absolute",
-                        bottom: "2rem",
-                        left: isRTL ? "auto" : "2rem",
-                        right: isRTL ? "2rem" : "auto",
-                        background: "rgba(var(--color-bg-rgb), 0.85)",
-                        backdropFilter: "blur(20px)",
-                        border: "1px solid var(--color-border-gold)",
-                        borderRadius: "var(--radius-md)",
-                        padding: "1.25rem 1.5rem",
-                    }}
-                >
-              <div
-                className="stat-font"
-                style={{
-                  fontSize: "2.5rem",
-                  color: "var(--color-gold)",
-                  lineHeight: 1,
-                }}
-              >
-                +50
-              </div>
-              <div
-                style={{
-                  fontSize: "0.75rem",
-                  color: "var(--color-muted)",
-                  marginTop: "0.25rem",
-                }}
-              >
-                {locale === "ar" ? "مشروع" : "Projects"}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Drag hint */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          style={{
-            fontSize: "0.75rem",
-            color: "var(--color-muted)",
-            marginTop: "0.5rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
-          <span>←→</span> {t("drag")}
-        </motion.p>
-      </div>
-
-      {/* Horizontal scroll container */}
-      {loading ? (
-        <div style={{ textAlign: "center", padding: "3rem" }}>
-          <p style={{ color: "var(--color-muted)" }}>
-            {isRTL ? "جاري التحميل..." : "Loading..."}
-          </p>
-        </div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          ref={scrollRef}
-          className="hide-scrollbar"
-          style={{
-            display: "flex",
-            gap: "1.5rem",
-            overflowX: "auto",
-            padding: "1rem 1.5rem 2rem",
-            cursor: isDragging ? "grabbing" : "grab",
-            scrollBehavior: "smooth",
-            direction: isRTL ? "rtl" : "ltr",
-          }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={() => setIsDragging(false)}
-          onMouseLeave={() => setIsDragging(false)}
-        >
-          {projects.map((project, i) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={i}
-              locale={locale}
-            />
-          ))}
-        </motion.div>
-      )}
-
-      <style>{`
-        @media (max-width: 768px) {
-          .about-grid {
-            grid-template-columns: 1fr !important;
-            gap: 2.5rem !important;
-          }
-          .about-image {
-            height: 300px !important;
-            order: 1 !important;
-          }
-          .about-grid > div:first-child {
-            order: 2 !important;
-          }
-        `}</style>
-    </section>
-  );
-}
-
-function ProjectCard({
-  project,
-  index,
-  locale,
-}: {
-  project: Project;
-  index: number;
-  locale: string;
-}) {
+function ProjectCard({ project, locale }: { project: Project; locale: string }) {
   const isRTL = locale === "ar";
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
-   return (
+  return (
     <motion.div
-      initial={{ opacity:0, y:20 }}
-      animate={{ opacity:1, y:0 }}
-      transition={{ duration:0.5, delay: index * 0.1 }}
-      whileHover={{ y:-8 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -8 }}
       style={{
-        minWidth: "320px",
-        width: "320px",
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
         background: "var(--color-card-bg)",
         border: "1px solid var(--color-border)",
         transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-        flexShrink: 0,
         cursor: "pointer",
       }}
     >
-      {/* Image */}
       <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
         <img
           src={project.image ? `${API_BASE}/storage/${project.image}` : "/images/project-architecture-1.svg"}
-          alt={isRTL ? project.title_ar : project.title_en}
+          alt={project.title}
           style={{
             width: "100%",
             height: "100%",
@@ -327,24 +58,13 @@ function ProjectCard({
             transition: "transform 0.5s ease",
           }}
         />
-                <div
-                    style={{
-                        position: "absolute",
-                        inset:0,
-                        background:
-                            "linear-gradient(180deg, transparent 50%, rgba(var(--color-bg-rgb),0.9) 100%)",
-                    }}
-                />
-                <div
-                    style={{
-                        position: "absolute",
-                        inset: 0,
-                        background:
-                            "linear-gradient(180deg, transparent 50%, rgba(var(--color-bg-rgb),0.9) 100%)",
-                    }}
-                />
-
-        {/* Category badge */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(180deg, transparent 50%, rgba(var(--color-bg-rgb),0.9) 100%)",
+          }}
+        />
         {project.category && (
           <div
             style={{
@@ -368,24 +88,24 @@ function ProjectCard({
         )}
       </div>
 
-      {/* Info */}
       <div style={{ padding: "1.5rem" }}>
         <h3
           style={{
             fontFamily: "var(--font-heading)",
             fontSize: "1.125rem",
             fontWeight: 600,
-            color: "var(--color-text)",
+            color: "var(--color-text-on-dark)",
             lineHeight: 1.3,
+            minHeight: "2.5rem",
           }}
         >
-          {isRTL ? project.title_ar : project.title_en}
+          {project.title || (isRTL ? "مشروع هندسي" : "Engineering Project")}
         </h3>
 
         {project.location && (
           <p style={{
             fontSize: "0.85rem",
-            color: "var(--color-text-muted)",
+            color: "var(--color-text-muted-on-dark)",
             marginTop: "0.5rem",
             display: "flex",
             alignItems: "center",
@@ -398,7 +118,7 @@ function ProjectCard({
         {project.year && (
           <p style={{
             fontSize: "0.85rem",
-            color: "var(--color-text-muted)",
+            color: "var(--color-text-muted-on-dark)",
             display: "flex",
             alignItems: "center",
             gap: "0.3rem"
@@ -434,5 +154,180 @@ function ProjectCard({
         </Link>
       </div>
     </motion.div>
+  );
+}
+
+export function ProjectsSection() {
+  const t = useTranslations("projects");
+  const locale = useLocale();
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  const isRTL = locale === "ar";
+
+  useEffect(() => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+    fetch(`${API_BASE}/api/v1/projects/${locale}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data) {
+          setProjects(data.data);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [locale]);
+
+  const filteredProjects = activeCategory === "all"
+    ? projects
+    : projects.filter(p => p.category === activeCategory);
+
+  const getCategoryLabel = (key: string) => {
+    const cat = categoryKeys.find(c => c.key === key);
+    return cat ? (isRTL ? cat.label.ar : cat.label.en) : key;
+  };
+
+  return (
+    <section
+      ref={ref}
+      className="section-padding"
+      id="projects"
+      style={{
+        position: "relative",
+        background: "linear-gradient(135deg, rgba(var(--color-accent-rgb), 0.05) 0%, transparent 100%)",
+      }}
+    >
+      <div className="container-custom">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
+        >
+          <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+            {t("title")}
+          </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            style={{
+              fontFamily: "var(--font-heading)",
+              fontSize: "clamp(2rem, 3.5vw, 3rem)",
+              fontWeight: 700,
+              color: "var(--color-text-on-dark)",
+              lineHeight: 1.2,
+              marginBottom: "1rem",
+            }}
+          >
+            {t("subtitle")}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{
+              fontSize: "1rem",
+              color: "var(--color-text-muted-on-dark)",
+              marginBottom: "2rem",
+              maxWidth: "600px",
+              margin: "0 auto 2rem",
+            }}
+          >
+            {t("description")}
+          </motion.p>
+          <Link
+            href={`/${locale}/projects`}
+            className="magnetic-btn magnetic-btn-primary"
+          >
+            {t("viewAll")} ({projects.length})
+          </Link>
+        </motion.div>
+
+        {/* Category Filter Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          style={{
+            display: "flex",
+            gap: "0.75rem",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            marginBottom: "2.5rem",
+          }}
+        >
+          {categoryKeys.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              style={{
+                padding: "0.4rem 1.1rem",
+                borderRadius: "9999px",
+                border: "1px solid",
+                borderColor: activeCategory === cat.key ? "var(--color-gold)" : "var(--color-border)",
+                background: activeCategory === cat.key ? "var(--color-gold)" : "transparent",
+                color: activeCategory === cat.key ? "var(--color-accent-text)" : "var(--color-text-muted-on-dark)",
+                cursor: "pointer",
+                fontSize: "0.85rem",
+                fontWeight: 500,
+                transition: "all 0.2s",
+                fontFamily: "inherit",
+              }}
+            >
+              {getCategoryLabel(cat.key)}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Projects Grid */}
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "3rem" }}>
+            <p style={{ color: "var(--color-text-muted-on-dark)" }}>
+              {isRTL ? "جاري التحميل..." : "Loading..."}
+            </p>
+          </div>
+        ) : filteredProjects.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "3rem" }}>
+            <p style={{ color: "var(--color-text-muted-on-dark)" }}>
+              {isRTL ? "لا توجد مشاريع في هذا التصنيف" : "No projects in this category"}
+            </p>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: "1.5rem",
+            }}
+            className="projects-grid"
+          >
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} locale={locale} />
+            ))}
+          </motion.div>
+        )}
+      </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .projects-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+      `}</style>
+    </section>
   );
 }

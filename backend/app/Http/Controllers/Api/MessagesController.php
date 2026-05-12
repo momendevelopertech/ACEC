@@ -14,7 +14,7 @@ class MessagesController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:100',
             'phone' => 'nullable|string|max:20',
-            'subject' => 'nullable|string|max:200',
+            'subject' => 'required|string|max:200',
             'message' => 'required|string|max:2000',
             'service_type' => 'nullable|string|max:100',
             'lang' => 'nullable|in:ar,en',
@@ -26,6 +26,8 @@ class MessagesController extends Controller
             }
         }
 
+        $lang = $validated['lang'] ?? 'ar';
+
         Message::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -33,9 +35,8 @@ class MessagesController extends Controller
             'subject' => $validated['subject'] ?? null,
             'message' => $validated['message'],
             'service_type' => $validated['service_type'] ?? null,
+            'lang' => $lang,
         ]);
-
-        $lang = $validated['lang'] ?? 'ar';
         return response()->json([
             'success' => true,
             'message' => $lang === 'ar'
@@ -53,6 +54,12 @@ class MessagesController extends Controller
             'job_title' => 'nullable|string|max:255',
             'message' => 'required|string|min:10',
         ]);
+
+        foreach ($validated as $key => $value) {
+            if (is_string($value)) {
+                $validated[$key] = strip_tags(trim($value));
+            }
+        }
 
         Message::create([
             'name' => $validated['name'],

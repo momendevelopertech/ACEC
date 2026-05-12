@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class BlogPostSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     public function run(): void
     {
         DB::table('blog_posts')->truncate();
@@ -54,7 +57,10 @@ class BlogPostSeeder extends Seeder
         ];
 
         foreach ($posts as $post) {
+            $slug = $post['slug'];
+            $imagePath = $this->generatePlaceholderImage("models/blog-posts/{$slug}.jpg", "blog-{$slug}");
             DB::table('blog_posts')->insert(array_merge($post, [
+                'image' => $imagePath,
                 'meta_title_ar' => $post['title_ar'] . ' | مدونة الميثاق العربي',
                 'meta_title_en' => $post['title_en'] . ' | ACEC Blog',
                 'created_at' => now(),

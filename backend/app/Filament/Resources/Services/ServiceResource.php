@@ -19,10 +19,22 @@ class ServiceResource extends Resource
     protected static ?string $model = Service::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
-    protected static ?string $navigationLabel = 'Services';
-    protected static ?string $modelLabel = 'Service';
-    protected static ?string $pluralModelLabel = 'Services';
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.services');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.services');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.services');
+    }
 
     public static function form(Schema $schema): Schema
     {

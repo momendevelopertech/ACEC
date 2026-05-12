@@ -19,10 +19,22 @@ class CertificationResource extends Resource
     protected static ?string $model = Certification::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
-    protected static ?string $navigationLabel = 'Certifications';
-    protected static ?string $modelLabel = 'Certification';
-    protected static ?string $pluralModelLabel = 'Certifications';
     protected static ?int $navigationSort = 7;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.certifications');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.certifications');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.certifications');
+    }
 
     public static function form(Schema $schema): Schema
     {

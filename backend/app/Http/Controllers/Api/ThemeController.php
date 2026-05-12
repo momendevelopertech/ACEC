@@ -4,10 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Theme;
+use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
     public function index()
+    {
+        return response()->json([
+            'success' => true,
+            'data' => Theme::all(),
+        ]);
+    }
+
+    public function active()
     {
         $theme = Theme::where('is_active', true)->first();
 
@@ -19,13 +28,62 @@ class ThemeController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'No theme configured',
-            ]);
+            ], 404);
         }
 
         return response()->json([
             'success' => true,
             'data' => $theme,
-            'css_variables' => $this->toCssVariables($theme),
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'name_ar' => 'nullable|string|max:255',
+            'slug' => 'required|string|max:255|unique:themes,slug',
+            'colors' => 'nullable|array',
+            'typography' => 'nullable|array',
+            'layout' => 'nullable|array',
+            'is_active' => 'boolean',
+        ]);
+
+        if (($data['is_active'] ?? false)) {
+            Theme::query()->update(['is_active' => false]);
+        }
+
+        $theme = Theme::create($data);
+
+        return response()->json([
+            'success' => true,
+            'data' => $theme,
+        ], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $theme = Theme::findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'name_ar' => 'nullable|string|max:255',
+            'slug' => 'sometimes|string|max:255|unique:themes,slug,' . $id,
+            'colors' => 'nullable|array',
+            'typography' => 'nullable|array',
+            'layout' => 'nullable|array',
+            'is_active' => 'boolean',
+        ]);
+
+        if (($data['is_active'] ?? false)) {
+            Theme::query()->update(['is_active' => false]);
+        }
+
+        $theme->update($data);
+
+        return response()->json([
+            'success' => true,
+            'data' => $theme,
         ]);
     }
 
@@ -41,28 +99,14 @@ class ThemeController extends Controller
         ]);
     }
 
-    private function toCssVariables(Theme $theme): array
+    public function destroy($id)
     {
-        $colors = $theme->colors ?? [];
-        $typography = $theme->typography ?? [];
-        $layout = $theme->layout ?? [];
+        $theme = Theme::findOrFail($id);
+        $theme->delete();
 
-        return [
-            '--color-primary' => $colors['primary'] ?? '#1a3c5e',
-            '--color-secondary' => $colors['secondary'] ?? '#c9a84c',
-            '--color-background' => $colors['background'] ?? '#ffffff',
-            '--color-surface' => $colors['surface'] ?? '#f0f4f8',
-            '--color-text' => $colors['text'] ?? '#1a1a2e',
-            '--color-text-muted' => $colors['text_muted'] ?? '#6b7280',
-            '--color-header-bg' => $colors['header_bg'] ?? '#1a3c5e',
-            '--color-footer-bg' => $colors['footer_bg'] ?? '#1a1a2e',
-            '--color-button-primary' => $colors['button_primary'] ?? '#c9a84c',
-            '--color-button-secondary' => $colors['button_secondary'] ?? '#1a3c5e',
-            '--color-border' => $colors['border'] ?? '#e5e7eb',
-            '--color-card-bg' => $colors['card_bg'] ?? '#ffffff',
-            '--font-ar' => $typography['font_ar'] ?? 'Cairo',
-            '--font-en' => $typography['font_en'] ?? 'Inter',
-            '--border-radius' => $layout['border_radius'] ?? 'md',
-        ];
+        return response()->json([
+            'success' => true,
+            'message' => 'Theme deleted',
+        ]);
     }
 }

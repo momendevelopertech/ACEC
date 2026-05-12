@@ -19,10 +19,22 @@ class ProjectResource extends Resource
     protected static ?string $model = Project::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;
-    protected static ?string $navigationLabel = 'Projects';
-    protected static ?string $modelLabel = 'Project';
-    protected static ?string $pluralModelLabel = 'Projects';
     protected static ?int $navigationSort = 3;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.projects');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.projects');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.projects');
+    }
 
     public static function form(Schema $schema): Schema
     {

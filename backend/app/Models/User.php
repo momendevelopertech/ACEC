@@ -11,6 +11,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
+    use \App\Traits\HasImageCleanup;
+
+    protected array $imageFields = ['avatar'];
 
     protected $fillable = [
         'name',

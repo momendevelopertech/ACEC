@@ -17,8 +17,16 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Public theme endpoints (outside v1 for simpler access)
+Route::get('/themes/active', [ThemeController::class, 'active']);
+Route::get('/themes', [ThemeController::class, 'index']);
+Route::post('/themes/{id}/activate', [ThemeController::class, 'activate']);
+Route::post('/themes', [ThemeController::class, 'store']);
+Route::put('/themes/{id}', [ThemeController::class, 'update']);
+Route::delete('/themes/{id}', [ThemeController::class, 'destroy']);
+
 Route::prefix('v1')->group(function () {
-    Route::get('/theme', [ThemeController::class, 'index']);
+    Route::get('/theme', [ThemeController::class, 'active']);
     Route::get('/content/{lang}', [ContentController::class, 'index']);
     Route::get('/hero/{lang}', [ContentController::class, 'hero']);
     Route::get('/services/{lang}', [ServicesController::class, 'index']);

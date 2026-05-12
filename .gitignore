@@ -77,3 +77,16 @@ _ide_helper.php
 /storage/logs/*
 /horizon
 /telescope
+
+# --- Runtime logs ---
+backend-stderr.txt
+backend-stdout.txt
+
+# --- Agent / AI config ---
+skills-lock.json
+
+# --- Dev / test scripts ---
+test-ph4.bat
+
+# --- Backend published vendor lang ---
+/backend/lang/vendor

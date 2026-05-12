@@ -15,6 +15,7 @@ class Contact extends Model
         'subject',
         'message',
         'service_type',
+        'lang',
         'is_read',
         'is_replied',
         'reply_text',

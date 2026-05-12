@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
+    use \App\Traits\HasImageCleanup;
+
+    protected array $imageFields = ['image'];
+
     protected $fillable = [
         'slug', 'icon', 'title_ar', 'title_en',
         'description_ar', 'description_en', 'content_ar', 'content_en',

@@ -68,6 +68,7 @@ function ServiceCard({
     inView: boolean;
 }) {
     const locale = useLocale();
+    const t = useTranslations("services");
 
     return (
         <motion.div
@@ -150,7 +151,7 @@ function ServiceCard({
                     }}
                     className="learn-more-link"
                 >
-                    {locale === "ar" ? "اقرأ المزيد" : "Learn More"}
+                    {t("learnMore")}
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path
                             d="M3 8H13M13 8L9 4M13 8L9 12"
@@ -168,18 +169,15 @@ function ServiceCard({
 
 export function ServicesSection() {
     const t = useTranslations("services");
+    const tNav = useTranslations("nav");
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
+    const locale = useLocale();
     const [services, setServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
-        // Get locale from html lang attribute or default to 'ar'
-        let locale = 'ar';
-        if (typeof window !== "undefined") {
-            locale = document.documentElement.lang || 'ar';
-        }
 
         fetch(`${API_BASE}/api/v1/services/${locale}`)
             .then(res => res.json())
@@ -232,7 +230,7 @@ export function ServicesSection() {
                 {loading ? (
                     <div style={{ textAlign: "center", padding: "3rem" }}>
                         <p style={{ color: "var(--color-text-muted)" }}>
-                            {typeof window !== "undefined" && document.documentElement.lang === "ar" ? "جاري التحميل..." : "Loading..."}
+                            {locale === "ar" ? "جاري التحميل..." : "Loading..."}
                         </p>
                     </div>
                 ) : (

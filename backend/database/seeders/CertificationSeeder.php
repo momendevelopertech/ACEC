@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class CertificationSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     public function run(): void
     {
         DB::table('certifications')->truncate();
@@ -45,7 +48,10 @@ class CertificationSeeder extends Seeder
         ];
 
         foreach ($certs as $cert) {
+            $slug = \Illuminate\Support\Str::slug($cert['name_en']);
+            $imagePath = $this->generatePlaceholderImage("models/certifications/{$slug}.jpg", "cert-{$slug}");
             DB::table('certifications')->insert(array_merge($cert, [
+                'image' => $imagePath,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]));

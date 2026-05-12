@@ -10,10 +10,16 @@ const defaultLocale = "ar";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // If the path already contains a locale segment, do nothing.
+  // If the path already contains a locale segment, refresh cookie.
   const firstSegment = pathname.split("/")[1];
   if (locales.includes(firstSegment)) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.cookies.set("NEXT_LOCALE", firstSegment, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    return response;
   }
 
   // Only handle the root path ("/"), otherwise let Next.js handle 404/not-found.
@@ -35,10 +41,16 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Redirect to the locale‑prefixed homepage.
+  // Redirect to the locale‑prefixed homepage and set cookie.
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}`;
-  return NextResponse.redirect(url);
+  const response = NextResponse.redirect(url);
+  response.cookies.set("NEXT_LOCALE", locale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
+  return response;
 }
 
 export const config = {

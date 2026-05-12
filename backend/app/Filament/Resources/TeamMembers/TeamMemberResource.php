@@ -19,10 +19,22 @@ class TeamMemberResource extends Resource
     protected static ?string $model = TeamMember::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
-    protected static ?string $navigationLabel = 'Team Members';
-    protected static ?string $modelLabel = 'Team Member';
-    protected static ?string $pluralModelLabel = 'Team Members';
     protected static ?int $navigationSort = 5;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.team_members');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.team_members');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.team_members');
+    }
 
     public static function form(Schema $schema): Schema
     {

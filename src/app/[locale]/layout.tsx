@@ -6,6 +6,7 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PageLoader } from "@/components/ui/PageLoader";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { LocaleProvider } from "@/components/layout/LocaleProvider";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <ThemeProvider>
+        <LocaleProvider />
         <PageLoader />
         <CustomCursor />
         <PageTransitionWrapper>{children}</PageTransitionWrapper>

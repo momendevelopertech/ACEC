@@ -19,11 +19,20 @@ class ContactResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
-    protected static ?string $navigationLabel = 'Messages';
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.messages');
+    }
 
-    protected static ?string $modelLabel = 'Message';
+    public static function getModelLabel(): string
+    {
+        return __('admin.messages');
+    }
 
-    protected static ?string $pluralModelLabel = 'Messages';
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.messages');
+    }
 
     protected static ?int $navigationSort = 1;
 

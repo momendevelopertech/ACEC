@@ -12,20 +12,25 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RecentMessages extends TableWidget
 {
-    protected static ?string $heading = 'Recent Messages';
     protected int|string|array $columnSpan = 'full';
+
+    public function getHeading(): string
+    {
+        return __('admin.recent_messages');
+    }
 
     public function table(Table $table): Table
     {
         return $table
             ->query(fn (): Builder => Message::query()->latest()->limit(5))
+            ->stackedOnMobile()
             ->columns([
-                TextColumn::make('name')->label('Name'),
-                TextColumn::make('email')->label('Email'),
-                TextColumn::make('subject')->label('Subject')->limit(40),
-                BadgeColumn::make('service_type')->label('Service')->color('gray'),
-                IconColumn::make('is_read')->boolean()->label('Read'),
-                TextColumn::make('created_at')->dateTime()->label('Received'),
+                TextColumn::make('name')->label(__('admin.col_name')),
+                TextColumn::make('email')->label(__('admin.col_email')),
+                TextColumn::make('subject')->label(__('admin.col_subject'))->limit(40),
+                BadgeColumn::make('service_type')->label(__('admin.col_service'))->color('gray'),
+                IconColumn::make('is_read')->boolean()->label(__('admin.col_read')),
+                TextColumn::make('created_at')->dateTime()->label(__('admin.col_received')),
             ]);
     }
 }

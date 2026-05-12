@@ -19,10 +19,22 @@ class BlogPostResource extends Resource
     protected static ?string $model = BlogPost::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
-    protected static ?string $navigationLabel = 'Blog Posts';
-    protected static ?string $modelLabel = 'Blog Post';
-    protected static ?string $pluralModelLabel = 'Blog Posts';
     protected static ?int $navigationSort = 6;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.blog_posts');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.blog_posts');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.blog_posts');
+    }
 
     public static function form(Schema $schema): Schema
     {

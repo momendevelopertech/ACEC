@@ -18,20 +18,20 @@ class StatsOverview extends StatsOverviewWidget
         $monthViews = PageView::whereMonth('created_at', now()->month)->count();
 
         return [
-            Stat::make('Total Projects', Project::where('is_active', true)->count())
-                ->description('Active projects')
+            Stat::make(__('admin.total_projects'), Project::where('is_active', true)->count())
+                ->description(__('admin.active_projects'))
                 ->color('primary')
                 ->icon(Heroicon::OutlinedBuildingOffice2),
-            Stat::make('Active Services', Service::where('is_active', true)->count())
-                ->description('Published services')
+            Stat::make(__('admin.active_services'), Service::where('is_active', true)->count())
+                ->description(__('admin.published_services'))
                 ->color('success')
                 ->icon(Heroicon::OutlinedWrenchScrewdriver),
-            Stat::make('Unread Messages', $unreadMessages)
-                ->description($unreadMessages > 0 ? 'Needs attention!' : 'All clear')
+            Stat::make(__('admin.unread_messages'), $unreadMessages)
+                ->description($unreadMessages > 0 ? __('admin.needs_attention') : __('admin.all_clear'))
                 ->color($unreadMessages > 0 ? 'danger' : 'success')
                 ->icon(Heroicon::OutlinedEnvelope),
-            Stat::make('Views This Month', $monthViews)
-                ->description('Page views')
+            Stat::make(__('admin.views_this_month'), $monthViews)
+                ->description(__('admin.page_views'))
                 ->color('info')
                 ->icon(Heroicon::OutlinedEye),
         ];

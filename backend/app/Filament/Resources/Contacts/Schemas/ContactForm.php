@@ -15,20 +15,25 @@ class ContactForm
     {
         return $schema
             ->components([
-                Section::make('Message Details')->schema([
-                    TextInput::make('name')->label('Name')->disabled(),
-                    TextInput::make('email')->label('Email')->disabled(),
-                    TextInput::make('phone')->label('Phone')->disabled(),
-                    TextInput::make('subject')->label('Subject')->disabled(),
-                    Textarea::make('message')->label('Message')->disabled()->rows(5)->columnSpanFull(),
-                    TextInput::make('service_type')->label('Service Type')->disabled(),
+                Section::make(__('admin.section_message_details'))->schema([
+                    TextInput::make('name')->label(__('admin.col_name'))->disabled(),
+                    TextInput::make('email')->label(__('admin.col_email'))->disabled()->extraAttributes(['dir' => 'ltr']),
+                    TextInput::make('phone')->label(__('admin.col_phone'))->disabled(),
+                    TextInput::make('subject')->label(__('admin.col_subject'))->disabled(),
+                    Textarea::make('message')->label(__('admin.col_message'))->disabled()->rows(5)->columnSpanFull(),
+                    TextInput::make('service_type')->label(__('admin.col_service'))->disabled(),
                 ])->columns(2),
 
-                Section::make('Status')->schema([
-                    Select::make('lang')->options(['ar' => 'Arabic', 'en' => 'English'])->disabled(),
-                    Toggle::make('is_read')->label('Mark as Read'),
-                    Toggle::make('is_replied')->label('Mark as Replied'),
-                    Textarea::make('reply_text')->label('Reply Notes')->rows(3),
+                Section::make(__('admin.section_status'))->schema([
+                    Select::make('lang')
+                        ->options([
+                            'ar' => __('admin.col_lang_ar'),
+                            'en' => __('admin.col_lang_en'),
+                        ])
+                        ->disabled(),
+                    Toggle::make('is_read')->label(__('admin.col_read')),
+                    Toggle::make('is_replied')->label(__('admin.btn_mark_replied')),
+                    Textarea::make('reply_text')->label(__('admin.col_reply_notes'))->rows(3),
                 ])->columns(2),
             ]);
     }

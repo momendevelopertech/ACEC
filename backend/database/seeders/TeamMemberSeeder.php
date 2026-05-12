@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Traits\GeneratesPlaceholderImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class TeamMemberSeeder extends Seeder
 {
+    use GeneratesPlaceholderImages;
+
     public function run(): void
     {
         DB::table('team_members')->truncate();
@@ -55,7 +58,10 @@ class TeamMemberSeeder extends Seeder
         ];
 
         foreach ($members as $member) {
+            $slug = \Illuminate\Support\Str::slug($member['name_en']);
+            $imagePath = $this->generatePlaceholderImage("models/team-members/{$slug}.jpg", "team-{$slug}", 300, 300);
             DB::table('team_members')->insert(array_merge($member, [
+                'image' => $imagePath,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]));

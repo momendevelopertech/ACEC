@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use \App\Traits\HasImageCleanup;
+
+    protected array $imageFields = ['image'];
+    protected array $imageArrayFields = ['gallery'];
+
     protected $fillable = [
         'slug', 'title_ar', 'title_en',
         'description_ar', 'description_en', 'content_ar', 'content_en',

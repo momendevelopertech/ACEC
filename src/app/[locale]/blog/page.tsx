@@ -110,7 +110,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                         }}
                       >
                         <img
-                          src={post.image}
+                          src={`${API_BASE}/storage/${post.image}`}
                           alt={post.title}
                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />

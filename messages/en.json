@@ -1,5 +1,6 @@
 {
     "nav": {
+        "more": "More",
         "services": "Services",
         "projects": "Projects",
         "about": "About",
@@ -102,6 +103,7 @@
         "name": "Full Name",
         "email": "Email Address",
         "phone": "Phone Number",
+        "subject": "Subject",
         "message": "Your Message",
         "service": "Service Required",
         "submit": "Send Message",

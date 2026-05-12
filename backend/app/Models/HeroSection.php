@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class HeroSection extends Model
 {
+    use \App\Traits\HasImageCleanup;
+
+    protected array $imageFields = ['image'];
+
     protected $fillable = [
         'lang', 'title', 'subtitle', 'description',
         'stat1_number', 'stat1_label', 'stat2_number', 'stat2_label',

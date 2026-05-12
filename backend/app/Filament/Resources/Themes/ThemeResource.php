@@ -18,10 +18,22 @@ class ThemeResource extends Resource
     protected static ?string $model = Theme::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPaintBrush;
-    protected static ?string $navigationLabel = 'Themes';
-    protected static ?string $modelLabel = 'Theme';
-    protected static ?string $pluralModelLabel = 'Themes';
     protected static ?int $navigationSort = 9;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.themes');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.themes');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.themes');
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -273,7 +273,7 @@ export function Footer() {
                             }}
                         >
                             <span style={{ width: "20px", height: "1px", background: "var(--color-gold)" }} />
-                            {isArabic ? "خدماتنا" : "Our Services"}
+                            {services("title")}
                         </h3>
                         <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                             {serviceLinks.map((link, index) => (

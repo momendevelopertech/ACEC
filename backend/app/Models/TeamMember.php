@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamMember extends Model
 {
+    use \App\Traits\HasImageCleanup;
+
+    protected array $imageFields = ['image'];
+
     protected $fillable = [
         'name_ar', 'name_en', 'position_ar', 'position_en',
         'bio_ar', 'bio_en', 'image', 'email', 'linkedin',
