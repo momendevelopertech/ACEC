@@ -1,60 +1,81 @@
-# ACEC - Static Export Deployment Guide (cPanel)
+# ACEC — Arabian Consulting & Engineering Center
 
-This project is configured for **Next.js static export** and can be deployed on shared hosting (cPanel) without a Node.js runtime.
+Multilingual corporate website with a Laravel Filament admin dashboard. Built with Next.js (static export) + Laravel API backend.
 
-## 1) Create environment file
+## Tech Stack
 
-Create `.env.local` at the project root:
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 15, React 18, TypeScript, Tailwind CSS 4, Framer Motion |
+| Backend | Laravel 11, Filament 3 (admin panel) |
+| Database | MySQL |
+| I18n | next-intl (Arabic / English, RTL support) |
+| Theme | Dynamic theme system with live switching via Context API |
+
+## Features
+
+- **Multilingual** — Full Arabic/English support with RTL/LTR layout
+- **Dynamic theming** — Gold/dark theme system with live switching from admin panel
+- **Static export** — Frontend builds to static HTML for cPanel deployment
+- **Filament admin** — Manage projects, services, blog, team, clients, certifications, job postings, and themes
+- **Contact form** — API-backed with rate limiting
+- **One-click local run** — `start-project.bat` auto-detects Laragon tools
+
+## Quick Start (Local Development)
+
+See **[README-LOCAL-RUN.md](README-LOCAL-RUN.md)** for full setup instructions including one-click launcher.
+
+### Prerequisites
+
+- [Laragon](https://laragon.org/download/) (PHP 8.3+, Composer, Node.js 18+, MySQL)
+
+### Manual Setup
 
 ```bash
-NEXT_PUBLIC_API_BASE=https://api.example.com
-```
+# 1. Backend
+cd backend
+copy .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve --host=127.0.0.1 --port=8000
 
-> `NEXT_PUBLIC_API_BASE` is required because the contact form now sends requests to an external backend endpoint (`/api/v1/contact`) instead of using Next.js API routes.
-
-## 2) Install dependencies
-
-```bash
+# 2. Frontend (new terminal, project root)
 npm install
+npm run dev
 ```
 
-## 3) Build static output
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000/api/v1/...
+- Admin panel: http://localhost:8000/admin
+
+## Production Deployment (cPanel)
+
+See **[DEPLOYMENT_GUIDE_AR.md](DEPLOYMENT_GUIDE_AR.md)** for Arabic deployment instructions.
 
 ```bash
+# Build static export
+npm install
 npm run build
+# Upload contents of out/ to public_html/
 ```
 
-This generates the static site in `out/`.
+## Environment Variables
 
-## 4) Verify generated static files
+| File | Purpose |
+|------|---------|
+| `.env.local` | Frontend — `NEXT_PUBLIC_API_BASE`, `NEXT_PUBLIC_SITE_URL` |
+| `backend/.env` | Backend — database, mail, app config |
 
-Confirm these files exist after build:
+## API Endpoints
 
-- `out/ar/index.html`
-- `out/en/index.html`
-- `out/ar/services/consulting/index.html`
-
-## 5) Upload to cPanel
-
-1. Open your hosting file manager or FTP.
-2. Upload the **contents of `out/`** into `public_html/`.
-3. Upload rewrite rules file to `public_html/.htaccess`.
-
-A deployment copy is provided at:
-
-- `.htaccess`
-- `deployment/.htaccess`
-
-## 6) Optional local static preview
-
-```bash
-npx serve out
-```
-
-Then open the URL shown by `serve`.
-
-## Notes
-
-- This static export setup does not use Next.js server runtime.
-- Internal App Router API routes are removed.
-- Dynamic routes are pre-generated during build via `generateStaticParams`.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/theme` | Active theme |
+| GET | `/api/v1/services/{lang}` | Services list |
+| GET | `/api/v1/projects/{lang}` | Projects list |
+| GET | `/api/v1/blog/{lang}` | Blog posts |
+| GET | `/api/v1/team/{lang}` | Team members |
+| POST | `/api/v1/contact` | Submit contact form |
+| GET | `/api/themes` | All themes (admin) |
+| POST | `/api/themes/{id}/activate` | Activate theme |

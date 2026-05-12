@@ -1,14 +1,21 @@
 import { defineConfig, globalIgnores } from "eslint/config";
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+import nextPlugin from "@next/eslint-plugin-next";
 
-const eslintConfig = defineConfig([
-  {
-    ignores: ["**/.next/**", "**/out/**", "**/build/**", "**/next-env.d.ts"],
-  },
+export default defineConfig([
+  globalIgnores(["**/.next/**", "**/out/**", "**/build/**", "**/next-env.d.ts", "**/backend/**", "**/node_modules/**", "**/.agents/**"]),
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
-    ...(await import("eslint-config-next/core-web-vitals.js").then((m) => m.default || m)),
-    ...(await import("eslint-config-next/typescript.js").then((m) => m.default || m)),
+    plugins: { "@next/next": nextPlugin },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-expressions": "warn",
+      "@typescript-eslint/no-require-imports": "off",
+    },
   },
 ]);
-
-export default eslintConfig;
