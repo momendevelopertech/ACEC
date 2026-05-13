@@ -78,8 +78,8 @@ export function PageLoader() {
           position: fixed;
           inset: 0;
           z-index: 99999;
-          background: #0a1628;
-          color: #fff;
+          background: var(--bg-primary, #0a1628);
+          color: var(--text-primary, #fff);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -132,7 +132,7 @@ export function PageLoader() {
           font-size: clamp(3rem, 8vw, 5rem);
           font-weight: 800;
           letter-spacing: 0.18em;
-          color: #ffffff;
+          color: var(--text-primary, #ffffff);
           opacity: 0;
           transform: scale(0.82);
           animation: loaderLogoIn 0.72s ease-out 0.1s forwards;
@@ -141,7 +141,7 @@ export function PageLoader() {
         .loader-tag {
           display: block;
           font-size: 0.95rem;
-          color: rgba(255,255,255,0.95);
+          color: var(--text-muted, rgba(255,255,255,0.95));
           letter-spacing: 0.12em;
           text-transform: uppercase;
           opacity: 0;
@@ -155,8 +155,8 @@ export function PageLoader() {
           height: 0.35rem;
           border-radius: 999px;
           overflow: hidden;
-          background: rgba(255,255,255,0.08);
-          box-shadow: inset 0 0 18px rgba(255,255,255,0.06);
+          background: rgba(var(--color-gold-rgb, 201, 168, 76), 0.08);
+          box-shadow: inset 0 0 18px rgba(var(--color-gold-rgb, 201, 168, 76), 0.06);
         }
 
         .loader-bar span {
@@ -165,7 +165,7 @@ export function PageLoader() {
           height: 100%;
           transform-origin: left center;
           transform: scaleX(0);
-          background: linear-gradient(90deg, #c9a84c 0%, #f3d98c 50%, #c9a84c 100%);
+          background: linear-gradient(90deg, var(--accent, #c9a84c) 0%, var(--accent-hover, #f3d98c) 50%, var(--accent, #c9a84c) 100%);
           background-size: 220% 100%;
           animation: loaderBar 2.6s ease-out forwards, loaderBarGlow 2.6s ease-in-out 0.4s infinite alternate;
         }

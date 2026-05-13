@@ -35,7 +35,11 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo.svg'))
             ->brandName('ACEC')
             ->maxContentWidth(Width::Full)
+            ->sidebarCollapsibleOnDesktop()
             ->sidebarFullyCollapsibleOnDesktop()
+            ->sidebarWidth('16rem')
+            ->collapsedSidebarWidth('4rem')
+            ->favicon(asset('images/favicon-dashboard.svg'))
             ->colors([
                 'primary' => Color::Amber,
                 'danger' => Color::Rose,
@@ -68,12 +72,10 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->bootUsing(function (Panel $panel): void {
-                if (app()->getLocale() === 'ar') {
-                    FilamentView::registerRenderHook(
-                        PanelsRenderHook::HEAD_END,
-                        fn (): string => $this->getRtlStyles(),
-                    );
-                }
+                FilamentView::registerRenderHook(
+                    PanelsRenderHook::HEAD_END,
+                    fn (): string => $this->getDirectionalStyles() . $this->getFaviconHtml(),
+                );
             })
             ->userMenuItems([
                 MenuItem::make()
@@ -97,164 +99,197 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 
-    private function getRtlStyles(): string
+    private function getDirectionalStyles(): string
     {
         return <<<'CSS'
         <style>
+            /* ============================
+               UNIVERSAL — applies to both LTR & RTL
+               ============================ */
+            .fi-sidebar-item {
+                text-align: start !important;
+            }
+            .fi-sidebar-item-icon {
+                margin-inline-end: 0.75rem !important;
+                margin-inline-start: 0 !important;
+            }
+            .fi-sidebar-group-label {
+                text-align: start !important;
+            }
+            .fi-main-ctn {
+                margin-inline: 0 !important;
+            }
+            .fi-header,
+            .fi-header-heading,
+            .fi-header-subheading {
+                text-align: start !important;
+            }
+            .fi-table th,
+            .fi-table td {
+                text-align: start !important;
+            }
+            .fi-fo-field-wrp {
+                text-align: start !important;
+            }
+            .fi-section-header-heading,
+            .fi-section-header-description {
+                text-align: start !important;
+            }
+            .fi-btn-icon {
+                margin-inline-end: 0.5rem !important;
+                margin-inline-start: 0 !important;
+            }
+            .fi-wi-stats-overview-stat {
+                text-align: start !important;
+            }
+            .fi-wi-stats-overview-stat-icon {
+                margin-inline-start: 0.75rem !important;
+                margin-inline-end: 0 !important;
+            }
+            .fi-dropdown-item {
+                text-align: start !important;
+            }
+            .fi-dropdown-list-item-icon {
+                margin-inline-end: 0.75rem !important;
+                margin-inline-start: 0 !important;
+            }
+            .fi-empty-state {
+                text-align: start !important;
+            }
+            .fi-modal-heading,
+            .fi-modal-description {
+                text-align: start !important;
+            }
+            .fi-content {
+                max-width: 100% !important;
+            }
+
+            /* ============================
+               RTL — right-to-left specifics
+               ============================ */
             [dir="rtl"] .fi-sidebar-nav {
                 order: 2;
             }
-
             [dir="rtl"] .fi-sidebar {
                 right: 0 !important;
                 left: auto !important;
                 border-right: none !important;
                 border-left: 1px solid var(--gray-200, #e5e7eb) !important;
             }
-
-            [dir="rtl"] .fi-sidebar-item {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-sidebar-item-icon {
-                margin-right: 0 !important;
-                margin-left: 0.75rem !important;
-            }
-
-            [dir="rtl"] .fi-sidebar-group-label {
-                text-align: right !important;
-            }
-
             [dir="rtl"] .fi-topbar {
-                right: 16rem !important;
+                right: var(--sidebar-width) !important;
                 left: 0 !important;
             }
-
-            [dir="rtl"] .fi-main-ctn {
-                margin-right: 16rem !important;
-                margin-left: 0 !important;
-            }
-
-            [dir="rtl"] .fi-header {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-header-heading {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-header-subheading {
-                text-align: right !important;
-            }
-
             [dir="rtl"] .fi-breadcrumbs ol {
                 flex-direction: row-reverse !important;
                 justify-content: flex-end !important;
             }
-
             [dir="rtl"] .fi-breadcrumbs li + li::before {
-                margin-left: 0.5rem !important;
-                margin-right: 0.5rem !important;
+                margin-inline: 0.5rem !important;
                 transform: rotate(180deg) !important;
             }
-
-            [dir="rtl"] .fi-table {
-                direction: rtl !important;
-            }
-
-            [dir="rtl"] .fi-table th {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-table td {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-fo-field-wrp {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-section-header-heading {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-section-header-description {
-                text-align: right !important;
-            }
-
             [dir="rtl"] .fi-btn {
                 flex-direction: row-reverse !important;
             }
-
-            [dir="rtl"] .fi-btn-icon {
-                margin-left: 0.5rem !important;
-                margin-right: 0 !important;
-            }
-
-            [dir="rtl"] .fi-wi-stats-overview-stat {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-wi-stats-overview-stat-icon {
-                margin-left: 0 !important;
-                margin-right: 0.75rem !important;
-            }
-
             [dir="rtl"] .fi-pagination {
                 flex-direction: row-reverse !important;
             }
-
-            [dir="rtl"] .fi-dropdown-item {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-dropdown-list-item-icon {
-                margin-right: 0 !important;
-                margin-left: 0.75rem !important;
-            }
-
-            [dir="rtl"] .fi-empty-state {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-modal-heading {
-                text-align: right !important;
-            }
-
-            [dir="rtl"] .fi-modal-description {
-                text-align: right !important;
-            }
-
             [dir="rtl"] .fi-icon-btn svg {
                 transform: scaleX(-1);
             }
-
             [dir="rtl"] .fi-sidebar-header {
                 flex-direction: row-reverse;
             }
 
+            /* ============================
+               LTR — left-to-right specifics
+               ============================ */
+            [dir="ltr"] .fi-sidebar {
+                left: 0 !important;
+                right: auto !important;
+                border-left: none !important;
+                border-right: 1px solid var(--gray-200, #e5e7eb) !important;
+            }
+            [dir="ltr"] .fi-topbar {
+                left: var(--sidebar-width) !important;
+                right: 0 !important;
+            }
+
+            /* ============================
+               RESPONSIVE — mobile & tablet
+               ============================ */
             @media (max-width: 1024px) {
-                [dir="rtl"] .fi-topbar {
+                .fi-topbar {
                     right: 0 !important;
+                    left: 0 !important;
                 }
 
-                [dir="rtl"] .fi-main-ctn {
-                    margin-right: 0 !important;
+                .fi-main-ctn {
+                    margin-inline: 0 !important;
                 }
 
                 [dir="rtl"] .fi-sidebar {
                     transform: translateX(100%) !important;
                 }
-
-                [dir="rtl"] .fi-sidebar.fi-open {
+                [dir="ltr"] .fi-sidebar {
+                    transform: translateX(-100%) !important;
+                }
+                [dir="rtl"] .fi-sidebar.fi-sidebar-open,
+                [dir="ltr"] .fi-sidebar.fi-sidebar-open {
                     transform: translateX(0) !important;
                 }
             }
-
-            .fi-content {
-                max-width: 100% !important;
+            /* ============================
+               COLLAPSED SIDEBAR — icon-only mode
+               ============================ */
+            .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn {
+                justify-content: center !important;
+                min-height: 44px !important;
+                min-width: 44px !important;
+                padding: 0.5rem !important;
             }
-        </style>
+            .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-icon {
+                margin-inline-end: 0 !important;
+                margin-inline-start: 0 !important;
+            }
+            .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav {
+                padding-inline: 0.25rem !important;
+            }
+            .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav-groups {
+                margin-inline: 0 !important;
+            }
+            .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-dropdown-trigger-btn {
+                justify-content: center !important;
+                min-height: 44px !important;
+                min-width: 44px !important;
+                padding: 0.5rem !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            /* ============================
+               TOPBAR — responsive to sidebar state
+               ============================ */
+            .fi-topbar {
+                transition-property: left, right !important;
+                transition-duration: 200ms !important;
+            }
+         </style>
         CSS;
+    }
+
+    private function getFaviconHtml(): string
+    {
+        $imgUrl = asset('images');
+
+        return implode("\n", [
+            '<link rel="icon" type="image/png" sizes="16x16" href="' . $imgUrl . '/favicon-dashboard-16x16.png">',
+            '<link rel="icon" type="image/png" sizes="32x32" href="' . $imgUrl . '/favicon-dashboard-32x32.png">',
+            '<link rel="icon" type="image/png" sizes="48x48" href="' . $imgUrl . '/favicon-dashboard-48x48.png">',
+            '<link rel="icon" type="image/png" sizes="192x192" href="' . $imgUrl . '/favicon-dashboard-192x192.png">',
+            '<link rel="icon" type="image/png" sizes="512x512" href="' . $imgUrl . '/favicon-dashboard-512x512.png">',
+            '<link rel="apple-touch-icon" sizes="180x180" href="' . $imgUrl . '/apple-touch-icon-dashboard.png">',
+            '<link rel="icon" type="image/png" href="' . $imgUrl . '/favicon-dashboard-dark-32x32.png" media="(prefers-color-scheme: dark)">',
+        ]);
     }
 }

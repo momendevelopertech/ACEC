@@ -58,8 +58,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     const bg = colors.bg_primary || '';
     if (bg) {
-      root.style.setProperty('--color-gold-dim', `rgba(${hexToRgb(colors.accent || '#C9A84C')}, 0.15)`);
-      root.style.setProperty('--color-border-gold', `rgba(${hexToRgb(colors.accent || '#C9A84C')}, 0.25)`);
+      const accentHex = colors.accent || '#C9A84C';
+      root.style.setProperty('--color-gold-dim', `rgba(${hexToRgb(accentHex)}, 0.15)`);
+      root.style.setProperty('--color-border-gold', `rgba(${hexToRgb(accentHex)}, 0.25)`);
     }
 
     root.setAttribute('data-theme', t.slug);

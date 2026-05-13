@@ -3,70 +3,80 @@
 @import "tailwindcss";
 
 :root {
+  /* ===== 6 Core Colors ===== */
   --bg-primary:     #0D1B2A;
-  --bg-secondary:   #1A2B3C;
-  --bg-card:        #162234;
-  --bg-section-alt: #111E2C;
-  --text-primary:   #F5F0E8;
-  --text-secondary: #B0A090;
-  --text-muted:     #6B7A8D;
+  --bg-surface:     #162234;
+  --border:         #3A5068;
+  --text-primary:   #F0F4F8;
+  --text-muted:     #8A9BB0;
   --accent:         #C9A84C;
-  --accent-hover:   #E0BC6A;
-  --accent-text:    #0D1B2A;
-  --border:         #2A3D52;
-  --navbar-bg:      #0D1B2A;
-  --navbar-text:    #F5F0E8;
-  --button-bg:      #C9A84C;
-  --button-text:    #0D1B2A;
-  --button-hover:   #E0BC6A;
-  --card-bg:        #162234;
-  --card-border:    #2A3D52;
-  --footer-bg:      #080F18;
-  --footer-text:    #B0A090;
+
+  /* ===== Derived from Core ===== */
+  --bg-surface-hover: #1E3149;
+  --border-strong:    #597894;
+  --accent-hover:     #F0CF7A;
+  --accent-muted:     rgba(201, 168, 76, 0.15);
+  --text-on-accent:   #0D1B2A;
+  --footer-bg:        #080D14;
+  --footer-text:      #8A9BB0;
+  --navbar-bg:        #162234;
+  --card-border:      #3A5068;
+  --button-bg:        #C9A84C;
+  --button-text:      #0D1B2A;
+  --button-hover:     #F0CF7A;
+  --text-secondary:   #9AABBE;
+
+  /* ===== Backward-compat aliases (old naming) ===== */
+  --bg-secondary:   var(--bg-surface);
+  --bg-card:        var(--bg-surface);
+  --bg-section-alt: #111E2C;
+  --accent-text:    var(--text-on-accent);
+  --navbar-text:    var(--text-primary);
+  --card-bg:        var(--bg-surface);
 
   /* Legacy CSS variable aliases (backward compat) */
   --color-bg:           var(--bg-primary);
   --color-bg-rgb:       13, 27, 42;
-  --color-surface:      var(--bg-secondary);
-  --color-surface-rgb:  26, 43, 60;
+  --color-surface:      var(--bg-surface);
+  --color-surface-rgb:  22, 34, 52;
   --color-surface-2:    var(--bg-section-alt);
   --color-gold:         var(--accent);
   --color-gold-rgb:     201, 168, 76;
   --color-gold-light:   var(--accent-hover);
   --color-gold-dim:     rgba(201, 168, 76, 0.15);
   --color-text:         var(--text-primary);
-  --color-text-rgb:     245, 240, 232;
-  --color-text-dark:    #0D1B2A;
+  --color-text-rgb:     240, 244, 248;
+  --color-text-dark:    var(--text-on-accent);
   --color-text-dark-rgb: 13, 27, 42;
-  --color-text-secondary: #B0A090;
+  --color-text-secondary: var(--text-secondary);
   --color-text-muted:   var(--text-secondary);
-  --color-text-muted-rgb: 176, 160, 144;
+  --color-text-muted-rgb: 138, 155, 176;
   --color-muted:        var(--text-muted);
   --color-border:       var(--border);
-  --color-border-rgb:   42, 61, 82;
+  --color-border-rgb:   58, 80, 104;
   --color-border-gold:  rgba(201, 168, 76, 0.25);
   --color-accent:       var(--accent);
   --color-accent-rgb:   201, 168, 76;
-  --color-card-bg:      var(--card-bg);
+  --color-card-bg:      var(--bg-surface);
   --color-card-bg-rgb:  22, 34, 52;
   --color-header-bg:    var(--navbar-bg);
   --color-footer-bg:    var(--footer-bg);
   --color-white:        var(--text-primary);
-  --color-white-rgb:    245, 240, 232;
+  --color-white-rgb:    240, 244, 248;
   --color-navbar-text:  var(--navbar-text);
   --color-button-text:  var(--button-text);
   --color-card-border:  var(--card-border);
   --color-footer-text:  var(--footer-text);
   --color-accent-text:  var(--accent-text);
-  --color-text-on-accent: #0D1B2A;
-  --color-text-on-dark: #F5F0E8;
-  --color-text-on-light: #0D1B2A;
-  --color-text-muted-on-dark: #B0A090;
+  --color-text-on-accent: var(--text-on-accent);
+  --color-text-on-dark: var(--text-primary);
+  --color-text-on-light: var(--text-on-accent);
+  --color-text-muted-on-dark: var(--text-muted);
   --color-text-muted-on-light: #4A5568;
 
   --font-heading: "Playfair Display", Georgia, serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-arabic: "Tajawal", "Cairo", sans-serif;
+  --font-body: "Inter", system-ui, Arial, sans-serif;
+  --font-arabic: "Tajawal", "Cairo", Arial, sans-serif;
   --font-stat: "Bebas Neue", sans-serif;
 
   --radius-sm: 8px;
@@ -83,6 +93,20 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Safe default — always show cursor */
+body {
+  cursor: default;
+}
+
+/* Only hide when custom cursor is confirmed loaded */
+html.custom-cursor-enabled[data-cursor-loaded="true"] {
+  cursor: none !important;
+}
+
+html.custom-cursor-enabled[data-cursor-loaded="true"] * {
+  cursor: none !important;
 }
 
 html {
@@ -111,7 +135,7 @@ body::before {
 
 /* Selection styling */
 ::selection {
-  background-color: rgba(201, 168, 76, 0.3);
+  background-color: rgba(var(--color-gold-rgb), 0.3);
   color: var(--color-text);
 }
 
@@ -216,22 +240,9 @@ body::before {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.4), transparent, rgba(201, 168, 76, 0.2));
+  background: linear-gradient(135deg, rgba(var(--color-gold-rgb), 0.4), transparent, rgba(var(--color-gold-rgb), 0.2));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.gradient-border::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.4), transparent, rgba(201, 168, 76, 0.2));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -256,31 +267,31 @@ body::before {
 }
 
 .magnetic-btn-primary {
-  background: linear-gradient(135deg, var(--color-gold), #a07830);
-  color: #0a0a0f;
+  background: linear-gradient(135deg, var(--color-gold), #8B7230);
+  color: var(--text-on-accent);
 }
 
 .magnetic-btn-primary:hover {
   background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
   transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.35);
+  box-shadow: 0 8px 32px rgba(var(--color-gold-rgb), 0.35);
 }
 
 .magnetic-btn-secondary {
-  background: rgba(201, 168, 76, 0.08);
+  background: rgba(var(--color-gold-rgb), 0.08);
   color: var(--color-gold);
-  border: 1px solid rgba(201, 168, 76, 0.3);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.3);
 }
 
 .magnetic-btn-secondary:hover {
-  background: rgba(201, 168, 76, 0.15);
+  background: rgba(var(--color-gold-rgb), 0.15);
   border-color: var(--color-gold);
   transform: translateY(-1px);
 }
 
 /* Glow effect */
 .gold-glow {
-  box-shadow: 0 0 40px rgba(201, 168, 76, 0.2), 0 0 80px rgba(201, 168, 76, 0.05);
+  box-shadow: 0 0 40px rgba(var(--color-gold-rgb), 0.2), 0 0 80px rgba(var(--color-gold-rgb), 0.05);
 }
 
 /* RTL spacing helpers */
@@ -302,7 +313,7 @@ body::before {
 .cursor-dot {
   width: 10px;
   height: 10px;
-  background: #c9a84c;
+  background: var(--accent);
   border-radius: 50%;
   position: fixed;
   left: 50%;
@@ -312,13 +323,13 @@ body::before {
   transform: translate(-50%, -50%);
   transition: transform 0.05s ease-out, background 0.2s ease;
   will-change: transform, background;
-  box-shadow: 0 0 12px rgba(201, 168, 76, 0.75);
+  box-shadow: 0 0 12px rgba(var(--color-gold-rgb), 0.75);
 }
 
 .cursor-ring {
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(201, 168, 76, 0.9);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.9);
   border-radius: 50%;
   position: fixed;
   left: 50%;
@@ -328,7 +339,7 @@ body::before {
   transform: translate(-50%, -50%);
   transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.15s ease-out;
   will-change: transform, width, height, border-color;
-  box-shadow: 0 0 14px rgba(201, 168, 76, 0.35);
+  box-shadow: 0 0 14px rgba(var(--color-gold-rgb), 0.35);
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -342,9 +353,9 @@ body::before {
 .animated-gradient {
   background: linear-gradient(
     135deg,
-    rgba(42, 74, 138, 0.1) 0%,
+    rgba(var(--color-gold-rgb), 0.08) 0%,
     transparent 50%,
-    rgba(201, 168, 76, 0.05) 100%
+    rgba(var(--color-gold-rgb), 0.04) 100%
   );
 }
 

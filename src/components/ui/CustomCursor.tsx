@@ -104,6 +104,13 @@ export function CustomCursor() {
         };
     }, [enabled]);
 
+    useEffect(() => {
+        document.documentElement.setAttribute('data-cursor-loaded', 'true');
+        return () => {
+            document.documentElement.removeAttribute('data-cursor-loaded');
+        };
+    }, []);
+
     if (!enabled) {
         return null;
     }
@@ -111,17 +118,17 @@ export function CustomCursor() {
     return (
         <>
             <style>{`
-                .custom-cursor-enabled {
+                .custom-cursor-enabled[data-cursor-loaded="true"] {
                     cursor: none !important;
                 }
-                .custom-cursor-enabled * {
+                .custom-cursor-enabled[data-cursor-loaded="true"] * {
                     cursor: none !important;
                 }
-                .custom-cursor-enabled button,
-                .custom-cursor-enabled a,
-                .custom-cursor-enabled input,
-                .custom-cursor-enabled textarea,
-                .custom-cursor-enabled select {
+                .custom-cursor-enabled[data-cursor-loaded="true"] button,
+                .custom-cursor-enabled[data-cursor-loaded="true"] a,
+                .custom-cursor-enabled[data-cursor-loaded="true"] input,
+                .custom-cursor-enabled[data-cursor-loaded="true"] textarea,
+                .custom-cursor-enabled[data-cursor-loaded="true"] select {
                     cursor: none !important;
                 }
             `}</style>
