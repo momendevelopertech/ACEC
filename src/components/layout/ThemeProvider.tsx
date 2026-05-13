@@ -56,12 +56,54 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.style.setProperty(`${cssVar}-rgb`, hexToRgb(value));
     });
 
-    const bg = colors.bg_primary || '';
-    if (bg) {
-      const accentHex = colors.accent || '#C9A84C';
-      root.style.setProperty('--color-gold-dim', `rgba(${hexToRgb(accentHex)}, 0.15)`);
-      root.style.setProperty('--color-border-gold', `rgba(${hexToRgb(accentHex)}, 0.25)`);
-    }
+    const accentHex = colors.accent || '#C9A84C';
+    const accentRgb = hexToRgb(accentHex);
+    const bgHex = colors.bg_primary || '#0D1B2A';
+    const bgRgb = hexToRgb(bgHex);
+    const textHex = colors.text_primary || '#F0F4F8';
+    const textRgb = hexToRgb(textHex);
+    const mutedHex = colors.text_muted || '#8A9BB0';
+    const secondaryHex = colors.text_secondary || '#9AABBE';
+    const surfaceHex = colors.bg_secondary || '#162234';
+    const cardBgHex = colors.bg_card || '#162234';
+    const borderHex = colors.border || '#3A5068';
+    const accentHoverHex = colors.accent_hover || '#F0CF7A';
+    const sectionAltHex = colors.bg_section_alt || '#111E2C';
+    const accentTextHex = colors.accent_text || '#0D1B2A';
+
+    root.style.setProperty('--color-gold-dim', `rgba(${accentRgb}, 0.15)`);
+    root.style.setProperty('--color-gold-dim-rgb', accentRgb);
+    root.style.setProperty('--color-border-gold', `rgba(${accentRgb}, 0.25)`);
+    root.style.setProperty('--color-border-gold-rgb', accentRgb);
+    root.style.setProperty('--color-accent-rgb', accentRgb);
+    root.style.setProperty('--color-accent', accentHex);
+    root.style.setProperty('--color-header-bg', `rgba(${bgRgb}, 0.85)`);
+    root.style.setProperty('--color-white', textHex);
+    root.style.setProperty('--color-white-rgb', textRgb);
+    root.style.setProperty('--color-accent-text', accentTextHex);
+
+    root.style.setProperty('--color-text-on-dark', textHex);
+    root.style.setProperty('--color-text-on-dark-rgb', textRgb);
+    root.style.setProperty('--color-text-on-accent', accentTextHex);
+    root.style.setProperty('--color-text-muted-on-dark', mutedHex);
+    root.style.setProperty('--color-text-on-light', accentTextHex);
+    root.style.setProperty('--color-text-muted-on-light', '#4A5568');
+    root.style.setProperty('--color-secondary', secondaryHex);
+    root.style.setProperty('--color-surface-2', sectionAltHex);
+    root.style.setProperty('--color-surface-rgb', hexToRgb(surfaceHex));
+    root.style.setProperty('--color-card-bg-rgb', hexToRgb(cardBgHex));
+    root.style.setProperty('--color-border-rgb', hexToRgb(borderHex));
+    root.style.setProperty('--color-gold-light-rgb', hexToRgb(accentHoverHex));
+
+    root.style.setProperty('--font-heading', '"Playfair Display", Georgia, serif');
+    root.style.setProperty('--font-body', '"Inter", system-ui, Arial, sans-serif');
+    root.style.setProperty('--font-arabic', '"Tajawal", "Cairo", Arial, sans-serif');
+    root.style.setProperty('--font-stat', '"Bebas Neue", sans-serif');
+    root.style.setProperty('--font-mono', 'monospace');
+    root.style.setProperty('--radius-sm', '8px');
+    root.style.setProperty('--radius-md', '16px');
+    root.style.setProperty('--radius-lg', '24px');
+    root.style.setProperty('--radius-xl', '32px');
 
     root.setAttribute('data-theme', t.slug);
   }, []);

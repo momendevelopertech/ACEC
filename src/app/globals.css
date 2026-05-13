@@ -130,7 +130,7 @@ body::before {
   background-size: 128px 128px;
   opacity: 0.03;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
 }
 
 /* Selection styling */
@@ -319,7 +319,7 @@ body::before {
   left: 50%;
   top: 50%;
   pointer-events: none;
-  z-index: 10000;
+  z-index: 60;
   transform: translate(-50%, -50%);
   transition: transform 0.05s ease-out, background 0.2s ease;
   will-change: transform, background;
@@ -335,7 +335,7 @@ body::before {
   left: 50%;
   top: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 59;
   transform: translate(-50%, -50%);
   transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.15s ease-out;
   will-change: transform, width, height, border-color;
@@ -611,17 +611,7 @@ section {
   background-color: var(--color-bg);
   color: var(--color-text-on-dark);
 }
-section.section-light {
-  background-color: #F5F0E8;
-  color: var(--color-text-on-light);
-}
-section.section-light h1,
-section.section-light h2,
-section.section-light h3,
-section.section-light p,
-section.section-light span {
-  color: var(--color-text-on-light);
-}
+
 
 /* Smooth gradient transitions */
 .smooth-gradient {

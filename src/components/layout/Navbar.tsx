@@ -31,6 +31,31 @@ export function Navbar() {
         return () => mediaQuery.removeEventListener("change", update);
     }, []);
 
+    useEffect(() => {
+        if (menuOpen) {
+            const scrollY = window.scrollY;
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = "100%";
+            document.body.style.overflow = "hidden";
+        } else {
+            const top = document.body.style.top;
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.width = "";
+            document.body.style.overflow = "";
+            if (top) {
+                window.scrollTo(0, parseInt(top || "0", 10) * -1);
+            }
+        }
+        return () => {
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.width = "";
+            document.body.style.overflow = "";
+        };
+    }, [menuOpen]);
+
     const switchLocale = () => {
         const newLocale = locale === "ar" ? "en" : "ar";
         const segments = pathname.split("/");
@@ -55,6 +80,18 @@ export function Navbar() {
         { href: `/${locale}/contact`, label: t("contact") },
     ];
 
+    const allNavItems = [
+        { href: `/${locale}/services`, label: t("services"), icon: "⚙️" },
+        { href: `/${locale}/projects`, label: t("projects"), icon: "🏗️" },
+        { href: `/${locale}/about`, label: t("about"), icon: "🏛️" },
+        { href: `/${locale}/team`, label: t("team"), icon: "👥" },
+        { href: `/${locale}/clients`, label: t("clients"), icon: "🤝" },
+        { href: `/${locale}/blog`, label: t("blog"), icon: "📝" },
+        { href: `/${locale}/certifications`, label: t("certifications"), icon: "🏅" },
+        { href: `/${locale}/career`, label: t("career"), icon: "💼" },
+        { href: `/${locale}/contact`, label: t("contact"), icon: "📞" },
+    ];
+
     return (
         <header
             style={{
@@ -62,7 +99,7 @@ export function Navbar() {
                 top: 0,
                 left: 0,
                 right: 0,
-                zIndex: 1000,
+                zIndex: 50,
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                 padding: scrolled ? "0.75rem 1rem" : "1rem 1rem",
                 background: "var(--color-header-bg)",
@@ -150,7 +187,7 @@ export function Navbar() {
                                     borderRadius: "0.5rem",
                                     padding: "0.5rem",
                                     marginTop: "0.25rem",
-                                    zIndex: 1000,
+                                    zIndex: 20,
                                     boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                                 }}
                             >
@@ -252,78 +289,143 @@ export function Navbar() {
             </div>
 
             {/* Mobile Menu */}
-            <div
-                style={{
-                    position: "fixed",
-                    inset: 0,
-                    top: 0,
-                    background: "var(--color-bg)",
-                    backdropFilter: "blur(30px)",
-                    zIndex: 1001,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "2rem",
-                    paddingTop: "5rem",
-                    paddingInline: "1.25rem",
-                    transition: "opacity 0.4s, visibility 0.4s",
-                    opacity: menuOpen ? 1 : 0,
-                    visibility: menuOpen ? "visible" : "hidden",
-                }}
-            >
-                <button
-                    onClick={() => setMenuOpen(false)}
+            {menuOpen && (
+                <div
                     style={{
-                        position: "absolute",
-                        top: "1rem",
-                        right: "1rem",
-                        width: "2.8rem",
-                        height: "2.8rem",
-                        borderRadius: "999px",
-                        border: "1px solid var(--color-border)",
-                        background: "var(--color-surface)",
-                        color: "var(--color-text)",
+                        position: "fixed",
+                        inset: 0,
+                        zIndex: 65,
+                        backgroundColor: "var(--color-bg)",
                         display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "1.25rem",
-                        cursor: "pointer",
+                        flexDirection: "column",
+                        overflowY: "auto",
+                        overflowX: "hidden",
                     }}
-                    aria-label={locale === "ar" ? "إغلاق القائمة" : "Close menu"}
                 >
-                    ×
-                </button>
-                    {[...mainNavLinks, ...secondaryNavLinks].map((link, i) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            padding: "1rem 1.5rem",
+                            borderBottom: "1px solid var(--color-border)",
+                            position: "sticky",
+                            top: 0,
+                            backgroundColor: "var(--color-bg)",
+                            zIndex: 1,
+                        }}
+                    >
+                        <span style={{ color: "var(--color-text)", fontWeight: 700, fontSize: "1.125rem" }}>
+                            ACEC
+                        </span>
+                        <button
                             onClick={() => setMenuOpen(false)}
+                            aria-label={locale === "ar" ? "إغلاق القائمة" : "Close menu"}
                             style={{
+                                width: "2.5rem",
+                                height: "2.5rem",
+                                borderRadius: "50%",
+                                border: "1px solid var(--color-border)",
+                                backgroundColor: "var(--color-surface)",
                                 color: "var(--color-text)",
-                                textDecoration: "none",
-                                fontSize: "2rem",
-                                fontFamily: "var(--font-heading)",
-                                fontWeight: 600,
-                                transition: "color 0.2s",
-                                transform: menuOpen
-                                    ? "translateY(0)"
-                                    : "translateY(20px)",
-                                transitionDelay: `${i * 0.05}s`,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                                fontSize: "1.25rem",
+                                flexShrink: 0,
                             }}
                         >
-                            {link.label}
+                            ✕
+                        </button>
+                    </div>
+
+                    <nav style={{ flex: 1, padding: "0.5rem 0" }}>
+                        {allNavItems.map((item, index) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={() => setMenuOpen(false)}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "1rem",
+                                    padding: "1rem 1.5rem",
+                                    borderBottom: "1px solid var(--color-border)",
+                                    color: "var(--color-text)",
+                                    textDecoration: "none",
+                                    fontSize: "1.125rem",
+                                    fontWeight: 500,
+                                    transition: "background-color 0.15s ease",
+                                }}
+                                onMouseEnter={(e) => {
+                                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.05)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        width: "2.25rem",
+                                        height: "2.25rem",
+                                        borderRadius: "0.5rem",
+                                        backgroundColor: "var(--color-gold-dim)",
+                                        border: "1px solid var(--color-border-gold)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    {item.icon}
+                                </span>
+                                <span>{item.label}</span>
+                                <span
+                                    style={{
+                                        marginInlineStart: "auto",
+                                        color: "var(--color-text-muted, var(--color-text))",
+                                        fontSize: "0.875rem",
+                                        opacity: 0.5,
+                                    }}
+                                >
+                                    {isRTL ? "←" : "→"}
+                                </span>
+                            </Link>
+                        ))}
+                    </nav>
+
+                    <div
+                        style={{
+                            padding: "1.5rem",
+                            borderTop: "1px solid var(--color-border)",
+                            backgroundColor: "var(--color-bg)",
+                            position: "sticky",
+                            bottom: 0,
+                        }}
+                    >
+                        <Link
+                            href={`/${locale}/contact`}
+                            onClick={() => setMenuOpen(false)}
+                            style={{
+                                display: "block",
+                                width: "100%",
+                                padding: "0.875rem",
+                                backgroundColor: "var(--color-gold)",
+                                color: "var(--color-accent-text)",
+                                borderRadius: "9999px",
+                                textAlign: "center",
+                                fontWeight: 600,
+                                fontSize: "1rem",
+                                textDecoration: "none",
+                                cursor: "pointer",
+                            }}
+                        >
+                            {t("consultation")}
                         </Link>
-                    ))}
-                <Link
-                    href={`/${locale}/contact`}
-                    onClick={() => setMenuOpen(false)}
-                    className="magnetic-btn magnetic-btn-primary"
-                    style={{ marginTop: "1rem" }}
-                >
-                    {t("consultation")}
-                </Link>
-            </div>
+                    </div>
+                </div>
+            )}
 
             <style>{`
         @media (min-width: 768px) {
