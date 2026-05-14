@@ -52,10 +52,10 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: "80px", minHeight: "100vh" }}>
+      <main className="pt-[80px] min-h-screen">
         <section className="section-padding">
           <div className="container-custom">
-            <div className="section-label" style={{ marginBottom: "1rem", justifyContent: "center" }}>
+            <div className="section-label justify-center mb-4">
               ACEC DASHBOARD
             </div>
             <h1
@@ -72,8 +72,8 @@ export default function DashboardPage() {
             </h1>
 
             {loading ? (
-              <div style={{ textAlign: "center", padding: "3rem" }}>
-                <p style={{ color: "var(--color-muted)" }}>
+              <div className="text-center p-12">
+                <p className="text-text-muted">
                   {isArabic ? "جاري التحميل..." : "Loading..."}
                 </p>
               </div>
@@ -157,7 +157,7 @@ export default function DashboardPage() {
                           ))}
                     </div>
 
-                    <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                    <div className="flex gap-3 flex-wrap">
                       {activeId !== theme.id && (
                         <button
                           onClick={() => handleActivate(theme.id)}

@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import { fadeUpVariant, staggerContainer } from "@/lib/animations";
 
 export interface Service {
   id: number;
@@ -72,9 +73,7 @@ function ServiceCard({
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            variants={fadeUpVariant}
             className="service-card gradient-border"
             style={{
                 position: "relative",
@@ -200,9 +199,9 @@ export function ServicesSection() {
             {/* Section header */}
             <div className="container-custom">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6 }}
+                    variants={fadeUpVariant}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
                     style={{ marginBottom: "1rem" }}
                     className="section-label"
                 >
@@ -210,9 +209,9 @@ export function ServicesSection() {
                 </motion.div>
 
                 <motion.h2
-                    initial={{ opacity:0, y:20 }}
-                    animate={inView ? { opacity:1, y:0 } : {}}
-                    transition={{ duration:0.6, delay:0.1 }}
+                    variants={fadeUpVariant}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
                     style={{
                         fontFamily: "var(--font-heading)",
                         fontSize: "clamp(2rem, 4vw, 3.5rem)",
@@ -234,7 +233,10 @@ export function ServicesSection() {
                         </p>
                     </div>
                 ) : (
-                    <div
+                    <motion.div
+                        variants={staggerContainer(0.1)}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
                         style={{
                             display: "grid",
                             gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
@@ -244,7 +246,7 @@ export function ServicesSection() {
                         {services.map((service, i) => (
                             <ServiceCard key={service.id} service={service} index={i} inView={inView} />
                         ))}
-                    </div>
+                    </motion.div>
                 )}
             </div>
 

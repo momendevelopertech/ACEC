@@ -82,7 +82,7 @@ export default async function ProjectDetailPage({ params }: Props) {
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         {/* Hero Section */}
         <section
           style={{
@@ -92,7 +92,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           }}
         >
           <div className="container-custom">
-            <div className="section-label" style={{ marginBottom: "1rem", justifyContent: "center" }}>
+            <div className="section-label justify-center mb-4">
               ACEC PROJECT
             </div>
             <h1
@@ -126,7 +126,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
         {/* Project Image */}
         {project.image && (
-          <section style={{ padding: "3rem 1.5rem" }}>
+          <section className="py-12 px-6">
             <div className="container-custom">
               <div
                 style={{
@@ -140,7 +140,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 <img
                   src={`${API_BASE}/storage/${project.image}`}
                   alt={isAr ? project.title_ar : project.title_en}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>

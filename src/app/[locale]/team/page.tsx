@@ -49,7 +49,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         {/* Hero */}
         <section
           style={{
@@ -60,8 +60,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
         >
           <div className="container-custom">
             <div
-              className="section-label"
-              style={{ justifyContent: "center", marginBottom: "1rem" }}
+              className="section-label justify-center mb-4"
             >
               {isAr ? "فريقنا" : "Our Team"}
             </div>
@@ -103,7 +102,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
         </section>
 
         {/* Team Grid */}
-        <section style={{ padding: "4rem 1.5rem 6rem" }}>
+        <section className="py-16 px-6 md:pb-24">
           <div className="container-custom">
             {teamData && teamData.length > 0 ? (
               <div
@@ -146,7 +145,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                         <img
                           src={`${API_BASE}/storage/${member.image}`}
                           alt={member.name}
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          className="w-full h-full object-cover"
                         />
                       ) : (
                         <span>
@@ -204,12 +203,9 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                 ))}
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "4rem 0" }}>
+              <div className="text-center py-16">
                 <p
-                  style={{
-                    fontSize: "1.2rem",
-                    color: "var(--color-muted)",
-                  }}
+                  className="text-xl text-text-muted"
                 >
                   {isAr ? "قريباً..." : "Coming Soon..."}
                 </p>
@@ -217,7 +213,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
             )}
 
             {/* Back link */}
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+            <div className="text-center mt-12">
               <Link
                 href={`/${locale}`}
                 style={{

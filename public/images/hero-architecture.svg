@@ -9,7 +9,6 @@
       <stop offset="100%" stop-color="#E8C97A"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="800" fill="url(#bg)" />
   <circle cx="820" cy="220" r="140" fill="rgba(201,168,76,0.12)" />
   <path d="M200 740V400H320V740" stroke="url(#gold)" stroke-width="24" stroke-linecap="round" />
   <path d="M360 740V500H460V740" stroke="#5D6C8A" stroke-width="22" stroke-linecap="round" />

@@ -2,11 +2,9 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { CustomCursor } from "@/components/ui/CustomCursor";
-import { PageLoader } from "@/components/ui/PageLoader";
-import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { LocaleProvider } from "@/components/layout/LocaleProvider";
+import { ClientShell } from "@/components/layout/ClientShell";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,9 +30,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <ThemeProvider>
         <LocaleProvider />
-        <PageLoader />
-        <CustomCursor />
-        <PageTransitionWrapper>{children}</PageTransitionWrapper>
+        <ClientShell>{children}</ClientShell>
       </ThemeProvider>
     </NextIntlClientProvider>
   );

@@ -68,7 +68,7 @@ export function Footer() {
                 </svg>
             ),
             href: "https://wa.me/966500037049",
-            color: "#25D366",
+            hoverClass: "hover:bg-[#25D366]/20 hover:border-[#25D366] hover:text-[#25D366]",
         },
         {
             name: "Email",
@@ -79,6 +79,7 @@ export function Footer() {
                 </svg>
             ),
             href: "mailto:info@ac-ec.com.sa",
+            hoverClass: "hover:bg-accent/20 hover:border-accent hover:text-accent",
         },
         {
             name: "Phone",
@@ -88,61 +89,32 @@ export function Footer() {
                 </svg>
             ),
             href: "tel:+966500037049",
+            hoverClass: "hover:bg-accent/20 hover:border-accent hover:text-accent",
         },
     ];
 
     return (
-        <footer
-            style={{
-                background: "linear-gradient(180deg, var(--color-surface) 0%, rgba(var(--color-bg-rgb),0.95) 100%)",
-                borderTop: "1px solid var(--color-border)",
-                padding: "5rem 1.5rem 2rem",
-                position: "relative",
-                overflow: "hidden",
-            }}
-        >
+        <footer className="relative overflow-hidden pt-20 pb-8 px-6 border-t border-border-default bg-gradient-to-b from-surface to-background/95">
             {/* Subtle background pattern */}
-                <div
-                    style={{
-                        position: "absolute",
-                        inset: 0,
-                        backgroundImage: "radial-gradient(circle at 20% 50%, rgba(var(--color-gold-rgb), 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(var(--color-accent-rgb), 0.03) 0%, transparent 50%)",
-                        pointerEvents: "none",
-                    }}
-                />
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_50%,rgba(var(--color-accent-rgb),0.03)_0%,transparent_50%),radial-gradient(circle_at_80%_50%,rgba(var(--color-accent-rgb),0.03)_0%,transparent_50%)]" />
 
-            <div className="container-custom" style={{ position: "relative", zIndex: 1 }}>
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1.5fr 1fr 1fr 1.2fr",
-                        gap: "3rem",
-                        marginBottom: "4rem",
-                    }}
-                    className="footer-grid"
-                >
+            <div className="container-custom relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-10 mb-16">
                     {/* Column 1: Logo + Description */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <div style={{ marginBottom: "1.25rem" }}>
+                        <div className="mb-5">
                             <Logo size="md" href={`/${locale}`} />
                         </div>
-                        <p
-                            style={{
-                                color: "var(--color-muted)",
-                                fontSize: "0.9rem",
-                                lineHeight: 1.8,
-                                marginBottom: "1.5rem",
-                            }}
-                        >
+                        <p className="text-text-muted text-[0.9rem] leading-[1.8] mb-6">
                             {t("description")}
                         </p>
 
                         {/* Social links with animations */}
-                        <div style={{ display: "flex", gap: "0.75rem" }}>
+                        <div className="flex gap-3">
                             {socialLinks.map((social, index) => (
                                 <motion.a
                                     key={social.name}
@@ -152,31 +124,7 @@ export function Footer() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: index * 0.1 }}
                                     whileHover={{ y: -3, scale: 1.1 }}
-                                    style={{
-                                        width: "42px",
-                                        height: "42px",
-                                        borderRadius: "50%",
-                                        background: "rgba(var(--color-gold-rgb), 0.08)",
-                                        border: "1px solid rgba(var(--color-gold-rgb), 0.2)",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        color: "var(--color-muted)",
-                                        textDecoration: "none",
-                                        transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.background = social.color
-                                            ? `${social.color}20`
-                                            : "rgba(var(--color-gold-rgb), 0.18)";
-                                        e.currentTarget.style.borderColor = social.color || "var(--color-gold)";
-                                        e.currentTarget.style.color = social.color || "var(--color-gold)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.background = "rgba(var(--color-gold-rgb), 0.08)";
-                                        e.currentTarget.style.borderColor = "rgba(var(--color-gold-rgb), 0.2)";
-                                        e.currentTarget.style.color = "var(--color-muted)";
-                                    }}
+                                    className={`w-[42px] h-[42px] rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-text-muted no-underline transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${social.hoverClass}`}
                                 >
                                     {social.icon}
                                 </motion.a>
@@ -190,23 +138,11 @@ export function Footer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                     >
-                        <h3
-                            style={{
-                                color: "var(--color-gold)",
-                                fontSize: "0.75rem",
-                                fontWeight: 600,
-                                letterSpacing: "0.15em",
-                                textTransform: "uppercase",
-                                marginBottom: "1.5rem",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "0.5rem",
-                            }}
-                        >
-                            <span style={{ width: "20px", height: "1px", background: "var(--color-gold)" }} />
+                        <h3 className="text-accent text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
+                            <span className="w-5 h-px bg-accent" />
                             {t("quickLinks")}
                         </h3>
-                        <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                        <nav className="flex flex-col gap-3">
                             {quickLinks.map((link, index) => (
                                 <motion.div
                                     key={link.href}
@@ -216,35 +152,10 @@ export function Footer() {
                                 >
                                     <Link
                                         href={link.href}
-                                        style={{
-                                            color: "var(--color-muted)",
-                                            textDecoration: "none",
-                                            fontSize: "0.9rem",
-                                            transition: "all 0.2s",
-                                            display: "inline-flex",
-                                            alignItems: "center",
-                                            gap: "0.5rem",
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.color = "var(--color-white)";
-                                            const arrow = e.currentTarget.querySelector(".arrow");
-                                            if (arrow) (arrow as HTMLElement).style.opacity = "1";
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.color = "var(--color-muted)";
-                                            const arrow = e.currentTarget.querySelector(".arrow");
-                                            if (arrow) (arrow as HTMLElement).style.opacity = "0";
-                                        }}
+                                        className="text-text-muted no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-text-primary group"
                                     >
-                                        <span
-                                            className="arrow"
-                                            style={{
-                                                opacity: 0,
-                                                transition: "opacity 0.2s",
-                                                fontSize: "0.7rem",
-                                            }}
-                                        >
-                                            →
+                                        <span className="opacity-0 transition-opacity duration-200 text-[0.7rem] group-hover:opacity-100">
+                                            {isArabic ? "←" : "→"}
                                         </span>
                                         {link.label}
                                     </Link>
@@ -259,23 +170,11 @@ export function Footer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <h3
-                            style={{
-                                color: "var(--color-gold)",
-                                fontSize: "0.75rem",
-                                fontWeight: 600,
-                                letterSpacing: "0.15em",
-                                textTransform: "uppercase",
-                                marginBottom: "1.5rem",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "0.5rem",
-                            }}
-                        >
-                            <span style={{ width: "20px", height: "1px", background: "var(--color-gold)" }} />
+                        <h3 className="text-accent text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
+                            <span className="w-5 h-px bg-accent" />
                             {services("title")}
                         </h3>
-                        <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                        <nav className="flex flex-col gap-3">
                             {serviceLinks.map((link, index) => (
                                 <motion.div
                                     key={link.href + index}
@@ -285,35 +184,10 @@ export function Footer() {
                                 >
                                     <Link
                                         href={link.href}
-                                        style={{
-                                            color: "var(--color-muted)",
-                                            textDecoration: "none",
-                                            fontSize: "0.9rem",
-                                            transition: "all 0.2s",
-                                            display: "inline-flex",
-                                            alignItems: "center",
-                                            gap: "0.5rem",
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.color = "var(--color-white)";
-                                            const arrow = e.currentTarget.querySelector(".arrow");
-                                            if (arrow) (arrow as HTMLElement).style.opacity = "1";
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.color = "var(--color-muted)";
-                                            const arrow = e.currentTarget.querySelector(".arrow");
-                                            if (arrow) (arrow as HTMLElement).style.opacity = "0";
-                                        }}
+                                        className="text-text-muted no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-text-primary group"
                                     >
-                                        <span
-                                            className="arrow"
-                                            style={{
-                                                opacity: 0,
-                                                transition: "opacity 0.2s",
-                                                fontSize: "0.7rem",
-                                            }}
-                                        >
-                                            →
+                                        <span className="opacity-0 transition-opacity duration-200 text-[0.7rem] group-hover:opacity-100">
+                                            {isArabic ? "←" : "→"}
                                         </span>
                                         {link.label}
                                     </Link>
@@ -328,84 +202,29 @@ export function Footer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                     >
-                        <h3
-                            style={{
-                                color: "var(--color-gold)",
-                                fontSize: "0.75rem",
-                                fontWeight: 600,
-                                letterSpacing: "0.15em",
-                                textTransform: "uppercase",
-                                marginBottom: "1.5rem",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "0.5rem",
-                            }}
-                        >
-                            <span style={{ width: "20px", height: "1px", background: "var(--color-gold)" }} />
+                        <h3 className="text-accent text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
+                            <span className="w-5 h-px bg-accent" />
                             {t("contactInfo")}
                         </h3>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                        <div className="flex flex-col gap-5">
                             {contactDetails.map((item) => (
-                                <div
-                                    key={item.title}
-                                    style={{
-                                        display: "flex",
-                                        gap: "0.875rem",
-                                        alignItems: "flex-start",
-                                    }}
-                                >
-                                    <span
-                                        style={{
-                                            fontSize: "1.1rem",
-                                            flexShrink: 0,
-                                            display: "inline-flex",
-                                            marginTop: "2px",
-                                        }}
-                                    >
+                                <div key={item.title} className="flex gap-3.5 items-start">
+                                    <span className="text-[1.1rem] shrink-0 inline-flex mt-0.5">
                                         {item.icon}
                                     </span>
-                                    <div style={{ flex: 1 }}>
-                                        <div
-                                            style={{
-                                                fontSize: "0.7rem",
-                                                color: "var(--color-gold)",
-                                                fontWeight: 600,
-                                                letterSpacing: "0.1em",
-                                                textTransform: "uppercase",
-                                                marginBottom: "0.25rem",
-                                            }}
-                                        >
+                                    <div className="flex-1">
+                                        <div className="text-[0.7rem] text-accent font-semibold tracking-[0.1em] uppercase mb-1">
                                             {item.title}
                                         </div>
                                         {item.href ? (
                                             <a
                                                 href={item.href}
-                                                style={{
-                                                    color: "var(--color-white)",
-                                                    textDecoration: "none",
-                                                    fontSize: "0.875rem",
-                                                    transition: "color 0.2s",
-                                                    display: "inline-block",
-                                                    lineHeight: 1.5,
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.style.color = "var(--color-gold)";
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.style.color = "var(--color-white)";
-                                                }}
+                                                className="text-text-primary no-underline text-[0.875rem] transition-colors duration-200 inline-block leading-[1.5] hover:text-accent"
                                             >
                                                 {item.value}
                                             </a>
                                         ) : (
-                                            <span
-                                                style={{
-                                                    color: "var(--color-white)",
-                                                    fontSize: "0.875rem",
-                                                    display: "block",
-                                                    lineHeight: 1.5,
-                                                }}
-                                            >
+                                            <span className="text-text-primary text-[0.875rem] block leading-[1.5]">
                                                 {item.value}
                                             </span>
                                         )}
@@ -421,11 +240,7 @@ export function Footer() {
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     transition={{ duration: 0.8 }}
-                    style={{
-                        borderTop: "1px solid var(--color-border)",
-                        margin: "3rem 0",
-                        transformOrigin: "center",
-                    }}
+                    className="border-t border-border-default my-12 origin-center"
                 />
 
                 {/* Bottom bar */}
@@ -433,45 +248,16 @@ export function Footer() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        flexWrap: "wrap",
-                        gap: "1rem",
-                        paddingBottom: "1rem",
-                    }}
+                    className="flex items-center justify-between flex-wrap gap-4 pb-4"
                 >
-                    <p style={{ color: "var(--color-muted)", fontSize: "0.8125rem" }}>
+                    <p className="text-text-muted text-[0.8125rem] m-0">
                         © {currentYear} {t("company")} — {t("rights")}
                     </p>
-                    <p style={{ color: "var(--color-muted)", fontSize: "0.8125rem" }}>
+                    <p className="text-text-muted text-[0.8125rem] m-0">
                         {isArabic ? "تصميم وتطوير" : "Designed & Developed"}
                     </p>
                 </motion.div>
             </div>
-
-            <style>{`
-                @media (max-width: 1024px) {
-                    .footer-grid {
-                        grid-template-columns: 1fr 1fr !important;
-                        gap: 2.5rem !important;
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .footer-grid {
-                        grid-template-columns: 1fr !important;
-                        gap: 2.5rem !important;
-                    }
-                }
-
-                @media (max-width: 480px) {
-                    footer {
-                        padding: 3rem 1rem 1.5rem !important;
-                    }
-                }
-            `}</style>
         </footer>
     );
 }

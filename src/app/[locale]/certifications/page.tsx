@@ -38,7 +38,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         <section
           style={{
             padding: "6rem 1.5rem 3rem",
@@ -47,7 +47,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
           }}
         >
           <div className="container-custom">
-            <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+            <div className="section-label justify-center mb-4">
               {isAr ? "الشهادات" : "Certifications"}
             </div>
             <h1
@@ -74,7 +74,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
           </div>
         </section>
 
-        <section style={{ padding: "4rem 1.5rem 6rem" }}>
+        <section className="py-16 px-6 md:pb-24">
           <div className="container-custom">
             {certs && certs.length > 0 ? (
               <div
@@ -149,14 +149,14 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                 ))}
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "4rem 0" }}>
-                <p style={{ fontSize: "1.2rem", color: "var(--color-muted)" }}>
+              <div className="text-center py-16">
+                <p className="text-xl text-text-muted">
                   {isAr ? "قريباً..." : "Coming Soon..."}
                 </p>
               </div>
             )}
 
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+            <div className="text-center mt-12">
               <Link
                 href={`/${locale}`}
                 style={{

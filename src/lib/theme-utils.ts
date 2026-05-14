@@ -1,34 +1,5 @@
 import { ThemeColors } from './theme-types';
 
-const KEY_MAP: Record<string, string> = {
-  bg_primary: '--color-bg',
-  bg_secondary: '--color-surface',
-  bg_card: '--color-card-bg',
-  bg_section_alt: '--color-surface-2',
-  text_primary: '--color-text',
-  text_secondary: '--color-text-muted',
-  text_muted: '--color-muted',
-  accent: '--color-gold',
-  accent_hover: '--color-gold-light',
-  accent_text: '--color-accent-text',
-  border: '--color-border',
-  navbar_bg: '--color-header-bg',
-  navbar_text: '--color-navbar-text',
-  button_bg: '--color-gold',
-  button_text: '--color-button-text',
-  button_hover: '--color-gold-light',
-  card_bg: '--color-card-bg',
-  card_border: '--color-card-border',
-  footer_bg: '--color-footer-bg',
-  footer_text: '--color-footer-text',
-};
-
-export function themeToCSS(colors: ThemeColors): string {
-  return Object.entries(colors)
-    .map(([key, value]) => `${KEY_MAP[key] || `--${key.replace(/_/g, '-')}`}: ${value};`)
-    .join(' ');
-}
-
 export function hexToRgb(hex: string): string {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
@@ -36,60 +7,49 @@ export function hexToRgb(hex: string): string {
     : '0, 0, 0';
 }
 
-export function applyThemeToDocument(colors: ThemeColors, slug?: string): void {
+/**
+ * Calculates and applies all application CSS variables derived from the 4 base colors.
+ */
+export function applyThemeToDocument(colors: ThemeColors, mode: 'light' | 'dark'): void {
   const root = document.documentElement;
-  Object.entries(colors).forEach(([key, value]) => {
-    const cssVar = KEY_MAP[key] || `--${key.replace(/_/g, '-')}`;
-    root.style.setProperty(cssVar, value);
-    root.style.setProperty(`${cssVar}-rgb`, hexToRgb(value));
-  });
-  const accentHex = colors.accent || '#C9A84C';
-  const accentRgb = hexToRgb(accentHex);
-  const bgHex = colors.bg_primary || '#0D1B2A';
-  const bgRgb = hexToRgb(bgHex);
-  const textHex = colors.text_primary || '#F0F4F8';
-  const textRgb = hexToRgb(textHex);
-  const mutedHex = colors.text_muted || '#8A9BB0';
-  const secondaryHex = colors.text_secondary || '#9AABBE';
-  const surfaceHex = colors.bg_secondary || '#162234';
-  const cardBgHex = colors.bg_card || '#162234';
-  const borderHex = colors.border || '#3A5068';
-  const accentHoverHex = colors.accent_hover || '#F0CF7A';
-  const sectionAltHex = colors.bg_section_alt || '#111E2C';
-  const accentTextHex = colors.accent_text || '#0D1B2A';
+  
+  // Set the 4 base colors
+  root.style.setProperty('--color-background', colors.background);
+  root.style.setProperty('--color-surface', colors.surface);
+  root.style.setProperty('--color-accent', colors.accent);
+  root.style.setProperty('--color-text-primary', colors.text);
 
-  root.style.setProperty('--color-gold-dim', `rgba(${accentRgb}, 0.15)`);
-  root.style.setProperty('--color-gold-dim-rgb', accentRgb);
-  root.style.setProperty('--color-border-gold', `rgba(${accentRgb}, 0.25)`);
-  root.style.setProperty('--color-border-gold-rgb', accentRgb);
-  root.style.setProperty('--color-accent-rgb', accentRgb);
-  root.style.setProperty('--color-accent', accentHex);
-  root.style.setProperty('--color-header-bg', `rgba(${bgRgb}, 0.85)`);
-  root.style.setProperty('--color-white', textHex);
-  root.style.setProperty('--color-white-rgb', textRgb);
-  root.style.setProperty('--color-accent-text', accentTextHex);
+  // Set RGB versions of base colors for opacity support
+  root.style.setProperty('--color-background-rgb', hexToRgb(colors.background));
+  root.style.setProperty('--color-surface-rgb', hexToRgb(colors.surface));
+  root.style.setProperty('--color-accent-rgb', hexToRgb(colors.accent));
+  root.style.setProperty('--color-text-rgb', hexToRgb(colors.text));
 
-  root.style.setProperty('--color-text-on-dark', textHex);
-  root.style.setProperty('--color-text-on-dark-rgb', textRgb);
-  root.style.setProperty('--color-text-on-accent', accentTextHex);
-  root.style.setProperty('--color-text-muted-on-dark', mutedHex);
-  root.style.setProperty('--color-text-on-light', accentTextHex);
-  root.style.setProperty('--color-text-muted-on-light', '#4A5568');
-  root.style.setProperty('--color-secondary', secondaryHex);
-  root.style.setProperty('--color-surface-2', sectionAltHex);
-  root.style.setProperty('--color-surface-rgb', hexToRgb(surfaceHex));
-  root.style.setProperty('--color-card-bg-rgb', hexToRgb(cardBgHex));
-  root.style.setProperty('--color-border-rgb', hexToRgb(borderHex));
-  root.style.setProperty('--color-gold-light-rgb', hexToRgb(accentHoverHex));
+  // Dynamic glow opacities to prevent dirty stains in light mode
+  root.style.setProperty('--glow-opacity', mode === 'dark' ? '0.15' : '0.01');
+  root.style.setProperty('--glow-opacity-secondary', mode === 'dark' ? '0.08' : '0.005');
 
-  root.style.setProperty('--font-heading', '"Playfair Display", Georgia, serif');
-  root.style.setProperty('--font-body', '"Inter", system-ui, Arial, sans-serif');
-  root.style.setProperty('--font-arabic', '"Tajawal", "Cairo", Arial, sans-serif');
-  root.style.setProperty('--font-stat', '"Bebas Neue", sans-serif');
-  root.style.setProperty('--font-mono', 'monospace');
-  root.style.setProperty('--radius-sm', '8px');
-  root.style.setProperty('--radius-md', '16px');
-  root.style.setProperty('--radius-lg', '24px');
-  root.style.setProperty('--radius-xl', '32px');
-  if (slug) root.setAttribute('data-theme', slug);
+  // Derived Backgrounds
+  root.style.setProperty('--color-surface-alt', `color-mix(in srgb, var(--color-background) 50%, var(--color-surface))`);
+  root.style.setProperty('--color-card-bg', 'var(--color-surface)');
+  root.style.setProperty('--color-header-bg', `rgba(var(--color-background-rgb), 0.85)`);
+  root.style.setProperty('--color-footer-bg', mode === 'dark' ? '#080D14' : '#F1F5F9'); // Slightly harder to calculate footer, keep standard scale
+
+  // Derived Text Colors
+  root.style.setProperty('--color-text-secondary', `color-mix(in srgb, var(--color-text-primary) 70%, transparent)`);
+  root.style.setProperty('--color-text-muted', `color-mix(in srgb, var(--color-text-primary) 50%, transparent)`);
+  root.style.setProperty('--color-header-text', 'var(--color-text-primary)');
+  root.style.setProperty('--color-footer-text', 'var(--color-text-muted)');
+
+  // Derived Accents & Buttons
+  root.style.setProperty('--color-accent-hover', `color-mix(in srgb, var(--color-accent) 80%, white)`);
+  root.style.setProperty('--color-text-on-accent', '#111827');
+  root.style.setProperty('--color-button-bg', 'var(--color-accent)');
+  root.style.setProperty('--color-button-text', 'var(--color-text-on-accent)');
+  root.style.setProperty('--color-button-hover', 'var(--color-accent-hover)');
+  root.style.setProperty('--color-accent-dim', `rgba(var(--color-accent-rgb), 0.15)`);
+
+  // Derived Borders
+  root.style.setProperty('--color-border-default', `color-mix(in srgb, var(--color-text-primary) 15%, transparent)`);
+  root.style.setProperty('--color-card-border', 'var(--color-border-default)');
 }

@@ -10,6 +10,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AcecDatabaseSeeder::class,
+            SettingsSeeder::class,
+            ThemeSeeder::class,
+            HeroSeeder::class,
+            WhyUsSeeder::class,
+            ServiceSeeder::class,
+            ProjectSeeder::class,
+            TeamMemberSeeder::class,
+            CertificationSeeder::class,
+            JobSeeder::class,
+            BlogPostSeeder::class,
         ]);
     }
 }

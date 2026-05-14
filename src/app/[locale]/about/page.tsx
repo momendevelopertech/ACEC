@@ -27,28 +27,13 @@ export default async function AboutPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: "80px" }}>
-        <div
-          style={{
-            padding: "5rem 1.5rem 2rem",
-            background:
-              "linear-gradient(180deg, rgba(201, 168, 76, 0.04) 0%, transparent 100%)",
-            borderBottom: "1px solid var(--color-border)",
-            textAlign: "center",
-          }}
-        >
+      <main className="pt-[80px]">
+        <div className="pt-20 pb-8 px-6 bg-[linear-gradient(180deg,rgba(var(--color-accent-rgb),0.04)_0%,transparent_100%)] border-b border-border-default text-center">
           <div className="container-custom">
-            <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+            <div className="section-label justify-center mb-4">
               ACEC
             </div>
-            <h1
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                fontWeight: 700,
-                color: "var(--color-white)",
-              }}
-            >
+            <h1 className="font-heading text-[clamp(2.5rem,5vw,4rem)] font-bold text-text-primary">
               {isArabic ? "عن " : "About "}
               <span className="gold-text">{isArabic ? "مكتبنا" : "Us"}</span>
             </h1>

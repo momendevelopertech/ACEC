@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import Image from "next/image";
+import { AcecLogoSVG } from "./AcecLogoSVG";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
@@ -22,19 +22,10 @@ export function Logo({ size = "md", href, className = "" }: LogoProps) {
   const dimensions = sizeMap[size];
 
   const content = (
-    <Image
-      src="/acec-logo.svg"
-      alt="ACEC - الميثاق العربي للاستشارات الهندسية"
+    <AcecLogoSVG
       width={dimensions.width}
       height={dimensions.height}
-      priority
       className={`transition-opacity duration-200 hover:opacity-80 ${className}`}
-      style={{
-        width: "auto",
-        height: "auto",
-        maxWidth: "100%",
-        maxHeight: dimensions.height,
-      }}
     />
   );
 

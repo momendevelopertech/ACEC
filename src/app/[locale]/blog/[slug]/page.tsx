@@ -82,7 +82,7 @@ export default async function BlogDetailPage({ params }: Props) {
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         {/* Hero Section */}
         <section
           style={{
@@ -92,7 +92,7 @@ export default async function BlogDetailPage({ params }: Props) {
             textAlign: "center",
           }}
         >
-          <div className="container-custom" style={{ maxWidth: "800px" }}>
+          <div className="container-custom max-w-[800px] mx-auto">
             {post.category && (
               <span
                 style={{
@@ -121,7 +121,7 @@ export default async function BlogDetailPage({ params }: Props) {
               {post.title}
             </h1>
             {post.published_at && (
-              <p style={{ color: "var(--color-muted)", fontSize: "0.9rem" }}>
+              <p className="text-sm text-text-muted">
                 {new Date(post.published_at).toLocaleDateString(isAr ? "ar-SA" : "en-US", {
                   year: "numeric",
                   month: "long",
@@ -134,8 +134,8 @@ export default async function BlogDetailPage({ params }: Props) {
 
         {/* Featured Image */}
         {post.image && (
-          <section style={{ padding: "3rem 1.5rem" }}>
-            <div className="container-custom" style={{ maxWidth: "900px" }}>
+          <section className="py-12 px-6">
+            <div className="container-custom max-w-[900px] mx-auto">
               <div
                 style={{
                   height: "400px",
@@ -147,7 +147,7 @@ export default async function BlogDetailPage({ params }: Props) {
                 <img
                   src={`${API_BASE}/storage/${post.image}`}
                   alt={post.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -156,7 +156,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
         {/* Blog Content */}
         <section style={{ padding: "3rem 1.5rem 6rem" }}>
-          <div className="container-custom" style={{ maxWidth: "800px" }}>
+          <div className="container-custom max-w-[800px] mx-auto">
             <article
               style={{
                 color: "rgba(var(--color-text-rgb), 0.8)",
@@ -168,7 +168,7 @@ export default async function BlogDetailPage({ params }: Props) {
             />
 
             {/* Back to blog */}
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+            <div className="text-center mt-12">
               <a
                 href={`/${locale}/blog`}
                 style={{

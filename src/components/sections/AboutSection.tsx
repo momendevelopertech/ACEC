@@ -4,7 +4,8 @@ import { useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { fadeUpVariant, staggerContainer, imageMaskVariant } from "@/lib/animations";
 
 export function AboutSection() {
     const t = useTranslations("about");
@@ -12,6 +13,13 @@ export function AboutSection() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
     const isRTL = locale === "ar";
+    
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "end start"],
+    });
+    
+    const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
     return (
         <section
@@ -35,11 +43,14 @@ export function AboutSection() {
                     className="about-grid"
                 >
                     {/* Text side */}
-                    <div style={{ order: isRTL ? 2 : 1 }}>
+                    <motion.div 
+                        style={{ order: isRTL ? 2 : 1 }}
+                        variants={staggerContainer(0.1)}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
+                    >
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.6 }}
+                            variants={fadeUpVariant}
                             className="section-label"
                             style={{ marginBottom: "1rem" }}
                         >
@@ -47,9 +58,7 @@ export function AboutSection() {
                         </motion.div>
 
                         <motion.h2
-                            initial={{ opacity:0, y:20 }}
-                            animate={inView ? { opacity:1, y:0 } : {}}
-                            transition={{ duration:0.6, delay:0.1 }}
+                            variants={fadeUpVariant}
                             style={{
                                 fontFamily: "var(--font-heading)",
                                 fontSize: "clamp(2rem, 3.5vw, 3rem)",
@@ -63,9 +72,7 @@ export function AboutSection() {
                         </motion.h2>
 
                         <motion.p
-                            initial={{ opacity:0, y:20 }}
-                            animate={inView ? { opacity:1, y:0 } : {}}
-                            transition={{ duration:0.6, delay:0.2 }}
+                            variants={fadeUpVariant}
                             style={{
                                 fontSize: "1rem",
                                 color: "var(--color-text-muted)",
@@ -84,9 +91,7 @@ export function AboutSection() {
                         ].map((point, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-                                animate={inView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                                variants={fadeUpVariant}
                                 style={{
                                     display: "flex",
                                     alignItems: "center",
@@ -110,9 +115,7 @@ export function AboutSection() {
                         ))}
 
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.6, delay: 0.6 }}
+                            variants={fadeUpVariant}
                             style={{ marginTop: "2rem" }}
                         >
                             <Link
@@ -122,13 +125,13 @@ export function AboutSection() {
                                 {t("learnMore")}
                             </Link>
                         </motion.div>
-                    </div>
+                    </motion.div>
 
                     {/* Image side */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={inView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ duration: 0.8, delay: 0.2 }}
+                        variants={imageMaskVariant}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
                         style={{
                             order: isRTL ? 1 : 2,
                             position: "relative",
@@ -138,12 +141,14 @@ export function AboutSection() {
                         }}
                         className="about-image"
                     >
-                        <Image
-                            src="/images/about-architecture.svg"
-                            alt="ACEC engineering illustration"
-                            fill
-                            style={{ objectFit: "cover" }}
-                        />
+                        <motion.div style={{ width: "100%", height: "115%", y: imageY, position: "absolute", inset: 0 }}>
+                            <Image
+                                src="/images/about-architecture.svg"
+                                alt="ACEC engineering illustration"
+                                fill
+                                style={{ objectFit: "cover" }}
+                            />
+                        </motion.div>
                         <div
                             style={{
                                 position: "absolute",

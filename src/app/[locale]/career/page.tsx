@@ -42,7 +42,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         <section
           style={{
             padding: "6rem 1.5rem 3rem",
@@ -51,7 +51,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
           }}
         >
           <div className="container-custom">
-            <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+            <div className="section-label justify-center mb-4">
               {isAr ? "انضم لفريقنا" : "Join Our Team"}
             </div>
             <h1
@@ -91,10 +91,10 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
           </div>
         </section>
 
-        <section style={{ padding: "4rem 1.5rem 6rem" }}>
+        <section className="py-16 px-6 md:pb-24">
           <div className="container-custom">
             {jobs && jobs.length > 0 ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div className="flex flex-col gap-6">
                 {jobs.map((job: any) => (
                   <div
                     key={job.id}
@@ -188,14 +188,14 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
                 ))}
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "4rem 0" }}>
-                <p style={{ fontSize: "1.2rem", color: "var(--color-muted)" }}>
+              <div className="text-center py-16">
+                <p className="text-xl text-text-muted">
                   {isAr ? "لا توجد وظائف متاحة حالياً" : "No positions available at the moment"}
                 </p>
               </div>
             )}
 
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+            <div className="text-center mt-12">
               <Link
                 href={`/${locale}`}
                 style={{

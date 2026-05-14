@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useInView } from "framer-motion";
+import { fadeUpVariant, staggerContainer } from "@/lib/animations";
 
 const whyIcons = {
     experience: (
@@ -65,11 +66,14 @@ export function WhySection() {
 
             <div className="container-custom" style={{ position: "relative" }}>
                 {/* Header */}
-                <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+                <motion.div 
+                    style={{ textAlign: "center", marginBottom: "4rem" }}
+                    variants={staggerContainer(0.1)}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
+                >
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={inView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.6 }}
+                        variants={fadeUpVariant}
                         className="section-label"
                         style={{ marginBottom: "1rem", justifyContent: "center" }}
                     >
@@ -77,9 +81,7 @@ export function WhySection() {
                     </motion.div>
 
                     <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={inView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.6, delay: 0.1 }}
+                        variants={fadeUpVariant}
                         style={{
                             fontFamily: "var(--font-heading)",
                             fontSize: "clamp(2rem, 4vw, 3rem)",
@@ -89,10 +91,13 @@ export function WhySection() {
                     >
                         {t("subtitle")}
                     </motion.h2>
-                </div>
+                </motion.div>
 
                 {/* Grid */}
-                <div
+                <motion.div
+                    variants={staggerContainer(0.15)}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
                     style={{
                         display: "grid",
                         gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
@@ -102,9 +107,7 @@ export function WhySection() {
                     {whyKeys.map((key, i) => (
                         <motion.div
                             key={key}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                            variants={fadeUpVariant}
                             style={{
                                 padding: "2rem",
                                 borderRadius: "var(--radius-lg)",
@@ -157,7 +160,7 @@ export function WhySection() {
                             </p>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
 
             <style>{`

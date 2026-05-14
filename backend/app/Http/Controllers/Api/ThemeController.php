@@ -18,22 +18,24 @@ class ThemeController extends Controller
 
     public function active()
     {
-        $theme = Theme::where('is_active', true)->first();
+        $light = Theme::where('slug', 'light')->first();
+        $dark = Theme::where('slug', 'dark')->first();
 
-        if (!$theme) {
-            $theme = Theme::first();
-        }
-
-        if (!$theme) {
+        if (!$light && !$dark) {
             return response()->json([
                 'success' => false,
-                'message' => 'No theme configured',
+                'message' => 'No themes configured',
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $theme,
+            'data' => [
+                'light' => $light ? $light->colors : [],
+                'dark'  => $dark ? $dark->colors : [],
+                'typography' => $light ? $light->typography : [],
+                'layout' => $light ? $light->layout : [],
+            ],
         ]);
     }
 

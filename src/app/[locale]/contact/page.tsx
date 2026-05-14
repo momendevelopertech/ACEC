@@ -48,7 +48,7 @@ export default async function ContactPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: "80px" }}>
+      <main className="pt-[80px]">
         <section className="section-padding">
           <div className="container-custom">
             <div
@@ -88,7 +88,7 @@ export default async function ContactPage({ params }: Props) {
                   {t("subtitle")}
                 </p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                <div className="flex flex-col gap-6">
                   {contactItems.map((item) => (
                     <div
                       key={item.title}

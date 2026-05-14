@@ -42,7 +42,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         {/* Hero Section */}
         <section
           style={{
@@ -53,8 +53,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
         >
           <div className="container-custom">
             <div
-              className="section-label"
-              style={{ justifyContent: "center", marginBottom: "1rem" }}
+              className="section-label justify-center mb-4"
             >
               {isAr ? "عملاؤنا" : "Our Clients"}
             </div>
@@ -96,7 +95,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
         </section>
 
         {/* Clients Grid */}
-        <section style={{ padding: "4rem 1.5rem 6rem" }}>
+        <section className="py-16 px-6 md:pb-24">
           <div className="container-custom">
             {clientsData && clientsData.length > 0 ? (
               <div
@@ -191,12 +190,9 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
                 ))}
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "4rem 0" }}>
+              <div className="text-center py-16">
                 <p
-                  style={{
-                    fontSize: "1.2rem",
-                    color: "var(--color-muted)",
-                  }}
+                  className="text-xl text-text-muted"
                 >
                   {isAr ? "قريباً..." : "Coming Soon..."}
                 </p>
@@ -204,7 +200,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
             )}
 
             {/* Bottom CTA */}
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+            <div className="text-center mt-12">
               <a
                 href={`/${locale}/contact`}
                 style={{

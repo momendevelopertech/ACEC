@@ -2,7 +2,8 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { fadeUpVariant, staggerContainer } from "@/lib/animations";
 
 interface StatItem {
     value: number;
@@ -29,32 +30,25 @@ function CountUp({
     prefix?: string;
     inView: boolean;
 }) {
-    const [count, setCount] = useState(0);
+    const motionValue = useMotionValue(0);
+    const springValue = useSpring(motionValue, {
+        damping: 30,
+        stiffness: 40,
+        restDelta: 0.001
+    });
 
     useEffect(() => {
-        if (!inView) return;
-        let start = 0;
-        const duration = 1800;
-        const step = 16;
-        const increment = value / (duration / step);
+        if (inView) {
+            motionValue.set(value);
+        }
+    }, [inView, value, motionValue]);
 
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= value) {
-                setCount(value);
-                clearInterval(timer);
-            } else {
-                setCount(Math.floor(start));
-            }
-        }, step);
-
-        return () => clearInterval(timer);
-    }, [inView, value]);
+    const displayValue = useTransform(springValue, (current) => Math.floor(current));
 
     return (
-        <span className="stat-font" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", color: "var(--color-gold)", lineHeight: 1 }}>
-            {prefix}{count}{suffix}
-        </span>
+        <motion.span className="stat-font" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", color: "var(--color-gold)", lineHeight: 1 }}>
+            {prefix}<motion.span>{displayValue}</motion.span>{suffix}
+        </motion.span>
     );
 }
 
@@ -85,7 +79,10 @@ export function StatsSection() {
             />
 
             <div className="container-custom" style={{ position: "relative" }}>
-                <div
+                <motion.div
+                    variants={staggerContainer(0.1)}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
                     style={{
                         display: "grid",
                         gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
@@ -96,9 +93,7 @@ export function StatsSection() {
                     {stats.map((stat, i) => (
                         <motion.div
                             key={stat.labelKey}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                            variants={fadeUpVariant}
                             style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -131,7 +126,7 @@ export function StatsSection() {
                             </span>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
 
             <style>{`

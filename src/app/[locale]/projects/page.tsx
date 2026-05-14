@@ -26,7 +26,7 @@ export default async function ProjectsPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: "80px" }}>
+      <main className="pt-[80px]">
         <div
           style={{
             padding: "5rem 1.5rem 2rem",
@@ -37,7 +37,7 @@ export default async function ProjectsPage({ params }: Props) {
           }}
         >
           <div className="container-custom">
-            <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+            <div className="section-label justify-center mb-4">
               ACEC
             </div>
             <h1

@@ -4,6 +4,7 @@ import { useLocale } from "next-intl";
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
@@ -42,24 +43,11 @@ export function ClientsSection() {
         fetchClients();
     }, []);
 
-    // Default clients for demo
-    const defaultClients = [
-        { name: "Dr. Sulaiman Al Habib", logo: "/images/client-logo.svg" },
-        { name: "Deemah", logo: "/images/client-logo.svg" },
-        { name: "McDonald's", logo: "/images/client-logo.svg" },
-        { name: "Pepsico", logo: "/images/client-logo.svg" },
-        { name: "Leejam", logo: "/images/client-logo.svg" },
-        { name: "STC", logo: "/images/client-logo.svg" },
-        { name: "SRMG", logo: "/images/client-logo.svg" },
-        { name: "Amlak", logo: "/images/client-logo.svg" },
-    ];
-
-    const displayClients = clients.length > 0 
-        ? clients.map((c: Client) => ({ 
-            name: isArabic ? c.name_ar : c.name_en, 
-            logo: c.logo ? `${API_BASE}/storage/${c.logo}` : "/images/client-logo.svg" 
-        }))
-        : defaultClients;
+    const displayClients = clients.map((c: Client) => ({ 
+        name: isArabic ? c.name_ar : c.name_en, 
+        logo: c.logo ? `${API_BASE}/storage/${c.logo}` : "/images/client-logo.svg",
+        website: c.website
+    }));
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -81,14 +69,31 @@ export function ClientsSection() {
         },
     };
 
+    if (loading) {
+        return (
+            <section className="py-24 px-6 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)] border-t border-border-default min-h-[500px] flex items-center justify-center">
+                <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+            </section>
+        );
+    }
+
+    if (clients.length === 0) {
+        return (
+            <section className="py-24 px-6 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)] border-t border-border-default">
+                <div className="container-custom text-center">
+                    <div className="section-label justify-center mb-4">
+                        {isArabic ? "عملاؤنا" : "Our Clients"}
+                    </div>
+                    <p className="text-text-muted mt-8">
+                        {isArabic ? "لا يوجد عملاء مضافين في قاعدة البيانات حالياً." : "No clients added in the database yet."}
+                    </p>
+                </div>
+            </section>
+        );
+    }
+
     return (
-        <section
-            style={{
-                padding: "6rem 1.5rem",
-                background: "linear-gradient(180deg, transparent 0%, rgba(var(--color-gold-rgb), 0.02) 100%)",
-                borderTop: "1px solid var(--color-border)",
-            }}
-        >
+        <section className="py-24 px-6 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)] border-t border-border-default">
             <div className="container-custom">
                 {/* Header */}
                 <motion.div
@@ -96,153 +101,70 @@ export function ClientsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    style={{ textAlign: "center", marginBottom: "4rem" }}
+                    className="text-center mb-16"
                 >
-                    <div
-                        className="section-label"
-                        style={{ justifyContent: "center", marginBottom: "1rem" }}
-                    >
+                    <div className="section-label justify-center mb-4">
                         {isArabic ? "عملاؤنا" : "Our Clients"}
                     </div>
-                    <h2
-                        style={{
-                            fontFamily: "var(--font-heading)",
-                            fontSize: "clamp(2rem, 5vw, 3rem)",
-                            fontWeight: 700,
-                            color: "var(--color-text)",
-                            marginBottom: "1rem",
-                        }}
-                    >
+                    <h2 className="font-heading text-[clamp(2rem,5vw,3rem)] font-bold text-text-primary mb-4">
                         {isArabic ? (
                             <>
                                 عملاؤنا{" "}
-                                <span className="gold-text">بفخر</span>
+                                <span className="text-accent">بفخر</span>
                             </>
                         ) : (
                             <>
                                 {" "}
-                                Our <span className="gold-text">Clients</span>
+                                Our <span className="text-accent">Clients</span>
                             </>
                         )}
                     </h2>
-                    <p
-                        style={{
-                            fontSize: "1.0625rem",
-                            color: "var(--color-text-muted)",
-                            maxWidth: "600px",
-                            margin: "0 auto",
-                            lineHeight: 1.6,
-                        }}
-                    >
+                    <p className="text-[1.0625rem] text-text-muted max-w-[600px] mx-auto leading-[1.6]">
                         {isArabic
                             ? "نفخر بشراكتنا مع أكبر وأبرز الشركات والمؤسسات في المملكة العربية السعودية"
                             : "We are proud to partner with leading companies and organizations in Saudi Arabia"}
                     </p>
                 </motion.div>
 
-                {/* Clients Grid */}
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                        gap: "2rem",
-                    }}
-                    className="clients-grid"
-                >
-                    {displayClients.map((client, idx) => (
-                        <motion.div
-                            key={idx}
-                            variants={itemVariants}
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                padding: "2rem",
-                                borderRadius: "var(--radius-lg)",
-                                background: "var(--color-card-bg)",
-                                border: "1px solid var(--color-border-gold)",
-                                backdropFilter: "blur(10px)",
-                                transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                                cursor: "pointer",
-                                minHeight: "140px",
-                                position: "relative",
-                                overflow: "hidden",
-                            }}
-                            whileHover={{
-                                borderColor: "var(--color-border-gold)",
-                                background: "var(--color-surface)",
-                                scale: 1.05,
-                                y: -4,
-                            }}
-                            className="client-card"
-                        >
-                                {/* Card background effect */}
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    inset: 0,
-                                    background:
-                                        "linear-gradient(135deg, var(--color-gold-dim) 0%, transparent 100%)",
-                                    opacity: 0,
-                                    transition: "opacity 0.3s",
-                                    pointerEvents: "none",
-                                }}
-                                className="card-bg"
-                            />
-
-                            {/* Client Logo/Name */}
-                            <div
-                                style={{
-                                    position: "relative",
-                                    zIndex: 1,
-                                    textAlign: "center",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    gap: "1rem",
-                                    width: "100%",
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        width: "100%",
-                                        height: "60px",
-                                        position: "relative",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                    }}
+                {/* Infinite Marquee */}
+                <div className="relative w-full overflow-hidden flex items-center py-8 group" dir="ltr">
+                    <div className="marquee-content flex flex-nowrap gap-4 md:gap-8 min-w-max">
+                        {/* Render the clients multiple times to ensure seamless scrolling */}
+                        {[...displayClients, ...displayClients, ...displayClients].map((client, idx) => {
+                            const CardWrapper = client.website ? "a" : "div";
+                            return (
+                                <motion.div
+                                    key={idx}
+                                    whileHover={{ scale: 1.05, y: -4 }}
+                                    className="relative flex flex-col items-center justify-center p-4 md:p-8 rounded-2xl bg-surface border border-border-default transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer w-[160px] md:w-[220px] h-[100px] md:h-[140px] hover:border-accent hover:bg-surface-hover shrink-0"
                                 >
-                                    <Image
-                                        src={client.logo}
-                                        alt={client.name}
-                                        fill
-                                        className="object-contain"
-                                        style={{
-                                            filter: "brightness(0.9) contrast(1.1)",
-                                            opacity: 0.8,
-                                        }}
+                                    <CardWrapper
+                                        href={client.website || undefined}
+                                        target={client.website ? "_blank" : undefined}
+                                        rel={client.website ? "noopener noreferrer" : undefined}
+                                        className="absolute inset-0 w-full h-full z-10 block"
                                     />
-                                </div>
-                                <span
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        fontWeight: 600,
-                                        color: "var(--color-text-muted)",
-                                        transition: "color 0.3s",
-                                    }}
-                                    className="client-name"
-                                >
-                                    {client.name}
-                                </span>
-                            </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
+
+                                    {/* Client Logo/Name */}
+                                    <div className="relative z-[5] text-center flex flex-col items-center gap-4 w-full">
+                                        <div className="w-full h-[40px] md:h-[50px] relative flex items-center justify-center mix-blend-luminosity opacity-60 transition-all duration-300 group-hover:mix-blend-normal group-hover:opacity-100">
+                                            <Image
+                                                src={client.logo}
+                                                alt={client.name}
+                                                fill
+                                                className="object-contain"
+                                                sizes="(max-width: 768px) 150px, 200px"
+                                            />
+                                        </div>
+                                        <span className="text-[0.7rem] md:text-sm font-semibold text-text-muted transition-colors duration-300 group-hover:text-accent whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                                            {client.name}
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </div>
 
                 {/* Bottom CTA */}
                 <motion.div
@@ -250,88 +172,60 @@ export function ClientsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
                     viewport={{ once: true }}
-                    style={{
-                        textAlign: "center",
-                        marginTop: "4rem",
-                        paddingTop: "3rem",
-                        borderTop: "1px solid var(--color-border)",
-                    }}
+                    className="text-center mt-16 pt-12 border-t border-border-default"
                 >
-                    <p
-                        style={{
-                            fontSize: "1rem",
-                            color: "rgba(var(--color-text-rgb), 0.7)",
-                            marginBottom: "1.5rem",
-                        }}
-                    >
+                    <p className="text-base text-text-muted mb-6">
                         {isArabic
                             ? "هل تريد أن تكون من عملائنا المميزين؟"
                             : "Want to become one of our valued clients?"}
                     </p>
-                    <motion.a
-                        href="#contact"
+                    <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "0.75rem",
-                            padding: "0.875rem 2.5rem",
-                            background: "linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%)",
-                            border: "none",
-                            borderRadius: "0.5rem",
-                            color: "var(--color-bg)",
-                            fontWeight: 600,
-                            fontSize: "1rem",
-                            cursor: "pointer",
-                            textDecoration: "none",
-                            boxShadow: "0 4px 15px rgba(var(--color-gold-rgb), 0.3)",
-                            transition: "all 0.3s",
-                        }}
+                        className="inline-block"
                     >
-                        {isArabic ? "احجز استشارة" : "Book Consultation"}
-                        <span>→</span>
-                    </motion.a>
+                        <Link 
+                            href={`/${locale}/contact`}
+                            className="inline-flex items-center gap-3 py-3.5 px-10 bg-[linear-gradient(135deg,var(--color-accent)_0%,rgba(var(--color-accent-rgb),0.8)_100%)] border-none rounded-lg text-text-on-accent font-semibold text-base cursor-pointer no-underline shadow-[0_4px_15px_rgba(var(--color-accent-rgb),0.3)] transition-all duration-300"
+                        >
+                            {isArabic ? "احجز استشارة" : "Book Consultation"}
+                            <span>{isArabic ? "←" : "→"}</span>
+                        </Link>
+                    </motion.div>
                 </motion.div>
             </div>
 
             <style>{`
-        @media (max-width: 768px) {
-          .clients-grid {
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-            gap: 1.5rem !important;
-          }
-          
-          .client-card {
-            padding: 1.5rem !important;
-            min-height: 120px !important;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .clients-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1rem !important;
-          }
-          
-          .client-card {
-            padding: 1rem !important;
-            min-height: 100px !important;
-          }
-          
-          .client-name {
-            font-size: 0.7rem !important;
-          }
-        }
-
-        .client-card:hover .card-bg {
-          opacity: 1 !important;
-        }
-
-        .client-card:hover .client-name {
-          color: var(--color-gold) !important;
-        }
-      `}</style>
+                @keyframes scroll {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(calc(-33.33% - 1.5rem)); }
+                }
+                .marquee-content {
+                    animation: scroll 30s linear infinite;
+                }
+                .group:hover .marquee-content {
+                    animation-play-state: paused;
+                }
+                /* Fade edges for the marquee */
+                .relative.w-full.overflow-hidden::before,
+                .relative.w-full.overflow-hidden::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    width: 100px;
+                    z-index: 10;
+                    pointer-events: none;
+                }
+                .relative.w-full.overflow-hidden::before {
+                    left: 0;
+                    background: linear-gradient(to right, var(--color-background) 0%, transparent 100%);
+                }
+                .relative.w-full.overflow-hidden::after {
+                    right: 0;
+                    background: linear-gradient(to left, var(--color-background) 0%, transparent 100%);
+                }
+            `}</style>
         </section>
     );
 }

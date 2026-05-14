@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import { fadeUpVariant, staggerContainer, imageMaskVariant } from "@/lib/animations";
 
 export interface Project {
   id: number;
@@ -34,112 +35,49 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      variants={fadeUpVariant}
       whileHover={{ y: -8 }}
-      style={{
-        borderRadius: "var(--radius-lg)",
-        overflow: "hidden",
-        background: "var(--color-card-bg)",
-        border: "1px solid var(--color-border)",
-        transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-        cursor: "pointer",
-      }}
+      className="rounded-2xl overflow-hidden bg-surface border border-border-default transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group"
     >
-      <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
+      <motion.div 
+        variants={imageMaskVariant}
+        className="relative h-[220px] overflow-hidden"
+      >
         <img
           src={project.image ? `${API_BASE}/storage/${project.image}` : "/images/project-architecture-1.svg"}
           alt={project.title}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            transition: "transform 0.5s ease",
-          }}
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(180deg, transparent 50%, rgba(var(--color-bg-rgb),0.9) 100%)",
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
         {project.category && (
           <div
-            style={{
-              position: "absolute",
-              top: "1rem",
-              left: isRTL ? "auto" : "1rem",
-              right: isRTL ? "1rem" : "auto",
-              background: "var(--color-gold-dim)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid var(--color-border-gold)",
-              borderRadius: "9999px",
-              padding: "0.3rem 0.85rem",
-              fontSize: "0.7rem",
-              fontWeight: 600,
-              color: "var(--color-gold)",
-              letterSpacing: "0.05em",
-            }}
+            className={`absolute top-4 ${isRTL ? "right-4" : "left-4"} bg-accent/15 backdrop-blur-md border border-accent/30 rounded-full px-3 py-1 text-[0.7rem] font-semibold text-accent tracking-wider`}
           >
             {project.category}
           </div>
         )}
-      </div>
+      </motion.div>
 
-      <div style={{ padding: "1.5rem" }}>
-        <h3
-          style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "1.125rem",
-            fontWeight: 600,
-            color: "var(--color-text-on-dark)",
-            lineHeight: 1.3,
-            minHeight: "2.5rem",
-          }}
-        >
+      <div className="p-6">
+        <h3 className="font-heading text-lg font-semibold text-text-primary leading-[1.3] min-h-[2.5rem]">
           {project.title || (isRTL ? "مشروع هندسي" : "Engineering Project")}
         </h3>
 
         {project.location && (
-          <p style={{
-            fontSize: "0.85rem",
-            color: "var(--color-text-muted-on-dark)",
-            marginTop: "0.5rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.3rem"
-          }}>
+          <p className="text-[0.85rem] text-text-muted mt-2 flex items-center gap-1.5">
             📍 {project.location}
           </p>
         )}
 
         {project.year && (
-          <p style={{
-            fontSize: "0.85rem",
-            color: "var(--color-text-muted-on-dark)",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.3rem"
-          }}>
+          <p className="text-[0.85rem] text-text-muted mt-1 flex items-center gap-1.5">
             📅 {project.year}
           </p>
         )}
 
         <Link
           href={`/${locale}/projects/${project.slug}`}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            color: "var(--color-gold)",
-            textDecoration: "none",
-            fontSize: "0.875rem",
-            fontWeight: 600,
-            transition: "gap 0.2s",
-            marginTop: "1rem",
-          }}
+          className={`inline-flex items-center gap-2 text-accent text-[0.875rem] font-semibold mt-4 transition-all duration-200 hover:gap-3 ${isRTL ? "hover:gap-3" : ""}`}
         >
           {isRTL ? "عرض التفاصيل" : "View Details"}
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -148,7 +86,7 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ transform: isRTL ? "rotate(180deg)" : "none" }}
+              className={isRTL ? "rotate-180" : ""}
             />
           </svg>
         </Link>
@@ -193,91 +131,58 @@ export function ProjectsSection() {
   return (
     <section
       ref={ref}
-      className="section-padding"
       id="projects"
-      style={{
-        position: "relative",
-        background: "linear-gradient(135deg, rgba(var(--color-accent-rgb), 0.05) 0%, transparent 100%)",
-      }}
+      className="relative py-24 px-6 md:py-32 md:px-12 xl:px-24 bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.05)_0%,transparent_100%)] border-t border-border-default"
     >
       <div className="container-custom">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
+          variants={staggerContainer(0.1)}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="text-center mb-12"
         >
-          <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+          <motion.div variants={fadeUpVariant} className="section-label justify-center mb-4">
             {t("title")}
-          </div>
+          </motion.div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(2rem, 3.5vw, 3rem)",
-              fontWeight: 700,
-              color: "var(--color-text-on-dark)",
-              lineHeight: 1.2,
-              marginBottom: "1rem",
-            }}
+            variants={fadeUpVariant}
+            className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold text-text-primary leading-[1.2] mb-4"
           >
             {t("subtitle")}
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            style={{
-              fontSize: "1rem",
-              color: "var(--color-text-muted-on-dark)",
-              marginBottom: "2rem",
-              maxWidth: "600px",
-              margin: "0 auto 2rem",
-            }}
+            variants={fadeUpVariant}
+            className="text-base text-text-muted max-w-[600px] mx-auto mb-8"
           >
             {t("description")}
           </motion.p>
-          <Link
-            href={`/${locale}/projects`}
-            className="magnetic-btn magnetic-btn-primary"
-          >
-            {t("viewAll")} ({projects.length})
-          </Link>
+          <motion.div variants={fadeUpVariant}>
+            <Link
+              href={`/${locale}/projects`}
+              className="magnetic-btn magnetic-btn-primary"
+            >
+              {t("viewAll")} ({projects.length})
+            </Link>
+          </motion.div>
         </motion.div>
 
         {/* Category Filter Tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          style={{
-            display: "flex",
-            gap: "0.75rem",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            marginBottom: "2.5rem",
-          }}
+          variants={fadeUpVariant}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="flex justify-center flex-wrap gap-3 mb-10"
         >
           {categoryKeys.map((cat) => (
             <button
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
-              style={{
-                padding: "0.4rem 1.1rem",
-                borderRadius: "9999px",
-                border: "1px solid",
-                borderColor: activeCategory === cat.key ? "var(--color-gold)" : "var(--color-border)",
-                background: activeCategory === cat.key ? "var(--color-gold)" : "transparent",
-                color: activeCategory === cat.key ? "var(--color-accent-text)" : "var(--color-text-muted-on-dark)",
-                cursor: "pointer",
-                fontSize: "0.85rem",
-                fontWeight: 500,
-                transition: "all 0.2s",
-                fontFamily: "inherit",
-              }}
+              className={`px-4 py-1.5 rounded-full border text-[0.85rem] font-medium transition-all duration-200 cursor-pointer ${
+                activeCategory === cat.key 
+                  ? "border-accent bg-accent text-text-on-accent" 
+                  : "border-border-default bg-transparent text-text-muted hover:border-accent hover:text-text-primary"
+              }`}
             >
               {getCategoryLabel(cat.key)}
             </button>
@@ -286,28 +191,24 @@ export function ProjectsSection() {
 
         {/* Projects Grid */}
         {loading ? (
-          <div style={{ textAlign: "center", padding: "3rem" }}>
-            <p style={{ color: "var(--color-text-muted-on-dark)" }}>
+          <div className="text-center p-12">
+            <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-text-muted">
               {isRTL ? "جاري التحميل..." : "Loading..."}
             </p>
           </div>
         ) : filteredProjects.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "3rem" }}>
-            <p style={{ color: "var(--color-text-muted-on-dark)" }}>
+          <div className="text-center p-12 bg-surface/50 border border-border-default rounded-2xl">
+            <p className="text-text-muted">
               {isRTL ? "لا توجد مشاريع في هذا التصنيف" : "No projects in this category"}
             </p>
           </div>
         ) : (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "1.5rem",
-            }}
-            className="projects-grid"
+            variants={staggerContainer(0.1)}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6"
           >
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} locale={locale} />
@@ -315,19 +216,6 @@ export function ProjectsSection() {
           </motion.div>
         )}
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .projects-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @media (min-width: 769px) and (max-width: 1024px) {
-          .projects-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

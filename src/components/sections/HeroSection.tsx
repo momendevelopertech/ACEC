@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { staggerContainer, fadeUpVariant, slideInVariant, textRevealVariant } from "@/lib/animations";
 
 export function HeroSection() {
     const t = useTranslations("hero");
@@ -30,8 +31,11 @@ export function HeroSection() {
                 overflow: "hidden",
             }}
         >
-            {/* Background Image with Parallax */}
+            {/* Background Image with Parallax & Subtle Breathing */}
             <motion.div
+                initial={{ scale: 1 }}
+                animate={{ scale: 1.05 }}
+                transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
                 style={{
                     position: "absolute",
                     inset: "-10%",
@@ -54,7 +58,7 @@ export function HeroSection() {
                         position: "absolute",
                         inset: 0,
                         background:
-                            "linear-gradient(135deg, rgba(var(--color-bg-rgb),0.9) 0%, rgba(var(--color-bg-rgb),0.6) 50%, rgba(var(--color-bg-rgb),0.85) 100%)",
+                            "linear-gradient(135deg, rgba(var(--color-background-rgb),0.9) 0%, rgba(var(--color-background-rgb),0.7) 50%, rgba(var(--color-background-rgb),0.9) 100%)",
                     }}
                 />
                 {/* Gold accent overlay */}
@@ -63,7 +67,7 @@ export function HeroSection() {
                         position: "absolute",
                         inset: 0,
                         background:
-                            "radial-gradient(ellipse at 20% 50%, rgba(var(--color-accent-rgb), 0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(var(--color-gold-rgb), 0.08) 0%, transparent 50%)",
+                            "radial-gradient(ellipse at 20% 50%, rgba(var(--color-accent-rgb), var(--glow-opacity, 0.15)) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(var(--color-accent-rgb), var(--glow-opacity-secondary, 0.08)) 0%, transparent 50%)",
                     }}
                 />
             </motion.div>
@@ -74,7 +78,7 @@ export function HeroSection() {
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                    "linear-gradient(rgba(var(--color-gold-rgb), 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--color-gold-rgb), 0.03) 1px, transparent 1px)",
+                    "linear-gradient(rgba(var(--color-accent-rgb), 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--color-accent-rgb), 0.03) 1px, transparent 1px)",
                 backgroundSize: "80px 80px",
                 zIndex: 1,
             }}
@@ -91,12 +95,15 @@ export function HeroSection() {
                 }}
                 className="container-custom section-padding"
             >
-                <div style={{ maxWidth: "800px" }}>
+                <motion.div 
+                    variants={staggerContainer(0.15, 0.2)}
+                    initial="hidden"
+                    animate="visible"
+                    style={{ maxWidth: "800px" }}
+                >
                     {/* Label */}
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
+                        variants={slideInVariant("left")}
                         className="section-label"
                         style={{ marginBottom: "2rem" }}
                     >
@@ -104,32 +111,30 @@ export function HeroSection() {
                     </motion.div>
 
                     {/* Headline */}
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    <div style={{ overflow: "hidden", paddingBottom: "10px" }}>
+                        <motion.h1
+                            variants={textRevealVariant}
                         style={{
                             fontFamily: "var(--font-heading)",
                             fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.1,
                             marginBottom: "1rem",
-                            color: "var(--color-white)",
+                            color: "var(--color-text-primary)",
                         }}
                     >
                         {t("headline")}
                         <br />
                         <span className="gold-text">{t("headline_accent")}</span>
-                    </motion.h1>
+                        </motion.h1>
+                    </div>
 
                     {/* Subtitle */}
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                        variants={fadeUpVariant}
                         style={{
                             fontSize: "clamp(1rem, 2vw, 1.25rem)",
-                            color: "rgba(var(--color-text-rgb), 0.65)",
+                            color: "var(--color-text-secondary)",
                             maxWidth: "540px",
                             lineHeight: 1.7,
                             marginBottom: "2.5rem",
@@ -140,9 +145,7 @@ export function HeroSection() {
 
                     {/* CTA Buttons */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.8 }}
+                        variants={fadeUpVariant}
                         style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
                     >
                         <Link
@@ -161,7 +164,7 @@ export function HeroSection() {
                             {t("cta_secondary")}
                         </Link>
                     </motion.div>
-                </div>
+                </motion.div>
 
                 {/* Floating stats mini */}
                 <motion.div
@@ -191,7 +194,7 @@ export function HeroSection() {
                                 className="stat-font"
                                 style={{
                                     fontSize: "2rem",
-                                    color: "var(--color-gold)",
+                                    color: "var(--color-accent)",
                                     lineHeight: 1,
                                 }}
                             >
@@ -200,7 +203,7 @@ export function HeroSection() {
                             <div
                                 style={{
                                     fontSize: "0.7rem",
-                                    color: "var(--color-muted)",
+                                    color: "var(--color-text-muted)",
                                     marginTop: "0.25rem",
                                     textTransform: "uppercase",
                                     letterSpacing: "0.1em",
@@ -233,7 +236,7 @@ export function HeroSection() {
                 <span
                     style={{
                         fontSize: "0.65rem",
-                        color: "var(--color-muted)",
+                        color: "var(--color-text-muted)",
                         letterSpacing: "0.2em",
                         textTransform: "uppercase",
                     }}
@@ -247,7 +250,7 @@ export function HeroSection() {
                         width: "1px",
                         height: "40px",
                         background:
-                            "linear-gradient(180deg, var(--color-gold) 0%, transparent 100%)",
+                            "linear-gradient(180deg, var(--color-accent) 0%, transparent 100%)",
                     }}
                 />
             </motion.div>

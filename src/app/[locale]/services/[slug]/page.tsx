@@ -82,7 +82,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   return (
     <PageTransitionWrapper>
       <Navbar />
-      <main style={{ paddingTop: "6rem" }}>
+      <main className="pt-24">
         {/* Hero Section */}
         <section
           style={{
@@ -91,10 +91,9 @@ export default async function ServiceDetailPage({ params }: Props) {
             borderBottom: "1px solid var(--color-border)",
           }}
         >
-          <div className="container-custom" style={{ maxWidth: "800px" }}>
+          <div className="container-custom max-w-[800px] mx-auto">
             <div
-              className="section-label"
-              style={{ marginBottom: "1rem", justifyContent: "center" }}
+              className="section-label justify-center mb-4"
             >
               ACEC SERVICE
             </div>
@@ -128,8 +127,8 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
 
         {/* Service Content */}
-        <section style={{ padding: "4rem 1.5rem 6rem" }}>
-          <div className="container-custom" style={{ maxWidth: "800px" }}>
+        <section className="py-16 px-6 md:pb-24">
+          <div className="container-custom max-w-[800px] mx-auto">
             {service.image && (
               <div
                 style={{
@@ -143,7 +142,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <img
                   src={`${API_BASE}/storage/${service.image}`}
                   alt={service.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  className="w-full h-full object-cover"
                 />
               </div>
             )}
@@ -159,7 +158,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             />
 
             {/* Back to services */}
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+            <div className="text-center mt-12">
               <a
                 href={`/${locale}/services`}
                 style={{
