@@ -10,6 +10,7 @@ return [
         'https://ac-ec.com.sa',
         'https://test.ac-ec.com.sa',
         'https://www.ac-ec.com.sa',
+        'https://acec-iota.vercel.app',
     ],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['Content-Type', 'Accept', 'Authorization', 'X-Requested-With', 'X-XSRF-TOKEN'],
