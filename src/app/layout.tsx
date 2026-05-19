@@ -4,8 +4,7 @@ import "./globals.css";
 import dynamic from "next/dynamic";
 
 const CustomCursor = dynamic(
-  () => import("@/components/ui/CustomCursor").then((m) => m.CustomCursor),
-  { ssr: false }
+  () => import("@/components/ui/CustomCursor").then((m) => m.CustomCursor)
 );
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
