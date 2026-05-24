@@ -5,7 +5,6 @@ import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Logo } from "./Logo";
-import { useTheme } from "./ThemeProvider";
 
 export function Navbar() {
     const t = useTranslations("nav");
@@ -16,7 +15,6 @@ export function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [moreOpen, setMoreOpen] = useState(false);
     const isRTL = locale === "ar";
-    const { mode, toggleMode } = useTheme();
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -90,7 +88,7 @@ export function Navbar() {
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] bg-header-bg ${
-                scrolled ? "py-3 px-4 backdrop-blur-2xl border-b border-border-default/25" : "py-4 px-4 backdrop-blur-none border-transparent"
+                scrolled ? "py-3 px-4 backdrop-blur-2xl border-b border-white/10" : "py-4 px-4 backdrop-blur-none border-transparent"
             }`}
         >
             <div dir="ltr" className="container-custom flex items-center justify-between gap-3 flex-nowrap min-h-[3.6rem] md:min-h-auto w-full">
@@ -110,7 +108,7 @@ export function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-text-primary no-underline text-[0.92rem] xl:text-[0.95rem] font-semibold py-2 px-3 xl:px-4 rounded-full transition-all duration-200 hover:text-text-primary hover:bg-accent/15 tracking-[0.01em] whitespace-nowrap`}
+                            className={`text-header-text no-underline text-[0.92rem] xl:text-[0.95rem] font-semibold py-2 px-3 xl:px-4 rounded-full transition-all duration-200 hover:text-header-text/80 hover:bg-white/10 tracking-[0.01em] whitespace-nowrap`}
                         >
                             {link.label}
                         </Link>
@@ -119,14 +117,14 @@ export function Navbar() {
                     <div className="relative hidden lg:block">
                         <button
                             onClick={() => setMoreOpen(!moreOpen)}
-                            className="bg-accent/15 border border-accent/25 rounded-full text-text-primary text-[0.95rem] font-semibold py-2 px-4 cursor-pointer transition-all duration-200 hover:bg-accent/25"
+                            className="border border-header-text/80 rounded-full text-header-text text-[0.95rem] font-semibold py-2 px-4 cursor-pointer transition-all duration-200 bg-transparent hover:bg-white/10"
                             aria-haspopup="true"
                             aria-expanded={moreOpen}
                         >
                             {t("more")}
                         </button>
                         {moreOpen && (
-                            <div className="absolute top-full left-0 bg-background border border-border-default rounded-lg p-2 mt-1 z-20 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+                            <div className="absolute top-full left-0 bg-background border border-border-default rounded-lg p-2 mt-1 z-20 shadow-[0_4px_12px_rgba(var(--color-accent-rgb),0.15)]">
                                 {secondaryNavLinks.map((link) => (
                                     <Link
                                         key={link.href}
@@ -147,18 +145,9 @@ export function Navbar() {
                     {/* Language switcher */}
                     <button
                         onClick={switchLocale}
-                        className="bg-accent/15 border border-accent/25 rounded-full text-accent text-xs font-semibold py-[0.45rem] px-4 cursor-pointer transition-all duration-200 tracking-wider whitespace-nowrap hover:bg-accent/25"
+                        className="border border-header-text/80 rounded-full text-header-text text-xs font-semibold py-[0.45rem] px-4 cursor-pointer transition-all duration-200 tracking-wider whitespace-nowrap bg-transparent hover:bg-white/10"
                     >
                         {locale === "ar" ? "EN" : "عربي"}
-                    </button>
-
-                    {/* Theme Toggle */}
-                    <button
-                        onClick={toggleMode}
-                        className="bg-accent/15 border border-accent/25 rounded-full text-accent text-xs font-semibold p-2 cursor-pointer transition-all duration-200 hover:bg-accent/25 flex items-center justify-center w-[34px] h-[34px]"
-                        aria-label="Toggle Dark/Light Mode"
-                    >
-                        {mode === "dark" ? "☀️" : "🌙"}
                     </button>
 
                     {/* CTA Button */}
@@ -172,13 +161,13 @@ export function Navbar() {
                     {/* Mobile Menu Toggle */}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="lg:hidden bg-accent/15 border border-accent/25 rounded-full cursor-pointer flex flex-col gap-1 py-3 px-3 min-w-[3.5rem] items-center justify-center hover:bg-accent/25 transition-colors"
+                        className="lg:hidden border border-header-text/80 rounded-full cursor-pointer flex flex-col gap-1 py-3 px-3 min-w-[3.5rem] items-center justify-center bg-transparent hover:bg-white/10 transition-colors"
                         aria-label={menuOpen ? (locale === "ar" ? "إغلاق" : "Close") : (locale === "ar" ? "افتح" : "Open")}
                     >
                         {[0, 1, 2].map((i) => (
                             <span
                                 key={i}
-                                className={`block w-[22px] h-[2px] bg-accent rounded-[2px] transition-all duration-300 ${
+                                className={`block w-[22px] h-[2px] bg-header-text rounded-[2px] transition-all duration-300 ${
                                     menuOpen && i === 0 ? "translate-y-[6px] rotate-45" :
                                     menuOpen && i === 2 ? "-translate-y-[6px] -rotate-45" :
                                     menuOpen && i === 1 ? "scale-x-0" : ""
@@ -209,13 +198,13 @@ export function Navbar() {
                                 key={item.href}
                                 href={item.href}
                                 onClick={() => setMenuOpen(false)}
-                                className="flex items-center gap-4 py-4 px-6 border-b border-border-default text-text-primary no-underline text-lg font-medium transition-colors hover:bg-white/5"
+                                className="flex items-center gap-4 py-4 px-6 border-b border-border-default text-text-primary no-underline text-lg font-medium transition-colors hover:bg-accent/5"
                             >
                                 <span className="w-9 h-9 rounded-lg bg-accent/15 border border-accent/25 flex items-center justify-center flex-shrink-0">
                                     {item.icon}
                                 </span>
                                 <span>{item.label}</span>
-                                <span className="ms-auto text-text-muted text-sm opacity-50">
+                                <span className="ms-auto text-text-muted text-sm">
                                     {isRTL ? "←" : "→"}
                                 </span>
                             </Link>

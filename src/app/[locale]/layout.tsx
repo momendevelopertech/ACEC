@@ -6,6 +6,8 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { LocaleProvider } from "@/components/layout/LocaleProvider";
 import { ClientShell } from "@/components/layout/ClientShell";
 
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

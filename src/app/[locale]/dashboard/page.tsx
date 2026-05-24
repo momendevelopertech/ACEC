@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { Navbar } from "@/components/layout/Navbar";
+import { Logo } from "@/components/layout/Logo";
 import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/layout/ThemeProvider";
@@ -55,6 +56,9 @@ export default function DashboardPage() {
       <main className="pt-[80px] min-h-screen">
         <section className="section-padding">
           <div className="container-custom">
+            <div className="flex justify-center mb-6">
+              <Logo size="md" />
+            </div>
             <div className="section-label justify-center mb-4">
               ACEC DASHBOARD
             </div>
@@ -93,7 +97,7 @@ export default function DashboardPage() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     style={{
                       background: "var(--color-surface)",
-                      border: `1px solid ${activeId === theme.id ? "var(--color-gold)" : "var(--color-border)"}`,
+                      border: `1px solid ${activeId === theme.id ? "var(--color-accent)" : "var(--color-border)"}`,
                       borderRadius: "var(--radius-lg)",
                       padding: "2rem",
                       position: "relative",
@@ -107,8 +111,8 @@ export default function DashboardPage() {
                           top: "1rem",
                           right: isArabic ? "auto" : "1rem",
                           left: isArabic ? "1rem" : "auto",
-                          background: "var(--color-gold)",
-                          color: "var(--color-bg)",
+                          background: "var(--color-accent)",
+                          color: "var(--color-text-on-accent)",
                           padding: "0.25rem 0.75rem",
                           borderRadius: "9999px",
                           fontSize: "0.75rem",
@@ -163,10 +167,10 @@ export default function DashboardPage() {
                           onClick={() => handleActivate(theme.id)}
                           style={{
                             padding: "0.5rem 1rem",
-                            background: "var(--color-gold)",
+                            background: "var(--color-accent)",
                             border: "none",
                             borderRadius: "var(--radius-sm)",
-                            color: "var(--color-bg)",
+                            color: "var(--color-text-on-accent)",
                             fontSize: "0.875rem",
                             fontWeight: 600,
                             cursor: "pointer",
@@ -184,15 +188,15 @@ export default function DashboardPage() {
 
             <div
               style={{
-                background: "rgba(var(--color-gold-rgb), 0.05)",
-                border: "1px solid rgba(var(--color-gold-rgb), 0.2)",
+                background: "rgba(var(--color-accent-rgb), 0.05)",
+                border: "1px solid rgba(var(--color-accent-rgb), 0.2)",
                 borderRadius: "var(--radius-lg)",
                 padding: "2rem",
                 textAlign: "center",
                 marginTop: "3rem",
               }}
             >
-              <p style={{ color: "var(--color-gold)", fontSize: "1rem", fontWeight: 600, marginBottom: "0.5rem" }}>
+              <p style={{ color: "var(--color-accent)", fontSize: "1rem", fontWeight: 600, marginBottom: "0.5rem" }}>
                 {isArabic ? "إدارة الثيمات" : "Theme Management"}
               </p>
               <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>

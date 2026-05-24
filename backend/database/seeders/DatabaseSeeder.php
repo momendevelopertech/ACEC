@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             CertificationSeeder::class,
             JobSeeder::class,
             BlogPostSeeder::class,
+            ClientSeeder::class,
+            ContentSeeder::class,
         ]);
     }
 }

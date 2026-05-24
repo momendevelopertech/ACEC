@@ -37,13 +37,13 @@ class ThemeForm
                     ->columns(2)
                     ->schema([
                         ColorPicker::make('colors.background')
-                            ->label('Background (e.g. #F8FAFC)'),
+                            ->label('Background (e.g. #D9D3CA)'),
                         ColorPicker::make('colors.surface')
-                            ->label('Surface/Cards (e.g. #FFFFFF)'),
+                            ->label('Surface/Cards (e.g. #E8E4DE)'),
                         ColorPicker::make('colors.accent')
-                            ->label('Accent/Brand (e.g. #C9A84C)'),
+                            ->label('Accent/Brand (e.g. #6B695A)'),
                         ColorPicker::make('colors.text')
-                            ->label('Text Primary (e.g. #0F172A)'),
+                            ->label('Text Primary (e.g. #474A4D)'),
                     ]),
 
                 Section::make(__('admin.theme_typography'))

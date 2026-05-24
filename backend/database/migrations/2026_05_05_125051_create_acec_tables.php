@@ -74,6 +74,7 @@ return new class extends Migration
             $table->string('client_ar')->nullable();
             $table->string('client_en')->nullable();
             $table->integer('year')->nullable();
+            $table->string('area')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);

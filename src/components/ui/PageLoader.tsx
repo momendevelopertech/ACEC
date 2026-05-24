@@ -53,15 +53,15 @@ export function PageLoader() {
         >
           <defs>
             <pattern id="loaderGrid" width="24" height="24" patternUnits="userSpaceOnUse">
-              <path d="M24 0H0V24" fill="none" stroke="rgba(201, 168, 76, 0.14)" strokeWidth="1" />
+              <path d="M24 0H0V24" fill="none" stroke="rgba(var(--color-accent-rgb), 0.14)" strokeWidth="1" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#loaderGrid)" />
-          <path d="M40 180 L80 130 L140 170 L220 90 L300 130" fill="none" stroke="rgba(201, 168, 76, 0.18)" strokeWidth="2" />
-          <path className="loader-arch" d="M90 200 L90 135 L135 110 L180 135 L180 200" fill="none" stroke="rgba(201, 168, 76, 0.65)" strokeWidth="2" />
-          <path className="loader-arch" d="M100 135 L165 135" fill="none" stroke="rgba(201, 168, 76, 0.65)" strokeWidth="1.5" />
-          <circle cx="110" cy="60" r="24" fill="rgba(201, 168, 76, 0.08)" />
-          <rect x="220" y="40" width="60" height="90" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(201, 168, 76, 0.16)" strokeWidth="1" />
+          <path d="M40 180 L80 130 L140 170 L220 90 L300 130" fill="none" stroke="rgba(var(--color-accent-rgb), 0.18)" strokeWidth="2" />
+          <path className="loader-arch" d="M90 200 L90 135 L135 110 L180 135 L180 200" fill="none" stroke="rgba(var(--color-accent-rgb), 0.65)" strokeWidth="2" />
+          <path className="loader-arch" d="M100 135 L165 135" fill="none" stroke="rgba(var(--color-accent-rgb), 0.65)" strokeWidth="1.5" />
+          <circle cx="110" cy="60" r="24" fill="rgba(var(--color-accent-rgb), 0.08)" />
+          <rect x="220" y="40" width="60" height="90" rx="10" fill="rgba(var(--color-surface-rgb), 0.25)" stroke="rgba(var(--color-accent-rgb), 0.16)" strokeWidth="1" />
         </svg>
 
         <div className="loader-content">
@@ -78,8 +78,8 @@ export function PageLoader() {
           position: fixed;
           inset: 0;
           z-index: 99999;
-          background: var(--bg-primary, #0a1628);
-          color: var(--text-primary, #fff);
+          background: var(--color-background, #D9D3CA);
+          color: var(--color-text-primary, #474A4D);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -132,7 +132,7 @@ export function PageLoader() {
           font-size: clamp(3rem, 8vw, 5rem);
           font-weight: 800;
           letter-spacing: 0.18em;
-          color: var(--text-primary, #ffffff);
+          color: var(--color-text-primary, #474A4D);
           opacity: 0;
           transform: scale(0.82);
           animation: loaderLogoIn 0.72s ease-out 0.1s forwards;
@@ -141,7 +141,7 @@ export function PageLoader() {
         .loader-tag {
           display: block;
           font-size: 0.95rem;
-          color: var(--text-muted, rgba(255,255,255,0.95));
+          color: var(--color-text-muted, #9A9589);
           letter-spacing: 0.12em;
           text-transform: uppercase;
           opacity: 0;
@@ -155,8 +155,8 @@ export function PageLoader() {
           height: 0.35rem;
           border-radius: 999px;
           overflow: hidden;
-          background: rgba(var(--color-gold-rgb, 201, 168, 76), 0.08);
-          box-shadow: inset 0 0 18px rgba(var(--color-gold-rgb, 201, 168, 76), 0.06);
+          background: rgba(var(--color-accent-rgb, 107, 105, 90), 0.08);
+          box-shadow: inset 0 0 18px rgba(var(--color-accent-rgb, 107, 105, 90), 0.06);
         }
 
         .loader-bar span {
@@ -165,7 +165,7 @@ export function PageLoader() {
           height: 100%;
           transform-origin: left center;
           transform: scaleX(0);
-          background: linear-gradient(90deg, var(--accent, #c9a84c) 0%, var(--accent-hover, #f3d98c) 50%, var(--accent, #c9a84c) 100%);
+          background: linear-gradient(90deg, var(--color-accent, #6B695A) 0%, var(--color-accent-hover, #57564A) 50%, var(--color-accent, #6B695A) 100%);
           background-size: 220% 100%;
           animation: loaderBar 2.6s ease-out forwards, loaderBarGlow 2.6s ease-in-out 0.4s infinite alternate;
         }

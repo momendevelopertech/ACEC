@@ -110,7 +110,7 @@ export function HeroSection() {
                         Arab Charter Engineering Consultants — ACEC
                     </motion.div>
 
-                    {/* Headline */}
+                    {/* Tagline */}
                     <div style={{ overflow: "hidden", paddingBottom: "10px" }}>
                         <motion.h1
                             variants={textRevealVariant}
@@ -119,14 +119,25 @@ export function HeroSection() {
                             fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.1,
-                            marginBottom: "1rem",
+                            marginBottom: "0.5rem",
                             color: "var(--color-text-primary)",
                         }}
                     >
-                        {t("headline")}
-                        <br />
-                        <span className="gold-text">{t("headline_accent")}</span>
+                        {locale === "ar" ? t("tagline") : t("tagline")}
                         </motion.h1>
+                        <motion.div
+                            variants={textRevealVariant}
+                            className="gold-text"
+                            style={{
+                                fontFamily: "var(--font-heading)",
+                                fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
+                                fontWeight: 500,
+                                marginBottom: "1.5rem",
+                                opacity: 0.8,
+                            }}
+                        >
+                            {locale === "ar" ? t("tagline_accent") : t("tagline_accent")}
+                        </motion.div>
                     </div>
 
                     {/* Subtitle */}
@@ -134,7 +145,7 @@ export function HeroSection() {
                         variants={fadeUpVariant}
                         style={{
                             fontSize: "clamp(1rem, 2vw, 1.25rem)",
-                            color: "var(--color-text-secondary)",
+                            color: "var(--color-text-muted)",
                             maxWidth: "540px",
                             lineHeight: 1.7,
                             marginBottom: "2.5rem",
@@ -182,9 +193,9 @@ export function HeroSection() {
                     className="hidden-mobile"
                 >
                     {[
-                        { num: "+50", label: locale === "ar" ? "مشروع" : "Projects" },
-                        { num: "+15", label: locale === "ar" ? "سنة" : "Years" },
-                        { num: "+30", label: locale === "ar" ? "عميل" : "Clients" },
+                        { num: "+25", label: locale === "ar" ? "سنة خبرة" : "Years Experience" },
+                        { num: "+2500", label: locale === "ar" ? "مشروع" : "Projects" },
+                        { num: "2006", label: locale === "ar" ? "تأسسنا" : "Established" },
                     ].map((stat) => (
                         <div
                             key={stat.label}

@@ -32,7 +32,7 @@ export default async function ServicesPage({ params }: Props) {
           style={{
             padding: "5rem 1.5rem 2rem",
             background:
-              "linear-gradient(180deg, rgba(201, 168, 76, 0.04) 0%, transparent 100%)",
+              "linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.04) 0%, transparent 100%)",
             borderBottom: "1px solid var(--color-border)",
             textAlign: "center",
           }}

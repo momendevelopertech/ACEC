@@ -21,12 +21,13 @@ export interface Project {
 
 const categoryKeys = [
   { key: "all", label: { ar: "الكل", en: "All" } },
-  { key: "residential", label: { ar: "سكني", en: "Residential" } },
   { key: "commercial", label: { ar: "تجاري", en: "Commercial" } },
+  { key: "residential", label: { ar: "سكني", en: "Residential" } },
   { key: "industrial", label: { ar: "صناعي", en: "Industrial" } },
-  { key: "education", label: { ar: "تعليمي", en: "Education" } },
-  { key: "healthcare", label: { ar: "صحي", en: "Healthcare" } },
-  { key: "interior", label: { ar: "داخلي", en: "Interior" } },
+  { key: "safety", label: { ar: "سلامة", en: "Safety" } },
+  { key: "interior", label: { ar: "تصميم داخلي", en: "Interior" } },
+  { key: "recreational", label: { ar: "ترفيهي", en: "Recreational" } },
+  { key: "educational", label: { ar: "تعليمي", en: "Educational" } },
 ];
 
 function ProjectCard({ project, locale }: { project: Project; locale: string }) {
@@ -37,7 +38,7 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
     <motion.div
       variants={fadeUpVariant}
       whileHover={{ y: -8 }}
-      className="rounded-2xl overflow-hidden bg-surface border border-border-default transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group"
+      className="rounded-2xl overflow-hidden bg-card-bg border border-card-border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group"
     >
       <motion.div 
         variants={imageMaskVariant}
@@ -51,7 +52,7 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
         {project.category && (
           <div
-            className={`absolute top-4 ${isRTL ? "right-4" : "left-4"} bg-accent/15 backdrop-blur-md border border-accent/30 rounded-full px-3 py-1 text-[0.7rem] font-semibold text-accent tracking-wider`}
+            className={`absolute top-4 ${isRTL ? "right-4" : "left-4"} bg-accent/15 backdrop-blur-md border border-accent/30 rounded-full px-3 py-1 text-[0.7rem] font-semibold text-[var(--brand-dark)] tracking-wider`}
           >
             {project.category}
           </div>
@@ -77,7 +78,7 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
 
         <Link
           href={`/${locale}/projects/${project.slug}`}
-          className={`inline-flex items-center gap-2 text-accent text-[0.875rem] font-semibold mt-4 transition-all duration-200 hover:gap-3 ${isRTL ? "hover:gap-3" : ""}`}
+          className={`inline-flex items-center gap-2 text-accent text-[0.875rem] font-semibold mt-4 transition-all duration-200 hover:gap-3 hover:text-[var(--brand-dark)] ${isRTL ? "hover:gap-3" : ""}`}
         >
           {isRTL ? "عرض التفاصيل" : "View Details"}
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -181,7 +182,7 @@ export function ProjectsSection() {
               className={`px-4 py-1.5 rounded-full border text-[0.85rem] font-medium transition-all duration-200 cursor-pointer ${
                 activeCategory === cat.key 
                   ? "border-accent bg-accent text-text-on-accent" 
-                  : "border-border-default bg-transparent text-text-muted hover:border-accent hover:text-text-primary"
+                  : "border-border-default bg-transparent text-text-muted hover:border-accent hover:text-[var(--brand-dark)]"
               }`}
             >
               {getCategoryLabel(cat.key)}

@@ -26,23 +26,36 @@ export default async function ContactPage({ params }: Props) {
 
   const contactItems = [
     {
-      icon: "📧",
-      title: isArabic ? "البريد الإلكتروني" : "Email",
+      icon: "📞",
+      title: isArabic ? "الهاتف 1" : "Phone 1",
+      value: "+966 500 037 049",
+      href: "tel:+966500037049",
+    },
+    {
+      icon: "📞",
+      title: isArabic ? "الهاتف 2" : "Phone 2",
+      value: "+966 545 541 210",
+      href: "tel:+966545541210",
+    },
+    {
+      icon: "✉️",
+      title: "Email",
       value: "info@ac-ec.com.sa",
       href: "mailto:info@ac-ec.com.sa",
     },
     {
-      icon: "🌐",
-      title: isArabic ? "الموقع الإلكتروني" : "Website",
-      value: "ac-ec.com.sa",
-      href: "https://ac-ec.com.sa",
-    },
-    {
       icon: "📍",
       title: isArabic ? "الموقع" : "Location",
-      value: isArabic ? "المملكة العربية السعودية" : "Saudi Arabia",
+      value: isArabic
+        ? "الرياض – حي الزهراء – شارع عمر بن عبد العزيز"
+        : "Omar Bin Abdulaziz Street, Al Zahraa District, Riyadh, Saudi Arabia",
       href: null,
     },
+  ];
+
+  const workingHours = [
+    { day: isArabic ? "الأحد – الخميس" : "Sunday – Thursday", hours: "9:00 AM – 6:00 PM" },
+    { day: isArabic ? "الجمعة – السبت" : "Friday – Saturday", hours: isArabic ? "مغلق" : "Closed" },
   ];
 
   return (
@@ -152,6 +165,49 @@ export default async function ContactPage({ params }: Props) {
                       </div>
                     </div>
                   ))}
+                </div>
+
+                {/* Working Hours */}
+                <div className="mt-10">
+                  <h3
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--color-accent)",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    {isArabic ? "ساعات العمل" : "Working Hours"}
+                  </h3>
+                  <div
+                    style={{
+                      background: "rgba(var(--color-gold-rgb), 0.04)",
+                      border: "1px solid rgba(var(--color-gold-rgb), 0.1)",
+                      borderRadius: "var(--radius-md)",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {workingHours.map((wh, i) => (
+                      <div
+                        key={wh.day}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          padding: "0.875rem 1.25rem",
+                          borderBottom: i < workingHours.length - 1 ? "1px solid rgba(var(--color-gold-rgb), 0.08)" : "none",
+                        }}
+                      >
+                        <span style={{ color: "var(--color-white)", fontSize: "0.875rem", fontWeight: 500 }}>
+                          {wh.day}
+                        </span>
+                        <span style={{ color: "var(--color-muted)", fontSize: "0.875rem" }}>
+                          {wh.hours}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 

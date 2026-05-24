@@ -171,7 +171,7 @@ export function WhySection() {
         .why-card:hover .why-icon {
           background: rgba(var(--color-gold-rgb), 0.15) !important;
           border-color: var(--color-gold) !important;
-          box-shadow: 0 0 20px rgba(201, 168, 76, 0.15);
+          box-shadow: 0 0 20px rgba(var(--color-accent-rgb), 0.15);
         }
       `}</style>
         </section>

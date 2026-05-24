@@ -99,18 +99,7 @@ class AcecDatabaseSeeder extends Seeder
             );
         }
 
-        // 6. Clients
-        $clients = ['Dr. Sulaiman Al Habib', 'McDonald\'s', 'PepsiCo', 'STC', 'Leejam', 'Deemah', 'SRMG', 'Amlak', 'Flyadeal', 'Floward', 'Gulf Aluminum', 'SME Marketplace', 'Hataba'];
-        foreach($clients as $i => $c) {
-            $slug = \Illuminate\Support\Str::slug($c);
-            $logoPath = $this->generatePlaceholderImage("models/clients/{$slug}.jpg", "client-{$slug}");
-            DB::table('clients')->updateOrInsert(
-                ['name_en' => $c],
-                ['name_ar' => $c, 'logo' => $logoPath, 'order' => $i, 'updated_at' => now()]
-            );
-        }
-        
-        // 7. Sections Config
+        // 6. Sections Config
         $sections = [
             ['key' => 'hero', 'name_en' => 'Hero Section', 'name_ar' => 'القسم الرئيسي'],
             ['key' => 'stats', 'name_en' => 'Statistics', 'name_ar' => 'الإحصائيات'],

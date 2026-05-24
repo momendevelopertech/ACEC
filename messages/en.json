@@ -6,17 +6,17 @@
         "about": "About",
         "contact": "Contact",
         "consultation": "Book Consultation",
-    "team": "Team",
-    "blog": "Blog",
-    "certifications": "Certifications",
-    "clients": "Clients",
-    "career": "Careers",
-    "profile": "Company Profile"
+        "team": "Team",
+        "blog": "Blog",
+        "certifications": "Certifications",
+        "clients": "Clients",
+        "career": "Careers",
+        "profile": "Company Profile"
     },
     "hero": {
-        "headline": "Building the Future",
-        "headline_accent": "with Exceptional Engineering",
-        "sub": "Comprehensive engineering consultancy and safety engineering across Saudi Arabia",
+        "tagline": "From Plan to Possession",
+        "tagline_accent": "من التصميم إلى التسليم",
+        "sub": "Comprehensive engineering consultancy, fire protection, and safety engineering across Saudi Arabia — delivering excellence since 2006.",
         "cta_primary": "Explore Services",
         "cta_secondary": "Contact Us",
         "scroll": "Scroll Down"
@@ -25,36 +25,36 @@
         "projects": "Projects Completed",
         "years": "Years of Experience",
         "clients": "Satisfied Clients",
-        "compliance": "Saudi Code Compliant"
+        "compliance": "Established"
     },
     "services": {
         "title": "Our Services",
         "subtitle": "Comprehensive engineering solutions covering all your project needs",
         "learnMore": "Learn More",
         "items": {
-            "consulting": {
-                "title": "Engineering Consultancy",
-                "description": "Architectural, structural, and MEP design for all types of projects"
-            },
-            "safety": {
-                "title": "Safety Engineering",
-                "description": "Fire protection systems, safety studies, and civil defense compliance"
-            },
-            "supervision": {
-                "title": "Engineering Supervision",
-                "description": "Professional project supervision for government and private sector"
+            "design": {
+                "title": "Design",
+                "description": "Architectural, structural, electrical, and mechanical design for residential, commercial, and industrial projects"
             },
             "interior": {
                 "title": "Interior Design",
-                "description": "Creative interior design and detailed drawing preparation"
+                "description": "Interior decoration layouts, space planning, and custom sustainable material selection"
             },
-            "factory": {
-                "title": "Factory Design",
-                "description": "Architectural, structural and MEP drawings compliant with MODON requirements"
+            "supervision": {
+                "title": "Supervision",
+                "description": "Professional project supervision reviewing contracts, monitoring execution, and approving financial certificates"
             },
-            "modon": {
-                "title": "MODON Compliance",
-                "description": "Full compliance with MODON and Saudi Building Code requirements"
+            "fire": {
+                "title": "Fire Protection",
+                "description": "Fire fighting system design, hydraulic calculations, evacuation planning, and Civil Defense approval"
+            },
+            "surveying": {
+                "title": "Land Surveying",
+                "description": "Topographic and cadastral surveys, grid leveling, benchmarking, and land subdivision planning"
+            },
+            "consulting": {
+                "title": "Full Consulting",
+                "description": "Comprehensive consulting across all engineering disciplines with project management and technical support"
             }
         }
     },
@@ -68,7 +68,7 @@
     "about": {
         "title": "About Our Office",
         "subtitle": "Specialized Engineering Consultancy",
-        "description": "Arab Charter Engineering Consultants (ACEC) — a specialized engineering consultancy providing comprehensive engineering services and safety engineering across Saudi Arabia. We combine deep expertise with modern technology to deliver exceptional engineering solutions.",
+        "description": "ACEC is a Saudi engineering consultancy firm established in 2006, headquartered in Riyadh, led by its founder and General Manager, Engineer Majed Al-Thuaiyb. It is one of the select few offices in Saudi Arabia accredited by the Civil Defense to operate across all cities of the Kingdom, specializing in fire protection and safety engineering — operating under the Saudi Building Code (SBC). Built to support the nation's vision of fostering large-scale projects, community development, and human advancement, ACEC operates with strong professional standards and high ethical values, housing a team of highly educated and experienced professionals dedicated to understanding client needs and delivering sustainable, cost-effective solutions on time and within scope.",
         "learnMore": "Learn More About Us"
     },
     "why": {
@@ -76,20 +76,20 @@
         "subtitle": "What makes us the ideal choice for your project",
         "items": {
             "experience": {
-                "title": "15+ Years Experience",
-                "description": "Extensive experience delivering diverse engineering projects"
+                "title": "25+ Years Experience",
+                "description": "Extensive experience since 2006 delivering diverse engineering projects across Saudi Arabia"
             },
             "compliance": {
                 "title": "Full Compliance",
-                "description": "Complete adherence to Saudi Code and government authority requirements"
+                "description": "Complete adherence to Saudi Building Code (SBC), NFPA standards, and government authority requirements"
             },
             "quality": {
                 "title": "High Standards",
-                "description": "The highest quality standards at every stage of the project"
+                "description": "The highest quality standards at every stage of the project with Civil Defense accredited processes"
             },
             "team": {
                 "title": "Specialized Team",
-                "description": "Certified engineers specialized across all engineering disciplines"
+                "description": "Certified engineers specialized across all engineering disciplines including fire protection and safety"
             }
         }
     },
@@ -112,7 +112,7 @@
         "error": "An error occurred, please try again."
     },
     "footer": {
-        "description": "Specialized engineering consultancy in Saudi Arabia",
+        "description": "Specialized engineering consultancy in Saudi Arabia — Civil Defense accredited, MODON approved since 2006",
         "quickLinks": "Quick Links",
         "contactInfo": "Contact Info",
         "rights": "All Rights Reserved",

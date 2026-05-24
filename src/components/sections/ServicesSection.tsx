@@ -17,16 +17,40 @@ export interface Service {
 }
 
 const serviceIcons: Record<string, React.ReactNode> = {
+    "engineering-consulting": (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M4 28V12L16 4L28 12V28H20V20H12V28H4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M12 14H20M16 10V18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+    ),
     consulting: (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <path d="M4 28V12L16 4L28 12V28H20V20H12V28H4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
             <path d="M12 14H20M16 10V18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
     ),
-    safety: (
+    "full-consulting": (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <path d="M16 3L5 8V16C5 21.5 9.5 26.7 16 28C22.5 26.7 27 21.5 27 16V8L16 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-            <path d="M11 16L14 19L21 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M4 28V12L16 4L28 12V28H20V20H12V28H4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M12 14H20M16 10V18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="16" cy="22" r="2" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+    ),
+    design: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M8 4L4 8V28H28V8L24 4H8Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M4 8H28" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M12 4V12M20 4V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M8 16H14V24H8V16Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M18 18H24M18 22H22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+    ),
+    interior: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M4 12H28" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M12 12V24M20 12V24" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M4 18H28" stroke="currentColor" strokeWidth="1.5" />
         </svg>
     ),
     supervision: (
@@ -36,12 +60,46 @@ const serviceIcons: Record<string, React.ReactNode> = {
             <path d="M8 4L4 8M24 4L28 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
     ),
-    interior: (
+    "fire-protection": (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L5 8V16C5 21.5 9.5 26.7 16 28C22.5 26.7 27 21.5 27 16V8L16 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M11 16L14 19L21 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M16 9V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="16" cy="16" r="1" fill="currentColor" />
+        </svg>
+    ),
+    fire: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L5 8V16C5 21.5 9.5 26.7 16 28C22.5 26.7 27 21.5 27 16V8L16 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M11 16L14 19L21 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    ),
+    "land-surveying": (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4L28 10V22L16 28L4 22V10L16 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M16 4V28M4 10L28 10M4 22L28 22" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="16" cy="16" r="3" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+    ),
+    "interior-design": (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <rect x="4" y="6" width="24" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
             <path d="M4 12H28" stroke="currentColor" strokeWidth="1.5" />
             <path d="M12 12V24M20 12V24" stroke="currentColor" strokeWidth="1.5" />
             <path d="M4 18H28" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M10 6V4M16 6V4M22 6V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+    ),
+    surveying: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4L28 10V22L16 28L4 22V10L16 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M16 4V28M4 10L28 10M4 22L28 22" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+    ),
+    safety: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L5 8V16C5 21.5 9.5 26.7 16 28C22.5 26.7 27 21.5 27 16V8L16 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M11 16L14 19L21 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     ),
     factory: (
@@ -265,7 +323,7 @@ export function ServicesSection() {
         }
         .learn-more-link:hover {
           gap: 0.75rem !important;
-          color: var(--color-gold-light) !important;
+          color: var(--brand-dark) !important;
         }
       `}</style>
         </section>

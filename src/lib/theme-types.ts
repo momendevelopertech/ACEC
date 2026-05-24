@@ -17,8 +17,8 @@ export interface Theme {
 }
 
 export const DEFAULT_THEME_COLORS: ThemeColors = {
-  background: '#FAFAFA',
-  surface: '#FFFFFF',
-  accent: '#8A6B24',
-  text: '#111827',
+  background: '#D9D3CA',
+  surface: '#E8E4DE',
+  accent: '#6B695A',
+  text: '#474A4D',
 };

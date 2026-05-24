@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale } from "next-intl";
-import { AcecLogoSVG } from "./AcecLogoSVG";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
@@ -14,18 +14,23 @@ export function Logo({ size = "md", href, className = "" }: LogoProps) {
   const locale = useLocale();
 
   const sizeMap = {
-    sm: { width: 200, height: 60 },
-    md: { width: 320, height: 96 },
-    lg: { width: 400, height: 120 },
+    sm: { width: 150, height: 45 },
+    md: { width: 220, height: 66 },
+    lg: { width: 320, height: 96 },
   };
 
   const dimensions = sizeMap[size];
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+
   const content = (
-    <AcecLogoSVG
+    <Image
+      src={`${API_BASE}/images/logo.png`}
+      alt="ACEC - Arab Charter Engineering Consultants"
       width={dimensions.width}
       height={dimensions.height}
-      className={`transition-opacity duration-200 hover:opacity-80 ${className}`}
+      className={`object-contain transition-opacity duration-200 hover:opacity-80 ${className}`}
+      priority
     />
   );
 

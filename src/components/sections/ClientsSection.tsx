@@ -147,7 +147,7 @@ export function ClientsSection() {
 
                                     {/* Client Logo/Name */}
                                     <div className="relative z-[5] text-center flex flex-col items-center gap-4 w-full">
-                                        <div className="w-full h-[40px] md:h-[50px] relative flex items-center justify-center mix-blend-luminosity opacity-60 transition-all duration-300 group-hover:mix-blend-normal group-hover:opacity-100">
+                                        <div className="w-full h-[40px] md:h-[50px] relative flex items-center justify-center opacity-75 grayscale transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100">
                                             <Image
                                                 src={client.logo}
                                                 alt={client.name}

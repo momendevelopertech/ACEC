@@ -180,9 +180,9 @@ export function ContactForm() {
                     style={{
                         padding: "1rem",
                         borderRadius: "var(--radius-sm)",
-                        background: "rgba(var(--color-gold-rgb), 0.1)",
-                        border: "1px solid rgba(var(--color-gold-rgb), 0.3)",
-                        color: "var(--color-gold)",
+                        background: "rgba(var(--color-accent-rgb), 0.1)",
+                        border: "1px solid rgba(var(--color-accent-rgb), 0.3)",
+                        color: "var(--color-accent)",
                         fontSize: "0.9rem",
                         textAlign: "center",
                     }}

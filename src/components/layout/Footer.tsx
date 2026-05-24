@@ -23,11 +23,12 @@ export function Footer() {
     ];
 
     const serviceLinks = [
-        { href: `/${locale}/services`, label: services("items.consulting.title") },
-        { href: `/${locale}/services`, label: services("items.safety.title") },
-        { href: `/${locale}/services`, label: services("items.supervision.title") },
-        { href: `/${locale}/services`, label: services("items.interior.title") },
-        { href: `/${locale}/services`, label: services("items.factory.title") },
+        { href: `/${locale}/services/design`, label: services("items.design.title") },
+        { href: `/${locale}/services/interior`, label: services("items.interior.title") },
+        { href: `/${locale}/services/supervision`, label: services("items.supervision.title") },
+        { href: `/${locale}/services/fire-protection`, label: services("items.fire.title") },
+        { href: `/${locale}/services/land-surveying`, label: services("items.surveying.title") },
+        { href: `/${locale}/services/consulting`, label: services("items.consulting.title") },
     ];
 
     const contactDetails = [

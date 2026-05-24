@@ -30,13 +30,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [darkColors, setDarkColors] = useState<ThemeColors | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize mode from local storage or system preference
+  // Initialize mode from local storage (defaults to light)
   useEffect(() => {
     const savedMode = localStorage.getItem("acec-theme-mode") as Mode;
     if (savedMode) {
       setMode(savedMode);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setMode("dark");
     }
   }, []);
 

@@ -19,10 +19,10 @@ class ThemeSeeder extends Seeder
                 'slug' => 'light',
                 'is_active' => true,
                 'colors' => [
-                    'background' => '#FAFAFA',
-                    'surface'    => '#FFFFFF',
-                    'accent'     => '#8A6B24',
-                    'text'       => '#111827',
+                    'background' => '#D9D3CA',
+                    'surface'    => '#E8E4DE',
+                    'accent'     => '#6B695A',
+                    'text'       => '#474A4D',
                 ],
             ],
             [
@@ -31,10 +31,10 @@ class ThemeSeeder extends Seeder
                 'slug' => 'dark',
                 'is_active' => true,
                 'colors' => [
-                    'background' => '#0D1B2A',
-                    'surface'    => '#162234',
-                    'accent'     => '#C9A84C',
-                    'text'       => '#F0F4F8',
+                    'background' => '#2C2E30',
+                    'surface'    => '#363A3D',
+                    'accent'     => '#9A9882',
+                    'text'       => '#D9D3CA',
                 ],
             ],
         ];

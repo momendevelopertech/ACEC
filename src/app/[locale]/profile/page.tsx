@@ -166,7 +166,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                     style={{
                       fontSize: "3rem",
                       marginBottom: "1.5rem",
-                      opacity: 0.5,
+                      opacity: 0.7,
                     }}
                   >
                     📄

@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogo(asset('images/logo.png'))
             ->brandName('ACEC')
             ->maxContentWidth(Width::Full)
             ->sidebarCollapsibleOnDesktop()
@@ -41,12 +41,12 @@ class AdminPanelProvider extends PanelProvider
             ->collapsedSidebarWidth('4rem')
             ->favicon(asset('images/favicon-dashboard.svg'))
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Gray,
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
-                'info' => Color::Sky,
+                'info' => Color::Gray,
                 'success' => Color::Emerald,
-                'warning' => Color::Amber,
+                'warning' => Color::Gray,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

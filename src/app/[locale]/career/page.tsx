@@ -5,8 +5,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 
-export const dynamic = 'force-static';
-
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
 async function getJobs(locale: string) {
@@ -159,7 +157,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
                         </p>
                         {job.requirements && (
                           <div className="mt-4">
-                            <h4 className="font-bold text-gray-700 mb-2" style={{ color: "var(--color-white)" }}>
+                            <h4 className="font-bold mb-2" style={{ color: "var(--color-white)" }}>
                               {isAr ? "المتطلبات:" : "Requirements:"}
                             </h4>
                             <p

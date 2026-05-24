@@ -5,8 +5,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 
-export const dynamic = 'force-static';
-
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
 async function getBlogData(locale: string) {

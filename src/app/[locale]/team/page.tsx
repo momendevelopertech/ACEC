@@ -130,8 +130,8 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                         width: "120px",
                         height: "120px",
                         borderRadius: "50%",
-                        background: "rgba(201, 168, 76, 0.1)",
-                        border: "2px solid rgba(201, 168, 76, 0.3)",
+                        background: "rgba(var(--color-accent-rgb), 0.1)",
+                        border: "2px solid rgba(var(--color-accent-rgb), 0.3)",
                         margin: "0 auto 1.5rem",
                         display: "flex",
                         alignItems: "center",
@@ -194,7 +194,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                       )}
                       {member.email && (
                         <a href={`mailto:${member.email}`}
-                           className="text-gray-500 hover:text-gray-700 transition-colors">
+                           className="text-accent hover:text-accent-hover transition-colors">
                           Email ✉
                         </a>
                       )}

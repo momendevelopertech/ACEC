@@ -13,10 +13,10 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-    { value: 50, suffix: "+", labelKey: "projects", prefix: "" },
-    { value: 15, suffix: "+", labelKey: "years" },
-    { value: 30, suffix: "+", labelKey: "clients" },
-    { value: 100, suffix: "%", labelKey: "compliance" },
+    { value: 25, suffix: "+", labelKey: "years", prefix: "" },
+    { value: 2500, suffix: "+", labelKey: "projects", prefix: "" },
+    { value: 2006, suffix: "", labelKey: "compliance", prefix: "" },
+    { value: 200, suffix: "+", labelKey: "clients", prefix: "" },
 ];
 
 function CountUp({

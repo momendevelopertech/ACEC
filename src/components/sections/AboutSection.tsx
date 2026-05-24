@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { fadeUpVariant, staggerContainer, imageMaskVariant } from "@/lib/animations";
@@ -114,17 +113,7 @@ export function AboutSection() {
                             </motion.div>
                         ))}
 
-                        <motion.div
-                            variants={fadeUpVariant}
-                            style={{ marginTop: "2rem" }}
-                        >
-                            <Link
-                                href={`/${locale}/about`}
-                                className="magnetic-btn magnetic-btn-primary"
-                            >
-                                {t("learnMore")}
-                            </Link>
-                        </motion.div>
+
                     </motion.div>
 
                     {/* Image side */}
@@ -180,7 +169,7 @@ export function AboutSection() {
                                     lineHeight: 1,
                                 }}
                             >
-                                +15
+                                +25
                             </div>
                             <div
                                 style={{
