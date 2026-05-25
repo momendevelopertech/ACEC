@@ -90,3 +90,9 @@ test-ph4.bat
 
 # --- Backend published vendor lang ---
 /backend/lang/vendor
+
+# Temp files
+army.png
+public/images/army-logo.png
+website-content-analysis.md
+*.tmp
