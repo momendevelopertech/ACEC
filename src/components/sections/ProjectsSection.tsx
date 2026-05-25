@@ -31,107 +31,6 @@ const categoryKeys = [
   { key: "educational", label: { ar: "تعليمي", en: "Educational" } },
 ];
 
-function getProjectImage(project: Project): string {
-  const t = (project.title || "").toLowerCase();
-  const c = project.category || "";
-
-  /* ── Commercial — Towers & Complexes ── */
-  if (t.includes("najd complex") || t.includes("tower"))
-    return "https://source.unsplash.com/800x600/?skyscraper,tower,riyadh";
-  if (t.includes("juin mixed"))
-    return "https://source.unsplash.com/800x600/?mixed-use,commercial,modern-building";
-  if (t.includes("hotel"))
-    return "https://source.unsplash.com/800x600/?hotel,luxury,architecture";
-  if (t.includes("leejam") || t.includes("sports"))
-    return "https://source.unsplash.com/800x600/?sports-complex,gym,modern";
-
-  /* ── Commercial — Retail & Drive-Thru ── */
-  if (t.includes("drive-thru"))
-    return "https://source.unsplash.com/800x600/?drive-thru,fast-food,restaurant";
-  if (t.includes("strip mall"))
-    return "https://source.unsplash.com/800x600/?shopping-mall,retail,outdoor";
-  if (t.includes("zulfi") || t.includes("retail"))
-    return "https://source.unsplash.com/800x600/?retail,shop,arabic-architecture";
-  if (t.includes("mcdonald"))
-    return "https://source.unsplash.com/800x600/?restaurant,food,heritage";
-  if (t.includes("juin commercial"))
-    return "https://source.unsplash.com/800x600/?commercial,complex,modern";
-
-  /* ── Recreational ── */
-  if (t.includes("equestrian"))
-    return "https://source.unsplash.com/800x600/?equestrian,horse,stable";
-  if (t.includes("pedestrian"))
-    return "https://source.unsplash.com/800x600/?pedestrian-bridge,urban,architecture";
-  if (t.includes("square") || t.includes("municipality"))
-    return "https://source.unsplash.com/800x600/?public-square,plaza,urban";
-
-  /* ── Residential ── */
-  if (t.includes("shaheqa") || t.includes("nakheel") || t.includes("maather"))
-    return "https://source.unsplash.com/800x600/?residential,apartment,modern";
-  if (t.includes("resthouse") || t.includes("almatwa"))
-    return "https://source.unsplash.com/800x600/?resthouse,luxury,landscape";
-
-  /* ── Educational ── */
-  if (t.includes("institute") || t.includes("technical") || t.includes("unaizah"))
-    return "https://source.unsplash.com/800x600/?institute,education,building";
-  if (t.includes("laboratory") || t.includes("vegetable") || t.includes("market"))
-    return "https://source.unsplash.com/800x600/?laboratory,market,glass-building";
-
-  /* ── Industrial — Factories ── */
-  if (t.includes("pharma") || t.includes("medicine") || t.includes("pharmaceutical") ||
-      t.includes("german pharma") || t.includes("wareed") || t.includes("emdad") || t.includes("kamal"))
-    return "https://source.unsplash.com/800x600/?pharmaceutical,factory,clean-room";
-  if (t.includes("food") || t.includes("pepsi") || t.includes("munajem") ||
-      t.includes("shams") || t.includes("riyadh foods"))
-    return "https://source.unsplash.com/800x600/?food-factory,production,industrial";
-  if (t.includes("warehouse") || t.includes("storage") || t.includes("babtin") ||
-      t.includes("abana") || t.includes("saif"))
-    return "https://source.unsplash.com/800x600/?warehouse,logistics,storage";
-  if (t.includes("hotpack")) return "https://source.unsplash.com/800x600/?factory,industrial,warehouse";
-
-  /* ── Safety ── */
-  if (t.includes("fire") || t.includes("safety") || t.includes("oceanarium") ||
-      t.includes("sabil") || t.includes("chamber"))
-    return "https://source.unsplash.com/800x600/?fire-safety,sprinkler,safety";
-  if (t.includes("stc") || t.includes("aqalat") || t.includes("dgda") || t.includes("diriyah"))
-    return "https://source.unsplash.com/800x600/?fire-safety,sprinkler,safety";
-  if (t.includes("university") || t.includes("college") || t.includes("faisal") ||
-      t.includes("ksu") || t.includes("king saud"))
-    return "https://source.unsplash.com/800x600/?university,campus,safety";
-
-  /* ── Interior — Commercial ── */
-  if (t.includes("hataba") || t.includes("restaurant"))
-    return "https://source.unsplash.com/800x600/?restaurant-interior,wood,warm-lighting";
-  if (t.includes("srmg") || t.includes("headquarters"))
-    return "https://source.unsplash.com/800x600/?corporate-office,modern-interior";
-  if (t.includes("floward"))
-    return "https://source.unsplash.com/800x600/?flowers,office,green-interior";
-  if (t.includes("fly adeal") || t.includes("aviation"))
-    return "https://source.unsplash.com/800x600/?airline-office,modern,aviation";
-  if (t.includes("olayan") && t.includes("admin"))
-    return "https://source.unsplash.com/800x600/?office-interior,neutral,corporate";
-
-  /* ── Interior — Residential ── */
-  if (t.includes("villa abdullah interior") || (t.includes("villa abdullah") && c === "interior"))
-    return "https://source.unsplash.com/800x600/?luxury-interior,neoclassical,gold";
-  if (t.includes("kahtany") || t.includes("majlis"))
-    return "https://source.unsplash.com/800x600/?majlis,arabic-interior,luxury";
-  if (t.includes("saadon"))
-    return "https://source.unsplash.com/800x600/?modern-living-room,minimalist,interior";
-
-  /* ── Fallback by category ── */
-  switch (c) {
-    case "commercial":    return "https://source.unsplash.com/800x600/?commercial,modern-building,architecture";
-    case "residential":   return "https://source.unsplash.com/800x600/?luxury-villa,modern-house,architecture";
-    case "industrial":    return "https://source.unsplash.com/800x600/?factory,industrial,warehouse";
-    case "safety":        return "https://source.unsplash.com/800x600/?fire-safety,sprinkler,safety";
-    case "interior":      return "https://source.unsplash.com/800x600/?interior-design,modern,living";
-    case "recreational":  return "https://source.unsplash.com/800x600/?recreation,landscape,urban";
-    case "educational":   return "https://source.unsplash.com/800x600/?education,building,architecture";
-    default:              return "https://source.unsplash.com/800x600/?architecture,modern,building";
-  }
-}
-
 function LocationIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B695A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,7 +50,7 @@ function AreaIcon() {
 }
 
 function ProjectCard({ project, locale }: { project: Project; locale: string }) {
-  const imgSrc = getProjectImage(project);
+  const imgSrc = `/images/projects/${project.slug}.jpg`;
 
   return (
     <div className="project-card">
