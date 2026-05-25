@@ -50,7 +50,8 @@ function AreaIcon() {
 }
 
 function ProjectCard({ project, locale }: { project: Project; locale: string }) {
-  const imgSrc = `/images/projects/${project.slug}.jpg`;
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  const imgSrc = project.image ? `${API_BASE}/storage/${project.image}` : `/images/projects/${project.slug}.jpg`;
 
   return (
     <div className="project-card">
