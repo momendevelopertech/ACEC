@@ -199,7 +199,7 @@ export default async function ContactPage({ params }: Props) {
                           borderBottom: i < workingHours.length - 1 ? "1px solid rgba(var(--color-gold-rgb), 0.08)" : "none",
                         }}
                       >
-                        <span style={{ color: "var(--color-white)", fontSize: "0.875rem", fontWeight: 500 }}>
+                        <span style={{ color: "var(--color-text-primary)", fontSize: "0.875rem", fontWeight: 500 }}>
                           {wh.day}
                         </span>
                         <span style={{ color: "var(--color-muted)", fontSize: "0.875rem" }}>
