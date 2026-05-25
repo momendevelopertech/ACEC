@@ -47,13 +47,6 @@ export function Navbar() {
         };
     }, [menuOpen]);
 
-    const switchLocale = () => {
-        const newLocale = locale === "ar" ? "en" : "ar";
-        const segments = pathname.split("/");
-        segments[1] = newLocale;
-        router.push(segments.join("/") || `/${newLocale}`);
-    };
-
     // High priority links - shown in main nav
     const mainNavLinks = [
         { href: `/${locale}/services`, label: t("services") },
@@ -142,13 +135,31 @@ export function Navbar() {
 
                 {/* Right side actions */}
                 <div className="flex items-center gap-2 xl:gap-3 flex-nowrap justify-end min-w-0 flex-shrink-0">
-                    {/* Language switcher */}
-                    <button
-                        onClick={switchLocale}
-                        className="border border-header-text/80 rounded-full text-header-text text-xs font-semibold py-[0.45rem] px-4 cursor-pointer transition-all duration-200 tracking-wider whitespace-nowrap bg-transparent hover:bg-white/10"
-                    >
-                        {locale === "ar" ? "EN" : "عربي"}
-                    </button>
+                    {/* Language switcher with flags */}
+                    <div className="flex items-center border border-header-text/30 rounded-full overflow-hidden divide-x divide-header-text/30">
+                      <button
+                        onClick={() => { if (locale !== "ar") { const newLocale = "ar"; const segs = pathname.split("/"); segs[1] = newLocale; router.push(segs.join("/") || `/${newLocale}`); }}}
+                        className={`flex items-center gap-1.5 px-3 py-[0.45rem] text-[0.7rem] font-semibold cursor-pointer transition-all duration-200 tracking-wider whitespace-nowrap ${
+                          locale === "ar"
+                            ? "bg-accent text-text-on-accent"
+                            : "bg-transparent text-header-text/60 hover:text-header-text"
+                        }`}
+                      >
+                        <span className="text-sm leading-none">🇸🇦</span>
+                        <span>AR</span>
+                      </button>
+                      <button
+                        onClick={() => { if (locale !== "en") { const newLocale = "en"; const segs = pathname.split("/"); segs[1] = newLocale; router.push(segs.join("/") || `/${newLocale}`); }}}
+                        className={`flex items-center gap-1.5 px-3 py-[0.45rem] text-[0.7rem] font-semibold cursor-pointer transition-all duration-200 tracking-wider whitespace-nowrap ${
+                          locale === "en"
+                            ? "bg-accent text-text-on-accent"
+                            : "bg-transparent text-header-text/60 hover:text-header-text"
+                        }`}
+                      >
+                        <span className="text-sm leading-none">🇬🇧</span>
+                        <span>EN</span>
+                      </button>
+                    </div>
 
                     {/* CTA Button */}
                     <Link
@@ -211,7 +222,7 @@ export function Navbar() {
                         ))}
                     </nav>
 
-                    <div className="p-6 border-t border-border-default bg-background sticky bottom-0">
+                    <div className="p-6 border-t border-border-default bg-background sticky bottom-0 flex flex-col gap-3">
                         <Link
                             href={`/${locale}/contact`}
                             onClick={() => setMenuOpen(false)}
@@ -219,6 +230,26 @@ export function Navbar() {
                         >
                             {t("consultation")}
                         </Link>
+                        <div className="flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => { setMenuOpen(false); const segs = pathname.split("/"); segs[1] = "ar"; router.push(segs.join("/")); }}
+                                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
+                                    locale === "ar" ? "bg-accent text-text-on-accent border-accent" : "border-border-default text-text-muted bg-transparent"
+                                }`}
+                            >
+                                <span className="text-base">🇸🇦</span>
+                                <span>AR</span>
+                            </button>
+                            <button
+                                onClick={() => { setMenuOpen(false); const segs = pathname.split("/"); segs[1] = "en"; router.push(segs.join("/")); }}
+                                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
+                                    locale === "en" ? "bg-accent text-text-on-accent border-accent" : "border-border-default text-text-muted bg-transparent"
+                                }`}
+                            >
+                                <span className="text-base">🇬🇧</span>
+                                <span>EN</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

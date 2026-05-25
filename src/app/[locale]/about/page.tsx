@@ -97,15 +97,10 @@ export default async function AboutPage({ params }: Props) {
               <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
                 {isArabic ? "منذ 2006 في خدمة الوطن" : "Serving the Nation Since 2006"}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8">
-                  <div className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">English</div>
-                  <p className="text-text-muted leading-[1.9] text-[0.95rem] whitespace-pre-line">{storyEn}</p>
-                </div>
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir="rtl">
-                  <div className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">العربية</div>
-                  <p className="text-text-muted leading-[1.9] text-[0.95rem] whitespace-pre-line">{storyAr}</p>
-                </div>
+              <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-text-muted leading-[1.9] text-[0.95rem] whitespace-pre-line">
+                  {isArabic ? storyAr : storyEn}
+                </p>
               </div>
             </div>
           </div>
@@ -122,15 +117,10 @@ export default async function AboutPage({ params }: Props) {
               <p className="text-text-muted text-sm mb-8">
                 {isArabic ? "المالك والمدير العام" : "Founder & General Manager"}
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir="rtl">
-                  <div className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">العربية</div>
-                  <p className="text-text-muted leading-[1.9] text-[0.9rem] whitespace-pre-line">{founderAr}</p>
-                </div>
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8">
-                  <div className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">English</div>
-                  <p className="text-text-muted leading-[1.9] text-[0.9rem] whitespace-pre-line">{founderEn}</p>
-                </div>
+              <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-text-muted leading-[1.9] text-[0.9rem] whitespace-pre-line">
+                  {isArabic ? founderAr : founderEn}
+                </p>
               </div>
               <div className="mt-8 text-center">
                 <p className="text-accent font-semibold font-heading text-lg">
@@ -149,13 +139,10 @@ export default async function AboutPage({ params }: Props) {
               <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
                 {isArabic ? "الريادة في الاستشارات الهندسية" : "Leadership in Engineering Consultancy"}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8">
-                  <p className="text-text-muted leading-[1.9] text-[0.95rem]">{visionEn}</p>
-                </div>
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir="rtl">
-                  <p className="text-text-muted leading-[1.9] text-[0.95rem]">{visionAr}</p>
-                </div>
+              <div className="bg-surface/50 border border-border-default rounded-2xl p-8 mb-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-text-muted leading-[1.9] text-[0.95rem]">
+                  {isArabic ? visionAr : visionEn}
+                </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {visionPoints.map((point, i) => (
@@ -179,13 +166,10 @@ export default async function AboutPage({ params }: Props) {
               <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
                 {isArabic ? "الارتقاء بفن وعلم الهندسة" : "Advancing the Art of Engineering"}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8">
-                  <p className="text-text-muted leading-[1.9] text-[0.95rem]">{missionEn}</p>
-                </div>
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir="rtl">
-                  <p className="text-text-muted leading-[1.9] text-[0.95rem]">{missionAr}</p>
-                </div>
+              <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-text-muted leading-[1.9] text-[0.95rem]">
+                  {isArabic ? missionAr : missionEn}
+                </p>
               </div>
             </div>
           </div>

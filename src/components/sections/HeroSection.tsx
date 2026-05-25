@@ -119,25 +119,12 @@ export function HeroSection() {
                             fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.1,
-                            marginBottom: "0.5rem",
+                            marginBottom: "1.5rem",
                             color: "var(--color-text-primary)",
                         }}
                     >
-                        {locale === "ar" ? t("tagline") : t("tagline")}
+                        {t("tagline")}
                         </motion.h1>
-                        <motion.div
-                            variants={textRevealVariant}
-                            className="gold-text"
-                            style={{
-                                fontFamily: "var(--font-heading)",
-                                fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
-                                fontWeight: 500,
-                                marginBottom: "1.5rem",
-                                opacity: 0.8,
-                            }}
-                        >
-                            {locale === "ar" ? t("tagline_accent") : t("tagline_accent")}
-                        </motion.div>
                     </div>
 
                     {/* Subtitle */}
