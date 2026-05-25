@@ -13,6 +13,7 @@ return [
     'job_postings'   => 'Job Postings',
 
     'profile_pdfs'   => 'Profile PDFs',
+    'hero_sections'  => 'Hero Sections',
 
     // Widgets
     'recent_messages'    => 'Recent Messages',
@@ -124,4 +125,15 @@ return [
     'col_file_size'         => 'Size',
     'section_pdf_details'   => 'File Details',
     'profile_pdf_active_hint' => 'When activated, any other active PDF will be deactivated automatically.',
+
+    // Hero Sections
+    'col_stat_number'      => 'Number',
+    'col_stat_label'       => 'Label',
+    'col_cta_text'         => 'Button Text',
+    'col_cta_link'         => 'Button Link',
+    'section_hero_stats'   => 'Statistics',
+    'section_hero_ctas'    => 'CTA Buttons',
+    'col_hero_title'       => 'Title',
+    'col_hero_subtitle'    => 'Subtitle',
+    'col_hero_description' => 'Description',
 ];

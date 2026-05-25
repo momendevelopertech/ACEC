@@ -1,14 +1,62 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeUpVariant, slideInVariant, textRevealVariant } from "@/lib/animations";
 
+interface HeroData {
+  id: number;
+  lang: string;
+  title: string;
+  subtitle: string | null;
+  description: string | null;
+  stat1_number: string | null;
+  stat1_label: string | null;
+  stat2_number: string | null;
+  stat2_label: string | null;
+  stat3_number: string | null;
+  stat3_label: string | null;
+  stat4_number: string | null;
+  stat4_label: string | null;
+  cta1_text: string | null;
+  cta1_link: string | null;
+  cta2_text: string | null;
+  cta2_link: string | null;
+  image: string | null;
+}
+
 export function HeroSection() {
-  const t = useTranslations("hero");
   const locale = useLocale();
   const isRTL = locale === "ar";
+  const [hero, setHero] = useState<HeroData | null>(null);
+  const t = useTranslations("hero");
+
+  useEffect(() => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+    fetch(`${API_BASE}/api/v1/hero/${locale}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data) {
+          setHero(data.data);
+        }
+      })
+      .catch(() => {});
+  }, [locale]);
+
+  const stats = hero
+    ? [
+        { num: hero.stat1_number, label: hero.stat1_label },
+        { num: hero.stat2_number, label: hero.stat2_label },
+        { num: hero.stat3_number, label: hero.stat3_label },
+      ].filter((s) => s.num || s.label)
+    : [];
+
+  const cta1Text = hero?.cta1_text || t("cta_primary");
+  const cta1Link = hero?.cta1_link || `/${locale}/services`;
+  const cta2Text = hero?.cta2_text || t("cta_secondary");
+  const cta2Link = hero?.cta2_link || `/${locale}/contact`;
 
   return (
     <section className="hero-section">
@@ -34,7 +82,7 @@ export function HeroSection() {
             variants={textRevealVariant}
             className="font-heading hero-title"
           >
-            {t("tagline")}
+            {hero?.title || t("tagline")}
           </motion.h1>
         </div>
 
@@ -43,7 +91,7 @@ export function HeroSection() {
           variants={fadeUpVariant}
           className="hero-subtitle"
         >
-          {t("sub")}
+          {hero?.subtitle || hero?.description || t("sub")}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -52,36 +100,34 @@ export function HeroSection() {
           className="hero-cta"
         >
           <Link
-            href={`/${locale}/services`}
+            href={cta1Link}
             className="magnetic-btn magnetic-btn-primary"
           >
-            {t("cta_primary")}
+            {cta1Text}
             <ArrowIcon />
           </Link>
           <Link
-            href={`/${locale}/contact`}
+            href={cta2Link}
             className="btn-contact"
           >
-            {t("cta_secondary")}
+            {cta2Text}
           </Link>
         </motion.div>
 
         {/* Stats */}
-        <motion.div
-          variants={fadeUpVariant}
-          className="hero-stats"
-        >
-          {[
-            { num: "+25", label: isRTL ? "سنة خبرة" : "Years Experience" },
-            { num: "+2500", label: isRTL ? "مشروع" : "Projects" },
-            { num: "2006", label: isRTL ? "تأسسنا" : "Established" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <div className="number">{stat.num}</div>
-              <div className="label">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
+        {stats.length > 0 && (
+          <motion.div
+            variants={fadeUpVariant}
+            className="hero-stats"
+          >
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <div className="number">{stat.num}</div>
+                <div className="label">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Right: Collage */}

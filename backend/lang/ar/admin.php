@@ -13,6 +13,7 @@ return [
     'job_postings'   => 'الوظائف',
 
     'profile_pdfs'   => 'ملفات الـ PDF التعريفية',
+    'hero_sections'  => 'قسم الهيرو',
 
     // Widgets
     'recent_messages'    => 'الرسائل الأخيرة',
@@ -124,4 +125,15 @@ return [
     'col_file_size'         => 'الحجم',
     'section_pdf_details'   => 'تفاصيل الملف',
     'profile_pdf_active_hint' => 'عند التفعيل، يتم إلغاء تفعيل أي PDF نشط آخر تلقائيًا.',
+
+    // Hero Sections
+    'col_stat_number'      => 'الرقم',
+    'col_stat_label'       => 'التسمية',
+    'col_cta_text'         => 'نص الزر',
+    'col_cta_link'         => 'رابط الزر',
+    'section_hero_stats'   => 'الإحصائيات',
+    'section_hero_ctas'    => 'أزرار الإجراء',
+    'col_hero_title'       => 'العنوان',
+    'col_hero_subtitle'    => 'العنوان الفرعي',
+    'col_hero_description' => 'الوصف',
 ];
