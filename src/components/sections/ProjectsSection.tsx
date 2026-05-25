@@ -96,6 +96,8 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
   );
 }
 
+const PROJECTS_PER_PAGE = 6;
+
 export function ProjectsSection() {
   const t = useTranslations("projects");
   const locale = useLocale();
@@ -104,6 +106,7 @@ export function ProjectsSection() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [visibleCount, setVisibleCount] = useState(PROJECTS_PER_PAGE);
 
   const isRTL = locale === "ar";
 
@@ -120,9 +123,20 @@ export function ProjectsSection() {
       .catch(() => setLoading(false));
   }, [locale]);
 
+  useEffect(() => {
+    setVisibleCount(PROJECTS_PER_PAGE);
+  }, [activeCategory]);
+
   const filteredProjects = activeCategory === "all"
     ? projects
     : projects.filter(p => p.category === activeCategory);
+
+  const visibleProjects = filteredProjects.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProjects.length;
+
+  const loadMore = () => {
+    setVisibleCount(prev => Math.min(prev + PROJECTS_PER_PAGE, filteredProjects.length));
+  };
 
   const getCategoryLabel = (key: string) => {
     const cat = categoryKeys.find(c => c.key === key);
@@ -205,16 +219,57 @@ export function ProjectsSection() {
             </p>
           </div>
         ) : (
-          <motion.div
-            variants={staggerContainer(0.1)}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6"
-          >
-            {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} locale={locale} />
-            ))}
-          </motion.div>
+          <>
+            <motion.div
+              variants={staggerContainer(0.1)}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6"
+            >
+              {visibleProjects.map((project) => (
+                <ProjectCard key={project.id} project={project} locale={locale} />
+              ))}
+            </motion.div>
+
+            {/* Pagination / Load More */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col items-center gap-4 mt-12"
+            >
+              <p className="text-text-muted text-[0.85rem]">
+                {isRTL
+                  ? `عرض ${visibleCount} من ${filteredProjects.length} مشروع`
+                  : `Showing ${visibleCount} of ${filteredProjects.length} projects`}
+              </p>
+              {hasMore && (
+                <motion.button
+                  onClick={loadMore}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full border border-accent/40 bg-accent/5 text-accent font-semibold text-[0.95rem] cursor-pointer transition-all duration-300 overflow-hidden hover:bg-accent hover:text-text-on-accent hover:border-accent"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isRTL ? "تحميل المزيد" : "Load More"}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform duration-300 group-hover:translate-y-0.5"
+                    >
+                      <path d="M12 5v14M5 12l7 7 7-7" />
+                    </svg>
+                  </span>
+                </motion.button>
+              )}
+            </motion.div>
+          </>
         )}
       </div>
     </section>
