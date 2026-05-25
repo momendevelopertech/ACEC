@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: locale === "ar" ? "عن المكتب | ACEC" : "About Us | ACEC",
     description:
       locale === "ar"
-        ? "مكتب الميثاق العربي للاستشارات الهندسية وهندسة السلامة — تعرف على مكتبنا وفريقنا"
+        ? "الميثاق العربي للاستشارات الهندسية وهندسة السلامة — تعرف على مكتبنا وفريقنا"
         : "Arabian Covenant Engineering Consultants — learn about our office and team",
   };
 }
@@ -26,7 +26,7 @@ export default async function AboutPage({ params }: Props) {
 
   const storyEn = "ACEC is a Saudi engineering consultancy firm established in 2006, headquartered in Riyadh, led by its founder and General Manager, Engineer Majed Al-Thuaiyb. It is one of the select few offices in Saudi Arabia accredited by the Civil Defense to operate across all cities of the Kingdom, specializing in fire protection and safety engineering — operating under the Saudi Building Code (SBC). Built to support the nation's vision of fostering large-scale projects, community development, and human advancement, ACEC operates with strong professional standards and high ethical values, housing a team of highly educated and experienced professionals dedicated to understanding client needs and delivering sustainable, cost-effective solutions on time and within scope.";
 
-  const storyAr = "مكتب الميثاق العربي للاستشارات الهندسية (ACEC) هو مكتب استشاري سعودي تأسس عام 2006، المكتب الرئيسي في الرياض والمالك والمدير العام هو المهندس ماجد الذييب. وهو أحد المكاتب القليلة على مستوى المملكة العربية السعودية المعتمدة لدى إدارة الدفاع المدني للعمل بجميع مدن المملكة العربية السعودية كاستشاري بمجال الحماية ومكافحة الحريق. تم إنشاء المكتب بما يحقق أهداف الوطن في إنجاح المشروعات الكبرى وتطوير المجتمع وبناء الحضارة الإنسانية طبقاً للكود السعودي (SBC). يضع ACEC معايير مهنية قوية وقيم أخلاقية عالية، ويفخر بوجود فريق محترف ومتماسك ذو تعليم عالٍ وذو خبرة يعمل مع العملاء لتحقيق وفهم متطلباتهم وتزويدهم بأفضل الخدمات المهنية والحلول الاقتصادية المستدامة ضمن الأطر الزمنية والمواعيد النهائية المطلوبة.";
+  const storyAr = "الميثاق العربي للاستشارات الهندسية (ACEC) هو مكتب استشاري سعودي تأسس عام 2006، المكتب الرئيسي في الرياض والمالك والمدير العام هو المهندس ماجد الذييب. وهو أحد المكاتب القليلة على مستوى المملكة العربية السعودية المعتمدة لدى إدارة الدفاع المدني للعمل بجميع مدن المملكة العربية السعودية كاستشاري بمجال الحماية ومكافحة الحريق. تم إنشاء المكتب بما يحقق أهداف الوطن في إنجاح المشروعات الكبرى وتطوير المجتمع وبناء الحضارة الإنسانية طبقاً للكود السعودي (SBC). يضع ACEC معايير مهنية قوية وقيم أخلاقية عالية، ويفخر بوجود فريق محترف ومتماسك ذو تعليم عالٍ وذو خبرة يعمل مع العملاء لتحقيق وفهم متطلباتهم وتزويدهم بأفضل الخدمات المهنية والحلول الاقتصادية المستدامة ضمن الأطر الزمنية والمواعيد النهائية المطلوبة.";
 
   const founderAr = `لكل مهنة أسرارها، وأيضاً لكل مهنة تقاليدها وأعرافها.. وقبل أن تنخرط في مجال مهنتك تكون الأفكار حالمة والمعالم وردية، وفي بداية الحياة العملية تتضح المعالم شيئاً فشيئاً، وتتمحور الأفكار رويداً رويداً، وكلما زادت الخطوات على الطريق كلما أفصحت لك المهنة عن بعض أسرارها وألزمتك الكثير من تقاليدها وأعرافها.
 

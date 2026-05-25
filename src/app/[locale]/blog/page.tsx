@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isAr = locale === "ar";
   return {
-    title: isAr ? "المدونة | مكتب الميثاق العربي" : "Blog | ACEC",
+    title: isAr ? "المدونة | الميثاق العربي" : "Blog | ACEC",
   };
 }
 

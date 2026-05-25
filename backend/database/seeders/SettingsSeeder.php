@@ -13,7 +13,7 @@ class SettingsSeeder extends Seeder
 
         $settings = [
             // General
-            ['key' => 'site_name_ar', 'value' => 'مكتب الميثاق العربي للاستشارات الهندسية وهندسة السلامة', 'group' => 'general', 'type' => 'text'],
+            ['key' => 'site_name_ar', 'value' => 'الميثاق العربي للاستشارات الهندسية وهندسة السلامة', 'group' => 'general', 'type' => 'text'],
             ['key' => 'site_name_en', 'value' => 'Arabian Covenant Engineering Consultants — ACEC', 'group' => 'general', 'type' => 'text'],
             ['key' => 'site_tagline_ar', 'value' => 'شركاؤكم في التميز الهندسي', 'group' => 'general', 'type' => 'text'],
             ['key' => 'site_tagline_en', 'value' => 'Your Partners in Engineering Excellence', 'group' => 'general', 'type' => 'text'],
@@ -33,7 +33,7 @@ class SettingsSeeder extends Seeder
             ['key' => 'twitter', 'value' => '', 'group' => 'social', 'type' => 'text'],
             ['key' => 'instagram', 'value' => '', 'group' => 'social', 'type' => 'text'],
             // SEO
-            ['key' => 'meta_title_ar', 'value' => 'مكتب الميثاق العربي | استشارات هندسية وهندسة سلامة', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_ar', 'value' => 'الميثاق العربي | استشارات هندسية وهندسة سلامة', 'group' => 'seo', 'type' => 'text'],
             ['key' => 'meta_title_en', 'value' => 'ACEC | Engineering Consultants & Safety Engineering', 'group' => 'seo', 'type' => 'text'],
             ['key' => 'meta_desc_ar', 'value' => 'مكتب متخصص في الاستشارات الهندسية وهندسة السلامة والإشراف الهندسي في المملكة العربية السعودية', 'group' => 'seo', 'type' => 'text'],
             ['key' => 'meta_desc_en', 'value' => 'Specialized in engineering consultancy, safety engineering and supervision in Saudi Arabia', 'group' => 'seo', 'type' => 'text'],

@@ -32,7 +32,7 @@ class ContentSeeder extends Seeder
                 'name_en' => 'Eng. Majed Al-Thuaiyb',
                 'position_ar' => 'المالك والمدير العام',
                 'position_en' => 'Founder & General Manager',
-                'bio_ar' => 'مؤسس مكتب الميثاق العربي للاستشارات الهندسية (ACEC) عام 2006. يتمتع بخبرة تزيد عن 25 عاماً في مجال الاستشارات الهندسية وهندسة السلامة والوقاية من الحريق. المكتب من المكاتب القليلة المعتمدة من الدفاع المدني للعمل بجميع مدن المملكة.',
+                'bio_ar' => 'مؤسس الميثاق العربي للاستشارات الهندسية (ACEC) عام 2006. يتمتع بخبرة تزيد عن 25 عاماً في مجال الاستشارات الهندسية وهندسة السلامة والوقاية من الحريق. المكتب من المكاتب القليلة المعتمدة من الدفاع المدني للعمل بجميع مدن المملكة.',
                 'bio_en' => 'Founder of Arabian Covenant Engineering Consultants (ACEC) in 2006. Has over 25 years of experience in engineering consultancy, safety engineering, and fire prevention. The office is one of the few accredited by Civil Defense to operate across all KSA cities.',
                 'order' => 1,
                 'is_active' => true,
@@ -512,7 +512,7 @@ class ContentSeeder extends Seeder
             [
                 'lang' => 'ar',
                 'title' => 'من التصميم إلى التسليم',
-                'subtitle' => 'مكتب الميثاق العربي للاستشارات الهندسية',
+                'subtitle' => 'الميثاق العربي للاستشارات الهندسية',
                 'description' => 'استشارات هندسية شاملة وهندسة سلامة والوقاية من الحريق في جميع أنحاء المملكة العربية السعودية — نقدم التميز منذ 2006.',
                 'stat1_number' => '+25', 'stat1_label' => 'سنة خبرة',
                 'stat2_number' => '+2500', 'stat2_label' => 'مشروع منجز',

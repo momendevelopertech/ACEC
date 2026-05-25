@@ -29,7 +29,7 @@ class AcecDatabaseSeeder extends Seeder
 
         // 2. Settings
         $settings = [
-            ['key' => 'site_name_ar', 'value' => 'مكتب الميثاق العربي للاستشارات الهندسية', 'group' => 'general'],
+            ['key' => 'site_name_ar', 'value' => 'الميثاق العربي للاستشارات الهندسية', 'group' => 'general'],
             ['key' => 'site_name_en', 'value' => 'Arabian Covenant Engineering Consultants - ACEC', 'group' => 'general'],
             ['key' => 'address_ar', 'value' => 'شارع عمر بن عبدالعزيز، حي الزهراء، الرياض، المملكة العربية السعودية', 'group' => 'contact'],
             ['key' => 'address_en', 'value' => 'Omar Bin Abdulaziz Street, Al Zahraa District, Riyadh, Saudi Arabia', 'group' => 'contact'],

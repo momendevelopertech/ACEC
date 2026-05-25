@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: locale === "ar" ? "تواصل معنا | ACEC" : "Contact Us | ACEC",
     description:
       locale === "ar"
-        ? "تواصل مع مكتب الميثاق العربي للاستشارات الهندسية — نحن هنا للإجابة على جميع استفساراتك"
+        ? "تواصل مع الميثاق العربي للاستشارات الهندسية — نحن هنا للإجابة على جميع استفساراتك"
         : "Contact Arabian Covenant Engineering Consultants — we are here to answer all your inquiries",
   };
 }

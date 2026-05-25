@@ -131,7 +131,7 @@ class ProjectSeeder extends Seeder
             $imagePath = $this->generatePlaceholderImage("models/projects/{$slug}.jpg", "project-{$slug}");
             DB::table('projects')->insert(array_merge($project, [
                 'image' => $imagePath,
-                'meta_title_ar' => $project['title_ar'] . ' | مكتب الميثاق العربي',
+                'meta_title_ar' => $project['title_ar'] . ' | الميثاق العربي',
                 'meta_title_en' => $project['title_en'] . ' | ACEC',
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: isAr ? "ملف المكتب التعريفي | ACEC" : "Company Profile | ACEC",
     description: isAr
-      ? "الملف التعريفي لمكتب الميثاق العربي للاستشارات الهندسية وهندسة السلامة"
+      ? "الملف التعريفي للميثاق العربي للاستشارات الهندسية وهندسة السلامة"
       : "Arabian Covenant Engineering Consultants (ACEC) — official company profile",
   };
 }
@@ -90,7 +90,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
               }}
             >
               {isAr
-                ? "تعرف على مكتب الميثاق العربي للاستشارات الهندسية — رؤيتنا، رسالتنا، خدماتنا، ومشاريعنا"
+                ? "تعرف على الميثاق العربي للاستشارات الهندسية — رؤيتنا، رسالتنا، خدماتنا، ومشاريعنا"
                 : "Discover Arabian Covenant Engineering Consultants (ACEC) — our vision, mission, services, and projects"}
             </p>
           </div>

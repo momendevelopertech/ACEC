@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isAr = locale === "ar";
   return {
-    title: isAr ? "الشهادات والاعتمادات | مكتب الميثاق العربي" : "Certifications & Accreditations | ACEC",
+    title: isAr ? "الشهادات والاعتمادات | الميثاق العربي" : "Certifications & Accreditations | ACEC",
   };
 }
 
