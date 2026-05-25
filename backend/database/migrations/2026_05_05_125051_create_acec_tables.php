@@ -21,20 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 2. Themes
-        Schema::create('themes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('name_ar')->nullable();
-            $table->string('slug')->unique();
-            $table->boolean('is_active')->default(false);
-            $table->json('colors')->nullable();
-            $table->json('typography')->nullable();
-            $table->json('layout')->nullable();
-            $table->timestamps();
-        });
-
-        // 3. Services
+        // 2. Services
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
@@ -106,7 +93,6 @@ return new class extends Migration
             $table->string('name_ar');
             $table->string('name_en');
             $table->string('logo')->nullable();
-            $table->string('website')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
@@ -272,7 +258,6 @@ return new class extends Migration
         Schema::dropIfExists('team_members');
         Schema::dropIfExists('projects');
         Schema::dropIfExists('services');
-        Schema::dropIfExists('themes');
         Schema::dropIfExists('settings');
         
         if (Schema::hasColumn('users', 'role')) {

@@ -11,7 +11,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AcecDatabaseSeeder::class,
             SettingsSeeder::class,
-            ThemeSeeder::class,
             HeroSeeder::class,
             WhyUsSeeder::class,
             ServiceSeeder::class,
@@ -22,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BlogPostSeeder::class,
             ClientSeeder::class,
             ContentSeeder::class,
+            ProfilePdfSeeder::class,
         ]);
     }
 }

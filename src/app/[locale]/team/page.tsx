@@ -69,7 +69,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
               }}
             >
@@ -117,7 +117,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                     key={member.id}
                     className="gradient-border"
                     style={{
-                      background: "rgba(18, 18, 26, 0.6)",
+                      background: "var(--color-surface)",
                       backdropFilter: "blur(20px)",
                       borderRadius: "var(--radius-lg)",
                       padding: "2rem",
@@ -141,24 +141,17 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                         overflow: "hidden",
                       }}
                     >
-                      {member.image ? (
-                        <img
-                          src={`${API_BASE}/storage/${member.image}`}
-                          alt={member.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <span>
-                          {member.name ? member.name.charAt(0) : '?'}
-                        </span>
-                      )}
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                      </svg>
                     </div>
                     <h3
                       style={{
                         fontFamily: "var(--font-heading)",
                         fontSize: "1.25rem",
                         fontWeight: 600,
-                        color: "var(--color-white)",
+                        color: "var(--color-text-primary)",
                         marginBottom: "0.5rem",
                       }}
                     >

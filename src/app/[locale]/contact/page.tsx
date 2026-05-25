@@ -82,7 +82,7 @@ export default async function ContactPage({ params }: Props) {
                     fontFamily: "var(--font-heading)",
                     fontSize: "clamp(2rem, 4vw, 3.5rem)",
                     fontWeight: 700,
-                    color: "var(--color-white)",
+                    color: "var(--color-text-primary)",
                     lineHeight: 1.2,
                     marginBottom: "1.5rem",
                   }}
@@ -144,7 +144,7 @@ export default async function ContactPage({ params }: Props) {
                           <a
                             href={item.href}
                             style={{
-                              color: "var(--color-white)",
+                              color: "var(--color-text-primary)",
                               textDecoration: "none",
                               fontSize: "0.9375rem",
                               transition: "color 0.2s",
@@ -155,7 +155,7 @@ export default async function ContactPage({ params }: Props) {
                         ) : (
                           <span
                             style={{
-                              color: "var(--color-white)",
+                              color: "var(--color-text-primary)",
                               fontSize: "0.9375rem",
                             }}
                           >

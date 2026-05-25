@@ -55,7 +55,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
               }}
             >
@@ -90,8 +90,8 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                     href={`/${locale}/blog/${post.slug}`}
                     className="gradient-border"
                     style={{
-                      background: "rgba(var(--color-surface-rgb), 0.6)",
-                      backdropFilter: "blur(20px)",
+                      background: "var(--color-card-bg)",
+                      border: "1px solid var(--color-card-border)",
                       borderRadius: "var(--radius-lg)",
                       overflow: "hidden",
                       textDecoration: "none",
@@ -132,7 +132,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                           fontFamily: "var(--font-heading)",
                           fontSize: "1.2rem",
                           fontWeight: 600,
-                          color: "var(--color-white)",
+                          color: "var(--color-text-primary)",
                           margin: "0.5rem 0",
                         }}
                       >

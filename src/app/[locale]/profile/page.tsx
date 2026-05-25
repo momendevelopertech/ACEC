@@ -64,7 +64,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
               }}
             >
@@ -104,7 +104,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                 <div
                   className="gradient-border"
                   style={{
-                    background: "rgba(18, 18, 26, 0.6)",
+                    background: "var(--color-card-bg)",
                     backdropFilter: "blur(20px)",
                     borderRadius: "var(--radius-lg)",
                     overflow: "hidden",
@@ -156,7 +156,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                   className="gradient-border mx-auto"
                   style={{
                     maxWidth: "500px",
-                    background: "rgba(18, 18, 26, 0.6)",
+                    background: "var(--color-card-bg)",
                     backdropFilter: "blur(20px)",
                     borderRadius: "var(--radius-lg)",
                     padding: "4rem 2rem",
@@ -176,7 +176,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                       fontFamily: "var(--font-heading)",
                       fontSize: "1.5rem",
                       fontWeight: 600,
-                      color: "var(--color-white)",
+                      color: "var(--color-text-primary)",
                       marginBottom: "0.75rem",
                     }}
                   >

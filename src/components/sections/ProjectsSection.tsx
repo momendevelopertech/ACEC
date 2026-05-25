@@ -38,7 +38,7 @@ function ProjectCard({ project, locale }: { project: Project; locale: string }) 
     <motion.div
       variants={fadeUpVariant}
       whileHover={{ y: -8 }}
-      className="rounded-2xl overflow-hidden bg-card-bg border border-card-border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group"
+      className="rounded-2xl overflow-hidden bg-card-bg border border-card-border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group premium-card"
     >
       <motion.div 
         variants={imageMaskVariant}

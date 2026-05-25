@@ -44,7 +44,6 @@ export function ContactForm() {
             if (response.success) {
                 setStatus("success");
                 setFormData({ name: "", email: "", phone: "", subject: "", message: "", service_interest: "" });
-                // Reset success message after 5 seconds
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
@@ -70,12 +69,13 @@ export function ContactForm() {
                 display: "flex",
                 flexDirection: "column",
                 gap: "1.25rem",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.04)",
             }}
         >
             {/* Name + Email row */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }} className="form-row">
                 <div>
-                    <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                         {t("name")}
                     </label>
                     <input
@@ -89,7 +89,7 @@ export function ContactForm() {
                     />
                 </div>
                 <div>
-                    <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                         {t("email")}
                     </label>
                     <input
@@ -106,7 +106,7 @@ export function ContactForm() {
 
             {/* Subject */}
             <div>
-                <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     {t("subject")}
                 </label>
                 <input
@@ -122,7 +122,7 @@ export function ContactForm() {
 
             {/* Phone */}
             <div>
-                <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     {t("phone")}
                 </label>
                 <input
@@ -137,7 +137,7 @@ export function ContactForm() {
 
             {/* Service */}
             <div>
-                <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     {t("service")}
                 </label>
                 <select
@@ -159,7 +159,7 @@ export function ContactForm() {
 
             {/* Message */}
             <div>
-                <label style={{ display: "block", fontSize: "0.8rem", color: "var(--color-muted)", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     {t("message")}
                 </label>
                 <textarea
@@ -180,11 +180,12 @@ export function ContactForm() {
                     style={{
                         padding: "1rem",
                         borderRadius: "var(--radius-sm)",
-                        background: "rgba(var(--color-accent-rgb), 0.1)",
-                        border: "1px solid rgba(var(--color-accent-rgb), 0.3)",
-                        color: "var(--color-accent)",
+                        background: "rgba(198, 166, 107, 0.1)",
+                        border: "1px solid rgba(198, 166, 107, 0.3)",
+                        color: "#6B695A",
                         fontSize: "0.9rem",
                         textAlign: "center",
+                        fontWeight: 500,
                     }}
                 >
                     ✓ {t("success")}
@@ -195,9 +196,9 @@ export function ContactForm() {
                     style={{
                         padding: "1rem",
                         borderRadius: "var(--radius-sm)",
-                        background: "rgba(200, 50, 50, 0.1)",
-                        border: "1px solid rgba(200, 50, 50, 0.3)",
-                        color: "#f87171",
+                        background: "rgba(200, 50, 50, 0.08)",
+                        border: "1px solid rgba(200, 50, 50, 0.2)",
+                        color: "#dc2626",
                         fontSize: "0.9rem",
                         textAlign: "center",
                     }}
@@ -210,15 +211,21 @@ export function ContactForm() {
             <button
                 type="submit"
                 disabled={status === "loading"}
-                className="magnetic-btn magnetic-btn-primary"
                 style={{
                     width: "100%",
                     fontSize: "1rem",
                     padding: "1rem",
-                    opacity: status === "loading" ? 0.7 : 1,
+                    borderRadius: "12px",
+                    fontWeight: 600,
                     cursor: status === "loading" ? "wait" : "pointer",
-                    justifyContent: "center",
+                    opacity: status === "loading" ? 0.7 : 1,
+                    background: "#6B695A",
+                    color: "#FFFFFF",
+                    border: "none",
+                    transition: "all 0.3s ease",
                 }}
+                onMouseEnter={(e) => { if (status !== "loading") e.currentTarget.style.background = "#C6A66B"; }}
+                onMouseLeave={(e) => { if (status !== "loading") e.currentTarget.style.background = "#6B695A"; }}
             >
                 {status === "loading"
                     ? locale === "ar"
@@ -235,7 +242,7 @@ export function ContactForm() {
         }
         select option {
           background: var(--color-surface);
-          color: var(--color-white);
+          color: var(--color-text-primary);
         }
       `}</style>
         </motion.form>

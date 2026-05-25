@@ -18,15 +18,15 @@ export function CTASection() {
     const bgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
     return (
-        <section
-            ref={ref}
-            style={{
-                position: "relative",
-                padding: "8rem 1.5rem",
-                overflow: "hidden",
-                textAlign: "center",
-            }}
-        >
+            <section
+                ref={ref}
+                className="section-padding"
+                style={{
+                    position: "relative",
+                    overflow: "hidden",
+                    textAlign: "center",
+                }}
+            >
             {/* Parallax background */}
             <motion.div
                 style={{

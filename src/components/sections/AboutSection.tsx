@@ -72,9 +72,9 @@ export function AboutSection() {
 
                         <motion.p
                             variants={fadeUpVariant}
+                            className="text-text-muted"
                             style={{
-                                fontSize: "1rem",
-                                color: "var(--color-text-muted)",
+                                fontSize: "1.05rem",
                                 lineHeight: 1.8,
                                 marginBottom: "2.5rem",
                             }}

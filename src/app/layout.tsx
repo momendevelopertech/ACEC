@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { generateThemeCssVars } from "@/lib/theme-utils";
 import "./globals.css";
 import dynamic from "next/dynamic";
 
 const CustomCursor = dynamic(
   () => import("@/components/ui/CustomCursor").then((m) => m.CustomCursor)
 );
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
 export const metadata: Metadata = {
   title: {
@@ -48,33 +45,14 @@ export const metadata: Metadata = {
   },
 };
 
-async function getActiveTheme() {
-  try {
-    const res = await fetch(`${API_BASE}/api/themes/active`, {
-      next: { revalidate: 60 },
-    });
-    if (res.ok) {
-      const json = await res.json();
-      if (json.success && json.data) return json.data;
-    }
-  } catch {
-    // fallback to CSS defaults
-  }
-  return null;
-}
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const theme = await getActiveTheme();
-  const cssVars = theme?.colors ? generateThemeCssVars(theme.colors) : null;
-
   return (
     <html suppressHydrationWarning>
-      <head>{cssVars ? <style id="theme-vars">{`:root { ${cssVars} }`}</style> : null}</head>
-      <body className="bg-background text-text-primary" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <CustomCursor />
         {children}
       </body>

@@ -46,7 +46,7 @@ export default async function ServicesPage({ params }: Props) {
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2.5rem, 5vw, 4rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
               }}
             >
               {isArabic ? "خدماتنا " : "Our "}

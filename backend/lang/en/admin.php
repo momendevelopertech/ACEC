@@ -11,7 +11,7 @@ return [
     'blog_posts'     => 'Blog Posts',
     'certifications' => 'Certifications',
     'job_postings'   => 'Job Postings',
-    'themes'         => 'Themes',
+
     'profile_pdfs'   => 'Profile PDFs',
 
     // Widgets
@@ -74,7 +74,6 @@ return [
     'col_excerpt_en'     => 'Excerpt (English)',
     'col_published_at'   => 'Published At',
     'col_logo'           => 'Logo',
-    'col_website'        => 'Website',
     'col_linkedin'       => 'LinkedIn',
     'col_position_ar'    => 'Position (Arabic)',
     'col_position_en'    => 'Position (English)',
@@ -102,41 +101,10 @@ return [
     'col_requirements_ar' => 'Requirements (Arabic)',
     'col_requirements_en' => 'Requirements (English)',
 
-    'notification_theme_activated' => 'Theme activated!',
-
     // Sections
-    'theme_info'          => 'Theme Info',
-    'theme_colors'        => 'Theme Colors',
-    'theme_typography'    => 'Typography',
-    'theme_layout'        => 'Layout',
     'actions'             => 'Actions',
     'section_message_details' => 'Message Details',
     'section_status'      => 'Status',
-
-    // Theme Colors
-    'color_bg_primary'    => 'Background Primary',
-    'color_bg_secondary'  => 'Background Secondary',
-    'color_bg_card'       => 'Background Card',
-    'color_bg_section_alt' => 'Background Section Alt',
-    'color_text_primary'  => 'Text Primary',
-    'color_text_secondary' => 'Text Secondary',
-    'color_text_muted'    => 'Text Muted',
-    'color_accent'        => 'Accent',
-    'color_accent_hover'  => 'Accent Hover',
-    'color_accent_text'   => 'Accent Text',
-    'color_border'        => 'Border',
-    'color_navbar_bg'     => 'Navbar Background',
-    'color_navbar_text'   => 'Navbar Text',
-    'color_button_bg'     => 'Button Background',
-    'color_button_text'   => 'Button Text',
-    'color_button_hover'  => 'Button Hover',
-    'color_card_bg'       => 'Card Background',
-    'color_card_border'   => 'Card Border',
-    'color_footer_bg'     => 'Footer Background',
-    'color_footer_text'   => 'Footer Text',
-    'color_font_ar'       => 'Arabic Font',
-    'color_font_en'       => 'English Font',
-    'color_border_radius' => 'Border Radius (sm/md/lg/xl)',
 
     // Contacts extra columns
     'col_phone'       => 'Phone',

@@ -55,7 +55,6 @@ class ClientSeeder extends Seeder
                 [
                     'name_ar'   => $client['ar'],
                     'logo'      => $imagePath,
-                    'website'   => null,
                     'order'     => $i,
                     'is_active' => true,
                     'updated_at' => now(),

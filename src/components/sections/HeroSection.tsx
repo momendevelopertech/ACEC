@@ -114,13 +114,13 @@ export function HeroSection() {
                     <div style={{ overflow: "hidden", paddingBottom: "10px" }}>
                         <motion.h1
                             variants={textRevealVariant}
+                        className="font-heading"
                         style={{
-                            fontFamily: "var(--font-heading)",
                             fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.1,
                             marginBottom: "1.5rem",
-                            color: "var(--color-text-primary)",
+                            color: "#474A4D",
                         }}
                     >
                         {t("tagline")}

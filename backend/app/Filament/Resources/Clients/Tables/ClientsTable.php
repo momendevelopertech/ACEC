@@ -24,9 +24,6 @@ class ClientsTable
                     ->searchable(),
                 ImageColumn::make('logo')
                     ->label(__('admin.col_logo')),
-                TextColumn::make('website')
-                    ->label(__('admin.col_website'))
-                    ->searchable(),
                 TextColumn::make('order')
                     ->label(__('admin.col_order'))
                     ->numeric()

@@ -140,7 +140,6 @@ class ContentSeeder extends Seeder
                 [
                     'name_ar' => $c['ar'],
                     'logo' => "models/clients/{$c['img']}",
-                    'website' => null,
                     'order' => $i,
                     'is_active' => true,
                     'updated_at' => now(),

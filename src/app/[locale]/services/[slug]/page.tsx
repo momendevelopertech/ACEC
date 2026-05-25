@@ -102,7 +102,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
                 textAlign: "center",
                 lineHeight: 1.3,
@@ -206,7 +206,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           }
         }
         article h2, article h3, article h4 {
-          color: var(--color-white);
+          color: var(--color-text-primary);
           margin-top: 2rem;
           margin-bottom: 1rem;
         }

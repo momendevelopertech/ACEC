@@ -13,7 +13,6 @@ interface Client {
   name_ar: string;
   name_en: string;
   logo: string;
-  website: string;
   order: number;
   is_active: string;
 }
@@ -46,7 +45,6 @@ export function ClientsSection() {
     const displayClients = clients.map((c: Client) => ({ 
         name: isArabic ? c.name_ar : c.name_en, 
         logo: c.logo ? `${API_BASE}/storage/${c.logo}` : "/images/client-logo.svg",
-        website: c.website
     }));
 
     const containerVariants: Variants = {
@@ -131,19 +129,12 @@ export function ClientsSection() {
                     <div className="marquee-content flex flex-nowrap gap-4 md:gap-8 min-w-max">
                         {/* Render the clients multiple times to ensure seamless scrolling */}
                         {[...displayClients, ...displayClients, ...displayClients].map((client, idx) => {
-                            const CardWrapper = client.website ? "a" : "div";
                             return (
                                 <motion.div
                                     key={idx}
                                     whileHover={{ scale: 1.05, y: -4 }}
-                                    className="relative flex flex-col items-center justify-center p-4 md:p-8 rounded-2xl bg-surface border border-border-default transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer w-[160px] md:w-[220px] h-[100px] md:h-[140px] hover:border-accent hover:bg-surface-hover shrink-0"
+                                    className="relative flex flex-col items-center justify-center p-4 md:p-8 rounded-2xl bg-surface border border-border-default transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] w-[160px] md:w-[220px] h-[100px] md:h-[140px] hover:border-[#C6A66B] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] shrink-0 group"
                                 >
-                                    <CardWrapper
-                                        href={client.website || undefined}
-                                        target={client.website ? "_blank" : undefined}
-                                        rel={client.website ? "noopener noreferrer" : undefined}
-                                        className="absolute inset-0 w-full h-full z-10 block"
-                                    />
 
                                     {/* Client Logo/Name */}
                                     <div className="relative z-[5] text-center flex flex-col items-center gap-4 w-full">

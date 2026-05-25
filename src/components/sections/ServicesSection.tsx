@@ -132,13 +132,10 @@ function ServiceCard({
     return (
         <motion.div
             variants={fadeUpVariant}
-            className="service-card gradient-border"
+            className="service-card premium-card"
             style={{
                 position: "relative",
-                background: "var(--color-card-bg)",
-                backdropFilter: "blur(20px)",
                 padding: "2rem",
-                borderRadius: "var(--radius-lg)",
                 cursor: "pointer",
                 overflow: "hidden",
                 willChange: "transform",
@@ -148,19 +145,9 @@ function ServiceCard({
             <div style={{ position: "relative", zIndex: 2 }}>
                 {/* Icon */}
                 <div
-                    className="service-icon"
+                    className="premium-icon"
                     style={{
-                        width: "64px",
-                        height: "64px",
-                        borderRadius: "var(--radius-md)",
-                        background: "var(--color-gold-dim)",
-                        border: "1px solid var(--color-border-gold)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "var(--color-gold)",
                         marginBottom: "1.5rem",
-                        transition: "all 0.3s ease",
                     }}
                 >
                     {serviceIcons[service.slug] || serviceIcons.consulting}
@@ -309,18 +296,6 @@ export function ServicesSection() {
             </div>
 
             <style>{`
-        .service-card:hover .card-bg-image {
-          opacity: 0.25;
-        }
-        .service-card:hover .service-icon {
-          background: var(--color-gold-dim);
-          border-color: var(--color-gold);
-          box-shadow: 0 0 20px var(--color-gold-dim);
-        }
-        .service-card:hover {
-          transform: translateY(-4px) !important;
-          transition: transform 0.3s ease !important;
-        }
         .learn-more-link:hover {
           gap: 0.75rem !important;
           color: var(--brand-dark) !important;

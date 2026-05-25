@@ -97,7 +97,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
               }}
             >
@@ -142,7 +142,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                   key={i}
                   className="gradient-border"
                   style={{
-                    background: "rgba(18, 18, 26, 0.6)",
+                    background: "var(--color-card-bg)",
                     backdropFilter: "blur(20px)",
                     borderRadius: "var(--radius-lg)",
                     padding: "2rem",
@@ -169,7 +169,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                       fontFamily: "var(--font-heading)",
                       fontSize: "1.2rem",
                       fontWeight: 600,
-                      color: "var(--color-white)",
+                      color: "var(--color-text-primary)",
                       marginBottom: "0.75rem",
                     }}
                   >
@@ -204,7 +204,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                   style={{
                     padding: "2rem",
                     borderRadius: "var(--radius-lg)",
-                    background: "rgba(var(--color-bg-rgb), 0.6)",
+                    background: "var(--color-card-bg)",
                     border: "1px solid var(--color-border)",
                     display: "flex",
                     gap: "1rem",
@@ -234,7 +234,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                         fontFamily: "var(--font-heading)",
                         fontSize: "1.1rem",
                         fontWeight: 600,
-                        color: "var(--color-white)",
+                        color: "var(--color-text-primary)",
                         marginBottom: "0.5rem",
                       }}
                     >
@@ -260,7 +260,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
         <section className="py-16 px-6">
           <div className="container-custom">
             <div className="text-center max-w-2xl mx-auto gradient-border" style={{
-              background: "rgba(18, 18, 26, 0.6)",
+              background: "var(--color-card-bg)",
               backdropFilter: "blur(20px)",
               borderRadius: "var(--radius-lg)",
               padding: "3rem 2rem",
@@ -309,7 +309,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                     key={cert.id}
                     className="gradient-border"
                     style={{
-                      background: "rgba(18, 18, 26, 0.6)",
+                      background: "var(--color-card-bg)",
                       backdropFilter: "blur(20px)",
                       borderRadius: "var(--radius-lg)",
                       padding: "2rem",
@@ -340,7 +340,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
                         fontFamily: "var(--font-heading)",
                         fontSize: "1.2rem",
                         fontWeight: 600,
-                        color: "var(--color-white)",
+                        color: "var(--color-text-primary)",
                         marginBottom: "0.5rem",
                       }}
                     >

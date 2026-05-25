@@ -94,18 +94,14 @@ export function StatsSection() {
                         <motion.div
                             key={stat.labelKey}
                             variants={fadeUpVariant}
+                            className="stat-card premium-card"
                             style={{
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 gap: "0.75rem",
                                 padding: "2rem",
-                                borderRadius: "var(--radius-lg)",
-                                background: "rgba(var(--color-gold-rgb), 0.04)",
-                                border: "1px solid rgba(var(--color-gold-rgb), 0.08)",
-                                transition: "background 0.3s",
                             }}
-                            className="stat-card"
                         >
                             <CountUp
                                 value={stat.value}

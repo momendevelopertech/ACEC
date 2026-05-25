@@ -11,7 +11,7 @@ class Client extends Model
     protected array $imageFields = ['logo'];
 
     protected $fillable = [
-        'name_ar', 'name_en', 'logo', 'website',
+        'name_ar', 'name_en', 'logo',
         'order', 'is_active',
     ];
 

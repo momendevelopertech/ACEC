@@ -20,25 +20,31 @@ trait GeneratesPlaceholderImages
             return $path;
         }
 
+        $ext = pathinfo($fullPath, PATHINFO_EXTENSION);
+
         try {
-            $url = "https://picsum.photos/seed/{$seed}/{$width}/{$height}";
-            $context = stream_context_create([
-                'http' => [
-                    'timeout' => 10,
-                    'user_agent' => 'ACEC-Seeder/1.0',
-                ],
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                ],
-            ]);
-
-            $imageData = @file_get_contents($url, false, $context);
-
-            if ($imageData !== false) {
-                file_put_contents($fullPath, $imageData);
-            } else {
+            if ($ext === 'svg') {
                 $this->createSvgPlaceholder($fullPath, $seed);
+            } else {
+                $url = "https://picsum.photos/seed/{$seed}/{$width}/{$height}";
+                $context = stream_context_create([
+                    'http' => [
+                        'timeout' => 10,
+                        'user_agent' => 'ACEC-Seeder/1.0',
+                    ],
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                    ],
+                ]);
+
+                $imageData = @file_get_contents($url, false, $context);
+
+                if ($imageData !== false) {
+                    file_put_contents($fullPath, $imageData);
+                } else {
+                    $this->createSvgPlaceholder($fullPath, $seed);
+                }
             }
         } catch (\Exception) {
             $this->createSvgPlaceholder($fullPath, $seed);
@@ -54,14 +60,16 @@ trait GeneratesPlaceholderImages
             mkdir($dir, 0755, true);
         }
 
-        $firstChar = mb_substr($label, 0, 1);
-        $colors = ['1a1a2e', '16213e', '0f3460', '533483', '2d4059', '222831', '30475e', '3a0088'];
+        $colors = ['#474A4D', '#6B695A', '#4A4D50', '#5A5C5E', '#3D4043'];
         $color = $colors[crc32($label) % count($colors)];
 
         $svg = <<<SVG
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
-  <rect width="400" height="300" fill="#{$color}"/>
-  <text x="200" y="150" font-family="Arial" font-size="80" fill="white" text-anchor="middle" dominant-baseline="central">{$firstChar}</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <rect width="300" height="300" fill="{$color}"/>
+  <g fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M150 180c-33 0-60 27-60 60v30h120v-30c0-33-27-60-60-60z"/>
+    <circle cx="150" cy="120" r="45"/>
+  </g>
 </svg>
 SVG;
         file_put_contents($fullPath, $svg);

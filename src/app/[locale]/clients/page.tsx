@@ -62,7 +62,7 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
               }}
             >
@@ -208,10 +208,10 @@ export default async function ClientsPage({ params }: { params: Promise<{ locale
                   alignItems: "center",
                   gap: "0.75rem",
                   padding: "0.875rem 2.5rem",
-                  background: "linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%)",
+                  background: "var(--color-button-bg)",
                   border: "none",
                   borderRadius: "0.5rem",
-                  color: "var(--color-bg)",
+                  color: "var(--color-button-text)",
                   fontWeight: 600,
                   fontSize: "1rem",
                   cursor: "pointer",

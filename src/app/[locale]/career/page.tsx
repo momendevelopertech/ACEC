@@ -57,7 +57,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 marginBottom: "1rem",
               }}
             >
@@ -98,7 +98,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
                     key={job.id}
                     className="gradient-border"
                     style={{
-                      background: "rgba(18, 18, 26, 0.6)",
+                      background: "var(--color-card-bg)",
                       backdropFilter: "blur(20px)",
                       borderRadius: "var(--radius-lg)",
                       padding: "2rem",
@@ -119,7 +119,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
                             fontFamily: "var(--font-heading)",
                             fontSize: "1.3rem",
                             fontWeight: 600,
-                            color: "var(--color-white)",
+                            color: "var(--color-text-primary)",
                             marginBottom: "0.5rem",
                           }}
                         >
@@ -157,7 +157,7 @@ export default async function CareerPage({ params }: { params: Promise<{ locale:
                         </p>
                         {job.requirements && (
                           <div className="mt-4">
-                            <h4 className="font-bold mb-2" style={{ color: "var(--color-white)" }}>
+                            <h4 className="font-bold mb-2" style={{ color: "var(--color-text-primary)" }}>
                               {isAr ? "المتطلبات:" : "Requirements:"}
                             </h4>
                             <p

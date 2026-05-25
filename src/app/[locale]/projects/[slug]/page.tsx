@@ -100,7 +100,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 700,
-                color: "var(--color-white)",
+                color: "var(--color-text-primary)",
                 textAlign: "center",
                 marginBottom: "1rem",
               }}
@@ -185,7 +185,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                     <h4 style={{ color: "var(--color-gold)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
                       {isAr ? "الموقع" : "Location"}
                     </h4>
-                    <p style={{ color: "var(--color-white)", margin: 0 }}>{project.location}</p>
+                    <p style={{ color: "var(--color-text-primary)", margin: 0 }}>{project.location}</p>
                   </div>
                 )}
                 {project.client && (
@@ -193,7 +193,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                     <h4 style={{ color: "var(--color-gold)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
                       {isAr ? "العميل" : "Client"}
                     </h4>
-                    <p style={{ color: "var(--color-white)", margin: 0 }}>{project.client}</p>
+                    <p style={{ color: "var(--color-text-primary)", margin: 0 }}>{project.client}</p>
                   </div>
                 )}
                 {project.year && (
@@ -201,7 +201,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                     <h4 style={{ color: "var(--color-gold)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
                       {isAr ? "السنة" : "Year"}
                     </h4>
-                    <p style={{ color: "var(--color-white)", margin: 0 }}>{project.year}</p>
+                    <p style={{ color: "var(--color-text-primary)", margin: 0 }}>{project.year}</p>
                   </div>
                 )}
                 {project.area && (
@@ -209,7 +209,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                     <h4 style={{ color: "var(--color-gold)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
                       {isAr ? "المساحة" : "Area"}
                     </h4>
-                    <p style={{ color: "var(--color-white)", margin: 0 }}>{project.area}</p>
+                    <p style={{ color: "var(--color-text-primary)", margin: 0 }}>{project.area}</p>
                   </div>
                 )}
               </div>

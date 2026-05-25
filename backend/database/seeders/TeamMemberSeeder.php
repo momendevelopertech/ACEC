@@ -16,50 +16,40 @@ class TeamMemberSeeder extends Seeder
 
         $members = [
             [
-                'name_ar' => 'م. أحمد الخالدي',
-                'name_en' => 'Eng. Ahmed Al-Khaldi',
-                'position_ar' => 'المدير العام',
-                'position_en' => 'General Manager',
-                'bio_ar' => 'خبرة تزيد عن 20 عاماً في مجال الاستشارات الهندسية وإدارة المشاريع الكبرى في المملكة العربية السعودية.',
-                'bio_en' => 'Over 20 years of experience in engineering consulting and major project management in Saudi Arabia.',
+                'name_ar' => 'م. ماجد الذييب',
+                'name_en' => 'Eng. Majed Al-Thuaiyb',
+                'position_ar' => 'المالك والمدير العام',
+                'position_en' => 'Founder & General Manager',
+                'bio_ar' => 'مؤسس المكتب ومالكه، يتمتع بخبرة واسعة في مجال الاستشارات الهندسية وهندسة السلامة. يقود فريقاً من المهندسين المتخصصين لتحقيق أعلى معايير الجودة والاحترافية في جميع المشاريع.',
+                'bio_en' => 'Founder and owner of the firm with extensive experience in engineering consultancy and safety engineering. Leads a team of specialized engineers to achieve the highest standards of quality and professionalism across all projects.',
                 'order' => 1,
                 'is_active' => true,
             ],
             [
-                'name_ar' => 'م. محمد العتيبي',
-                'name_en' => 'Eng. Mohammed Al-Otaibi',
-                'position_ar' => 'مدير قسم السلامة',
-                'position_en' => 'Safety Department Manager',
-                'bio_ar' => 'متخصص في هندسة السلامة وأنظمة الحماية من الحريق مع خبرة واسعة في اشتراطات الدفاع المدني.',
-                'bio_en' => 'Specialized in safety engineering and fire protection systems with extensive experience in civil defense requirements.',
+                'name_ar' => 'م. عبد الله القحطاني',
+                'name_en' => 'Eng. Abdullah Al-Qahtani',
+                'position_ar' => 'مدير قسم التصميم',
+                'position_en' => 'Design Department Manager',
+                'bio_ar' => 'متخصص في التصميم المعماري والهندسي مع خبرة تزيد عن 15 عاماً في المشاريع السكنية والتجارية والصناعية.',
+                'bio_en' => 'Specialized in architectural and engineering design with over 15 years of experience in residential, commercial, and industrial projects.',
                 'order' => 2,
                 'is_active' => true,
             ],
             [
-                'name_ar' => 'م. سارة الشمري',
-                'name_en' => 'Eng. Sarah Al-Shamari',
-                'position_ar' => 'مديرة التصميم الداخلي',
-                'position_en' => 'Interior Design Manager',
-                'bio_ar' => 'مصممة داخلية متخصصة تجمع بين الجماليات العصرية والوظيفية العملية في مختلف المشاريع.',
-                'bio_en' => 'Specialized interior designer combining modern aesthetics with practical functionality across various projects.',
+                'name_ar' => 'م. فيصل الحربي',
+                'name_en' => 'Eng. Faisal Al-Harbi',
+                'position_ar' => 'مدير قسم السلامة والحماية من الحريق',
+                'position_en' => 'Fire Protection & Safety Manager',
+                'bio_ar' => 'خبير في أنظمة السلامة والحماية من الحريق ومعتمد من الدفاع المدني، مع خبرة في تطبيق الكود السعودي ومعايير NFPA.',
+                'bio_en' => 'Expert in fire protection and safety systems, accredited by the Civil Defense, with experience in applying SBC and NFPA standards.',
                 'order' => 3,
-                'is_active' => true,
-            ],
-            [
-                'name_ar' => 'م. خالد الدوسري',
-                'name_en' => 'Eng. Khaled Al-Dosari',
-                'position_ar' => 'رئيس قسم الإشراف',
-                'position_en' => 'Head of Supervision',
-                'bio_ar' => 'مهندس مشرف معتمد بخبرة تزيد عن 15 عاماً في إشراف المشاريع الحكومية والخاصة.',
-                'bio_en' => 'Certified supervising engineer with over 15 years of experience supervising government and private projects.',
-                'order' => 4,
                 'is_active' => true,
             ],
         ];
 
         foreach ($members as $member) {
             $slug = \Illuminate\Support\Str::slug($member['name_en']);
-            $imagePath = $this->generatePlaceholderImage("models/team-members/{$slug}.jpg", "team-{$slug}", 300, 300);
+            $imagePath = $this->generatePlaceholderImage("models/team-members/{$slug}.svg", "team-{$slug}", 300, 300);
             DB::table('team_members')->insert(array_merge($member, [
                 'image' => $imagePath,
                 'created_at' => now(),

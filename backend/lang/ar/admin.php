@@ -11,7 +11,7 @@ return [
     'blog_posts'     => 'المقالات',
     'certifications' => 'الشهادات',
     'job_postings'   => 'الوظائف',
-    'themes'         => 'الثيمات',
+
     'profile_pdfs'   => 'ملفات الـ PDF التعريفية',
 
     // Widgets
@@ -74,7 +74,6 @@ return [
     'col_excerpt_en'     => 'الملخص بالإنجليزية',
     'col_published_at'   => 'تاريخ النشر',
     'col_logo'           => 'الشعار',
-    'col_website'        => 'الموقع الإلكتروني',
     'col_linkedin'       => 'لينكدإن',
     'col_position_ar'    => 'المنصب بالعربية',
     'col_position_en'    => 'المنصب بالإنجليزية',
@@ -102,41 +101,10 @@ return [
     'col_requirements_ar' => 'المتطلبات بالعربية',
     'col_requirements_en' => 'المتطلبات بالإنجليزية',
 
-    'notification_theme_activated' => 'تم تفعيل الثيم!',
-
     // Sections
-    'theme_info'          => 'معلومات الثيم',
-    'theme_colors'        => 'ألوان الثيم',
-    'theme_typography'    => 'الطباعة',
-    'theme_layout'        => 'التخطيط',
     'actions'             => 'الإجراءات',
     'section_message_details' => 'تفاصيل الرسالة',
     'section_status'      => 'الحالة',
-
-    // Theme Colors
-    'color_bg_primary'    => 'الخلفية الرئيسية',
-    'color_bg_secondary'  => 'الخلفية الثانوية',
-    'color_bg_card'       => 'خلفية البطاقة',
-    'color_bg_section_alt' => 'خلفية القسم البديلة',
-    'color_text_primary'  => 'النص الرئيسي',
-    'color_text_secondary' => 'النص الثانوي',
-    'color_text_muted'    => 'نص باهت',
-    'color_accent'        => 'لون التمييز',
-    'color_accent_hover'  => 'لون التمييز عند التمرير',
-    'color_accent_text'   => 'نص التمييز',
-    'color_border'        => 'الحدود',
-    'color_navbar_bg'     => 'خلفية الشريط العلوي',
-    'color_navbar_text'   => 'نص الشريط العلوي',
-    'color_button_bg'     => 'خلفية الزر',
-    'color_button_text'   => 'نص الزر',
-    'color_button_hover'  => 'لون الزر عند التمرير',
-    'color_card_bg'       => 'خلفية البطاقة',
-    'color_card_border'   => 'حدود البطاقة',
-    'color_footer_bg'     => 'خلفية التذييل',
-    'color_footer_text'   => 'نص التذييل',
-    'color_font_ar'       => 'الخط العربي',
-    'color_font_en'       => 'الخط الإنجليزي',
-    'color_border_radius' => 'نصف قطر الحدود (sm/md/lg/xl)',
 
     // Contacts extra columns
     'col_phone'       => 'الهاتف',

@@ -27,9 +27,6 @@ class ClientForm
                     ->maxSize(2048)
                     ->imageEditor()
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
-                TextInput::make('website')
-                    ->label(__('admin.col_website'))
-                    ->url(),
                 TextInput::make('order')
                     ->label(__('admin.col_order'))
                     ->required()

@@ -47,11 +47,7 @@ class AcecDatabaseSeeder extends Seeder
             );
         }
 
-        // 3. Themes (Delegated to ThemeSeeder)
-        // Theme seeding is now handled exclusively by ThemeSeeder.php 
-        // which seeds the simplified Light and Dark themes.
-
-        // 4. Hero Section
+        // 3. Hero Section
         foreach (['en', 'ar'] as $lang) {
             DB::table('hero_sections')->updateOrInsert(
                 ['lang' => $lang],

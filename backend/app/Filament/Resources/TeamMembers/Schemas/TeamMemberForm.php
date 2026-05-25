@@ -37,7 +37,7 @@ class TeamMemberForm
                     ->directory('models/team-members')
                     ->maxSize(2048)
                     ->imageEditor()
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml']),
                 TextInput::make('email')
                     ->label(__('admin.col_email'))
                     ->email()

@@ -33,7 +33,6 @@ export function Footer() {
 
     const contactDetails = [
         {
-            icon: "📍",
             title: isArabic ? "العنوان" : "Address",
             value: isArabic
                 ? "شارع عمر بن عبدالعزيز، ح الزهراء، الرياض"
@@ -41,20 +40,17 @@ export function Footer() {
             href: null,
         },
         {
-            icon: "📞",
             title: isArabic ? "الهاتف" : "Phone",
             value: "+966 500 037 049",
             href: "tel:+966500037049",
         },
         {
-            icon: "💬",
             title: "WhatsApp",
             value: "+966 500 037 049",
             href: "https://wa.me/966500037049",
         },
         {
-            icon: "📧",
-            title: isArabic ? "البريد الإلكتروني" : "Email",
+            title: "Email",
             value: "info@ac-ec.com.sa",
             href: "mailto:info@ac-ec.com.sa",
         },
@@ -69,38 +65,35 @@ export function Footer() {
                 </svg>
             ),
             href: "https://wa.me/966500037049",
-            hoverClass: "hover:bg-[#25D366]/20 hover:border-[#25D366] hover:text-[#25D366]",
         },
         {
             name: "Email",
             icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="4" width="20" height="16" rx="2"/>
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                 </svg>
             ),
             href: "mailto:info@ac-ec.com.sa",
-            hoverClass: "hover:bg-accent/20 hover:border-accent hover:text-accent",
         },
         {
             name: "Phone",
             icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
             ),
             href: "tel:+966500037049",
-            hoverClass: "hover:bg-accent/20 hover:border-accent hover:text-accent",
         },
     ];
 
     return (
-        <footer className="relative overflow-hidden pt-20 pb-8 px-6 border-t border-border-default bg-gradient-to-b from-surface to-background/95">
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_50%,rgba(var(--color-accent-rgb),0.03)_0%,transparent_50%),radial-gradient(circle_at_80%_50%,rgba(var(--color-accent-rgb),0.03)_0%,transparent_50%)]" />
+        <footer className="relative overflow-hidden bg-[#474A4D] pt-20 pb-8 px-6">
+            {/* Subtle gold accent line at top */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(198,166,107,0.4)] to-transparent" />
 
             <div className="container-custom relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-10 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-12 mb-16">
                     {/* Column 1: Logo + Description */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -110,11 +103,10 @@ export function Footer() {
                         <div className="mb-5">
                             <Logo size="md" href={`/${locale}`} />
                         </div>
-                        <p className="text-text-muted text-[0.9rem] leading-[1.8] mb-6">
+                        <p className="text-[#B8B4AC] text-[0.9rem] leading-[1.8] mb-6">
                             {t("description")}
                         </p>
 
-                        {/* Social links with animations */}
                         <div className="flex gap-3">
                             {socialLinks.map((social, index) => (
                                 <motion.a
@@ -125,7 +117,7 @@ export function Footer() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: index * 0.1 }}
                                     whileHover={{ y: -3, scale: 1.1 }}
-                                    className={`w-[42px] h-[42px] rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-text-muted no-underline transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${social.hoverClass}`}
+                                    className="w-[42px] h-[42px] rounded-full bg-[rgba(198,166,107,0.1)] border border-[rgba(198,166,107,0.2)] flex items-center justify-center text-[#B8B4AC] no-underline transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[rgba(198,166,107,0.2)] hover:border-[#C6A66B] hover:text-[#C6A66B]"
                                 >
                                     {social.icon}
                                 </motion.a>
@@ -139,8 +131,8 @@ export function Footer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                     >
-                        <h3 className="text-accent text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
-                            <span className="w-5 h-px bg-accent" />
+                        <h3 className="text-[#C6A66B] text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
+                            <span className="w-5 h-px bg-[#C6A66B]" />
                             {t("quickLinks")}
                         </h3>
                         <nav className="flex flex-col gap-3">
@@ -153,7 +145,7 @@ export function Footer() {
                                 >
                                     <Link
                                         href={link.href}
-                                        className="text-text-muted no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-text-primary group"
+                                        className="text-[#B8B4AC] no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-[#C6A66B] group"
                                     >
                                         <span className="opacity-0 transition-opacity duration-200 text-[0.7rem] group-hover:opacity-100">
                                             {isArabic ? "←" : "→"}
@@ -171,8 +163,8 @@ export function Footer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <h3 className="text-accent text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
-                            <span className="w-5 h-px bg-accent" />
+                        <h3 className="text-[#C6A66B] text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
+                            <span className="w-5 h-px bg-[#C6A66B]" />
                             {services("title")}
                         </h3>
                         <nav className="flex flex-col gap-3">
@@ -185,7 +177,7 @@ export function Footer() {
                                 >
                                     <Link
                                         href={link.href}
-                                        className="text-text-muted no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-text-primary group"
+                                        className="text-[#B8B4AC] no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-[#C6A66B] group"
                                     >
                                         <span className="opacity-0 transition-opacity duration-200 text-[0.7rem] group-hover:opacity-100">
                                             {isArabic ? "←" : "→"}
@@ -203,33 +195,28 @@ export function Footer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                     >
-                        <h3 className="text-accent text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
-                            <span className="w-5 h-px bg-accent" />
+                        <h3 className="text-[#C6A66B] text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
+                            <span className="w-5 h-px bg-[#C6A66B]" />
                             {t("contactInfo")}
                         </h3>
                         <div className="flex flex-col gap-5">
                             {contactDetails.map((item) => (
-                                <div key={item.title} className="flex gap-3.5 items-start">
-                                    <span className="text-[1.1rem] shrink-0 inline-flex mt-0.5">
-                                        {item.icon}
-                                    </span>
-                                    <div className="flex-1">
-                                        <div className="text-[0.7rem] text-accent font-semibold tracking-[0.1em] uppercase mb-1">
-                                            {item.title}
-                                        </div>
-                                        {item.href ? (
-                                            <a
-                                                href={item.href}
-                                                className="text-text-primary no-underline text-[0.875rem] transition-colors duration-200 inline-block leading-[1.5] hover:text-accent"
-                                            >
-                                                {item.value}
-                                            </a>
-                                        ) : (
-                                            <span className="text-text-primary text-[0.875rem] block leading-[1.5]">
-                                                {item.value}
-                                            </span>
-                                        )}
+                                <div key={item.title} className="flex flex-col gap-0.5">
+                                    <div className="text-[0.65rem] text-[#C6A66B] font-semibold tracking-[0.1em] uppercase">
+                                        {item.title}
                                     </div>
+                                    {item.href ? (
+                                        <a
+                                            href={item.href}
+                                            className="text-[#F5F1E8] no-underline text-[0.875rem] transition-colors duration-200 leading-[1.5] hover:text-[#C6A66B]"
+                                        >
+                                            {item.value}
+                                        </a>
+                                    ) : (
+                                        <span className="text-[#F5F1E8] text-[0.875rem] leading-[1.5]">
+                                            {item.value}
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -241,7 +228,7 @@ export function Footer() {
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     transition={{ duration: 0.8 }}
-                    className="border-t border-border-default my-12 origin-center"
+                    className="h-px bg-gradient-to-r from-transparent via-[rgba(198,166,107,0.2)] to-transparent my-12 origin-center"
                 />
 
                 {/* Bottom bar */}
@@ -251,10 +238,10 @@ export function Footer() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                     className="flex items-center justify-between flex-wrap gap-4 pb-4"
                 >
-                    <p className="text-text-muted text-[0.8125rem] m-0">
+                    <p className="text-[#B8B4AC] text-[0.8125rem] m-0">
                         © {currentYear} {t("company")} — {t("rights")}
                     </p>
-                    <p className="text-text-muted text-[0.8125rem] m-0">
+                    <p className="text-[#B8B4AC] text-[0.8125rem] m-0">
                         {isArabic ? "تصميم وتطوير" : "Designed & Developed"}
                     </p>
                 </motion.div>
