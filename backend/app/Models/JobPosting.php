@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobPosting extends Model
 {
+    use \App\Traits\ClearsModelCache;
     protected $fillable = [
         'title_ar', 'title_en', 'description_ar', 'description_en',
         'requirements_ar', 'requirements_en',

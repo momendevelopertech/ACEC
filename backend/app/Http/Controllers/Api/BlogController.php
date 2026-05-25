@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use Illuminate\Support\Facades\Cache;
 
 class BlogController extends Controller
 {
@@ -11,21 +12,23 @@ class BlogController extends Controller
     {
         $lang = in_array($lang, ['ar', 'en']) ? $lang : 'ar';
 
-        $posts = BlogPost::where('is_published', true)
-            ->orderBy('published_at', 'desc')
-            ->get()
-            ->map(function ($post) use ($lang) {
-                return [
-                    'id' => $post->id,
-                    'slug' => $post->slug,
-                    'title' => $lang === 'ar' ? $post->title_ar : $post->title_en,
-                    'excerpt' => $lang === 'ar' ? $post->excerpt_ar : $post->excerpt_en,
-                    'image' => $post->image,
-                    'category' => $post->category,
-                    'published_at' => $post->published_at,
-                    'views' => $post->views,
-                ];
-            });
+        $posts = Cache::remember("blog.{$lang}", 3600, function () use ($lang) {
+            return BlogPost::where('is_published', true)
+                ->orderBy('published_at', 'desc')
+                ->get()
+                ->map(function ($post) use ($lang) {
+                    return [
+                        'id' => $post->id,
+                        'slug' => $post->slug,
+                        'title' => $lang === 'ar' ? $post->title_ar : $post->title_en,
+                        'excerpt' => $lang === 'ar' ? $post->excerpt_ar : $post->excerpt_en,
+                        'image' => $post->image,
+                        'category' => $post->category,
+                        'published_at' => $post->published_at,
+                        'views' => $post->views,
+                    ];
+                });
+        });
 
         return response()->json([
             'success' => true,

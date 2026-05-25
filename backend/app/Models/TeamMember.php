@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamMember extends Model
 {
+    use \App\Traits\ClearsModelCache;
     use \App\Traits\HasImageCleanup;
 
     protected array $imageFields = ['image'];

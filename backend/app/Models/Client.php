@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use \App\Traits\HasImageCleanup;
+    use \App\Traits\ClearsModelCache;
 
     protected array $imageFields = ['logo'];
 

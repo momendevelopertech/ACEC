@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WhyUsItem extends Model
 {
+    use \App\Traits\ClearsModelCache;
     protected $fillable = [
         'icon', 'title_ar', 'title_en',
         'description_ar', 'description_en',

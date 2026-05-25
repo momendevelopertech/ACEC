@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
+    use \App\Traits\ClearsModelCache;
     protected $fillable = [
         'key', 'value', 'group', 'type',
     ];

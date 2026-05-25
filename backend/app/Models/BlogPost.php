@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class BlogPost extends Model
 {
     use \App\Traits\HasImageCleanup;
+    use \App\Traits\ClearsModelCache;
 
     protected array $imageFields = ['image'];
 

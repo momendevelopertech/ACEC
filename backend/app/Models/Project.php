@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use \App\Traits\HasImageCleanup;
+    use \App\Traits\ClearsModelCache;
 
     protected array $imageFields = ['image'];
     protected array $imageArrayFields = ['gallery'];

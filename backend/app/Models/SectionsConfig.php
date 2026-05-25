@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SectionsConfig extends Model
 {
+    use \App\Traits\ClearsModelCache;
     protected $fillable = [
         'section_key', 'name_ar', 'name_en',
         'is_visible', 'order', 'custom_settings',
