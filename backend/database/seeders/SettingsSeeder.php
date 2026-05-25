@@ -14,7 +14,7 @@ class SettingsSeeder extends Seeder
         $settings = [
             // General
             ['key' => 'site_name_ar', 'value' => 'مكتب الميثاق العربي للاستشارات الهندسية وهندسة السلامة', 'group' => 'general', 'type' => 'text'],
-            ['key' => 'site_name_en', 'value' => 'Arab Charter Engineering Consultants — ACEC', 'group' => 'general', 'type' => 'text'],
+            ['key' => 'site_name_en', 'value' => 'Arabian Covenant Engineering Consultants — ACEC', 'group' => 'general', 'type' => 'text'],
             ['key' => 'site_tagline_ar', 'value' => 'شركاؤكم في التميز الهندسي', 'group' => 'general', 'type' => 'text'],
             ['key' => 'site_tagline_en', 'value' => 'Your Partners in Engineering Excellence', 'group' => 'general', 'type' => 'text'],
             ['key' => 'default_lang', 'value' => 'ar', 'group' => 'general', 'type' => 'text'],

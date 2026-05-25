@@ -66,7 +66,7 @@ export function PageLoader() {
 
         <div className="loader-content">
           <span className="loader-logo">ACEC</span>
-          <span className="loader-tag">Arab Charter Engineering Consultants</span>
+          <span className="loader-tag">Arabian Covenant Engineering Consultants</span>
           <div className="loader-bar">
             <span />
           </div>

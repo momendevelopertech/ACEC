@@ -38,7 +38,7 @@ class HeroSeeder extends Seeder
             [
                 'lang' => 'en',
                 'title' => 'Building the Future with Exceptional Engineering',
-                'subtitle' => 'Arab Charter Engineering Consultants',
+                'subtitle' => 'Arabian Covenant Engineering Consultants',
                 'description' => 'Your trusted partners in delivering engineering projects with the highest standards of quality and safety in Saudi Arabia.',
                 'stat1_number' => '50+', 'stat1_label' => 'Completed Projects',
                 'stat2_number' => '15+', 'stat2_label' => 'Years Experience',

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Saudi Arabia",
   ],
   authors: [{ name: "ACEC" }],
-  creator: "Arab Charter Engineering Consultants",
+  creator: "Arabian Covenant Engineering Consultants",
   metadataBase: new URL("https://ac-ec.com.sa"),
   icons: {
     icon: "/favicon.svg",

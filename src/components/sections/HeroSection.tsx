@@ -107,7 +107,7 @@ export function HeroSection() {
                         className="section-label"
                         style={{ marginBottom: "2rem" }}
                     >
-                        Arab Charter Engineering Consultants — ACEC
+                        Arabian Covenant Engineering Consultants — ACEC
                     </motion.div>
 
                     {/* Tagline */}

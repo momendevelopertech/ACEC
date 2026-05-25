@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description:
       locale === "ar"
         ? "تواصل مع مكتب الميثاق العربي للاستشارات الهندسية — نحن هنا للإجابة على جميع استفساراتك"
-        : "Contact Arab Charter Engineering Consultants — we are here to answer all your inquiries",
+        : "Contact Arabian Covenant Engineering Consultants — we are here to answer all your inquiries",
   };
 }
 

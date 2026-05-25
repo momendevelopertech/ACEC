@@ -33,7 +33,7 @@ class ContentSeeder extends Seeder
                 'position_ar' => 'المالك والمدير العام',
                 'position_en' => 'Founder & General Manager',
                 'bio_ar' => 'مؤسس مكتب الميثاق العربي للاستشارات الهندسية (ACEC) عام 2006. يتمتع بخبرة تزيد عن 25 عاماً في مجال الاستشارات الهندسية وهندسة السلامة والوقاية من الحريق. المكتب من المكاتب القليلة المعتمدة من الدفاع المدني للعمل بجميع مدن المملكة.',
-                'bio_en' => 'Founder of Arab Charter Engineering Consultants (ACEC) in 2006. Has over 25 years of experience in engineering consultancy, safety engineering, and fire prevention. The office is one of the few accredited by Civil Defense to operate across all KSA cities.',
+                'bio_en' => 'Founder of Arabian Covenant Engineering Consultants (ACEC) in 2006. Has over 25 years of experience in engineering consultancy, safety engineering, and fire prevention. The office is one of the few accredited by Civil Defense to operate across all KSA cities.',
                 'order' => 1,
                 'is_active' => true,
                 'email' => 'majed@ac-ec.com.sa',
@@ -528,7 +528,7 @@ class ContentSeeder extends Seeder
             [
                 'lang' => 'en',
                 'title' => 'From Plan to Possession',
-                'subtitle' => 'Arab Charter Engineering Consultants',
+                'subtitle' => 'Arabian Covenant Engineering Consultants',
                 'description' => 'Comprehensive engineering consultancy, fire protection, and safety engineering across Saudi Arabia — delivering excellence since 2006.',
                 'stat1_number' => '25+', 'stat1_label' => 'Years Experience',
                 'stat2_number' => '2500+', 'stat2_label' => 'Projects Completed',

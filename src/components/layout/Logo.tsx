@@ -26,7 +26,7 @@ export function Logo({ size = "md", href, className = "" }: LogoProps) {
   const content = (
     <Image
       src={`${API_BASE}/images/logo.png`}
-      alt="ACEC - Arab Charter Engineering Consultants"
+      alt="ACEC - Arabian Covenant Engineering Consultants"
       width={dimensions.width}
       height={dimensions.height}
       className={`object-contain transition-opacity duration-200 hover:opacity-80 ${className}`}
@@ -39,7 +39,7 @@ export function Logo({ size = "md", href, className = "" }: LogoProps) {
       <Link
         href={href}
         className="inline-flex items-center no-underline"
-        aria-label="ACEC - Arab Charter Engineering Consultants"
+        aria-label="ACEC - Arabian Covenant Engineering Consultants"
       >
         {content}
       </Link>
