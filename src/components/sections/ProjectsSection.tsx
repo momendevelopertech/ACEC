@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { fadeUpVariant, staggerContainer, imageMaskVariant } from "@/lib/animations";
+import { fadeUpVariant, staggerContainer } from "@/lib/animations";
 
 export interface Project {
   id: number;
@@ -17,6 +17,7 @@ export interface Project {
   is_featured: boolean;
   location: string;
   client: string;
+  area?: string;
 }
 
 const categoryKeys = [
@@ -30,69 +31,154 @@ const categoryKeys = [
   { key: "educational", label: { ar: "تعليمي", en: "Educational" } },
 ];
 
+function getProjectImage(project: Project): string {
+  const t = (project.title || "").toLowerCase();
+  const c = project.category || "";
+
+  /* ── Commercial — Towers & Complexes ── */
+  if (t.includes("najd complex") || t.includes("tower"))
+    return "https://source.unsplash.com/800x600/?skyscraper,tower,riyadh";
+  if (t.includes("juin mixed"))
+    return "https://source.unsplash.com/800x600/?mixed-use,commercial,modern-building";
+  if (t.includes("hotel"))
+    return "https://source.unsplash.com/800x600/?hotel,luxury,architecture";
+  if (t.includes("leejam") || t.includes("sports"))
+    return "https://source.unsplash.com/800x600/?sports-complex,gym,modern";
+
+  /* ── Commercial — Retail & Drive-Thru ── */
+  if (t.includes("drive-thru"))
+    return "https://source.unsplash.com/800x600/?drive-thru,fast-food,restaurant";
+  if (t.includes("strip mall"))
+    return "https://source.unsplash.com/800x600/?shopping-mall,retail,outdoor";
+  if (t.includes("zulfi") || t.includes("retail"))
+    return "https://source.unsplash.com/800x600/?retail,shop,arabic-architecture";
+  if (t.includes("mcdonald"))
+    return "https://source.unsplash.com/800x600/?restaurant,food,heritage";
+  if (t.includes("juin commercial"))
+    return "https://source.unsplash.com/800x600/?commercial,complex,modern";
+
+  /* ── Recreational ── */
+  if (t.includes("equestrian"))
+    return "https://source.unsplash.com/800x600/?equestrian,horse,stable";
+  if (t.includes("pedestrian"))
+    return "https://source.unsplash.com/800x600/?pedestrian-bridge,urban,architecture";
+  if (t.includes("square") || t.includes("municipality"))
+    return "https://source.unsplash.com/800x600/?public-square,plaza,urban";
+
+  /* ── Residential ── */
+  if (t.includes("shaheqa") || t.includes("nakheel") || t.includes("maather"))
+    return "https://source.unsplash.com/800x600/?residential,apartment,modern";
+  if (t.includes("resthouse") || t.includes("almatwa"))
+    return "https://source.unsplash.com/800x600/?resthouse,luxury,landscape";
+
+  /* ── Educational ── */
+  if (t.includes("institute") || t.includes("technical") || t.includes("unaizah"))
+    return "https://source.unsplash.com/800x600/?institute,education,building";
+  if (t.includes("laboratory") || t.includes("vegetable") || t.includes("market"))
+    return "https://source.unsplash.com/800x600/?laboratory,market,glass-building";
+
+  /* ── Industrial — Factories ── */
+  if (t.includes("pharma") || t.includes("medicine") || t.includes("pharmaceutical") ||
+      t.includes("german pharma") || t.includes("wareed") || t.includes("emdad") || t.includes("kamal"))
+    return "https://source.unsplash.com/800x600/?pharmaceutical,factory,clean-room";
+  if (t.includes("food") || t.includes("pepsi") || t.includes("munajem") ||
+      t.includes("shams") || t.includes("riyadh foods"))
+    return "https://source.unsplash.com/800x600/?food-factory,production,industrial";
+  if (t.includes("warehouse") || t.includes("storage") || t.includes("babtin") ||
+      t.includes("abana") || t.includes("saif"))
+    return "https://source.unsplash.com/800x600/?warehouse,logistics,storage";
+  if (t.includes("hotpack")) return "https://source.unsplash.com/800x600/?factory,industrial,warehouse";
+
+  /* ── Safety ── */
+  if (t.includes("fire") || t.includes("safety") || t.includes("oceanarium") ||
+      t.includes("sabil") || t.includes("chamber"))
+    return "https://source.unsplash.com/800x600/?fire-safety,sprinkler,safety";
+  if (t.includes("stc") || t.includes("aqalat") || t.includes("dgda") || t.includes("diriyah"))
+    return "https://source.unsplash.com/800x600/?fire-safety,sprinkler,safety";
+  if (t.includes("university") || t.includes("college") || t.includes("faisal") ||
+      t.includes("ksu") || t.includes("king saud"))
+    return "https://source.unsplash.com/800x600/?university,campus,safety";
+
+  /* ── Interior — Commercial ── */
+  if (t.includes("hataba") || t.includes("restaurant"))
+    return "https://source.unsplash.com/800x600/?restaurant-interior,wood,warm-lighting";
+  if (t.includes("srmg") || t.includes("headquarters"))
+    return "https://source.unsplash.com/800x600/?corporate-office,modern-interior";
+  if (t.includes("floward"))
+    return "https://source.unsplash.com/800x600/?flowers,office,green-interior";
+  if (t.includes("fly adeal") || t.includes("aviation"))
+    return "https://source.unsplash.com/800x600/?airline-office,modern,aviation";
+  if (t.includes("olayan") && t.includes("admin"))
+    return "https://source.unsplash.com/800x600/?office-interior,neutral,corporate";
+
+  /* ── Interior — Residential ── */
+  if (t.includes("villa abdullah interior") || (t.includes("villa abdullah") && c === "interior"))
+    return "https://source.unsplash.com/800x600/?luxury-interior,neoclassical,gold";
+  if (t.includes("kahtany") || t.includes("majlis"))
+    return "https://source.unsplash.com/800x600/?majlis,arabic-interior,luxury";
+  if (t.includes("saadon"))
+    return "https://source.unsplash.com/800x600/?modern-living-room,minimalist,interior";
+
+  /* ── Fallback by category ── */
+  switch (c) {
+    case "commercial":    return "https://source.unsplash.com/800x600/?commercial,modern-building,architecture";
+    case "residential":   return "https://source.unsplash.com/800x600/?luxury-villa,modern-house,architecture";
+    case "industrial":    return "https://source.unsplash.com/800x600/?factory,industrial,warehouse";
+    case "safety":        return "https://source.unsplash.com/800x600/?fire-safety,sprinkler,safety";
+    case "interior":      return "https://source.unsplash.com/800x600/?interior-design,modern,living";
+    case "recreational":  return "https://source.unsplash.com/800x600/?recreation,landscape,urban";
+    case "educational":   return "https://source.unsplash.com/800x600/?education,building,architecture";
+    default:              return "https://source.unsplash.com/800x600/?architecture,modern,building";
+  }
+}
+
+function LocationIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B695A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+
+function AreaIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B695A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M3 9h18M9 3v18" />
+    </svg>
+  );
+}
+
 function ProjectCard({ project, locale }: { project: Project; locale: string }) {
-  const isRTL = locale === "ar";
-  const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  const imgSrc = getProjectImage(project);
 
   return (
-    <motion.div
-      variants={fadeUpVariant}
-      whileHover={{ y: -8 }}
-      className="rounded-2xl overflow-hidden bg-card-bg border border-card-border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group premium-card"
-    >
-      <motion.div 
-        variants={imageMaskVariant}
-        className="relative h-[220px] overflow-hidden"
-      >
-        <img
-          src={project.image ? `${API_BASE}/storage/${project.image}` : "/images/project-architecture-1.svg"}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
+    <div className="project-card">
+      <div className="card-image">
+        <img src={imgSrc} alt={project.title} loading="lazy" />
         {project.category && (
-          <div
-            className={`absolute top-4 ${isRTL ? "right-4" : "left-4"} bg-accent/15 backdrop-blur-md border border-accent/30 rounded-full px-3 py-1 text-[0.7rem] font-semibold text-[var(--brand-dark)] tracking-wider`}
-          >
-            {project.category}
-          </div>
+          <span className="badge">{project.category}</span>
         )}
-      </motion.div>
-
-      <div className="p-6">
-        <h3 className="font-heading text-lg font-semibold text-text-primary leading-[1.3] min-h-[2.5rem]">
-          {project.title || (isRTL ? "مشروع هندسي" : "Engineering Project")}
-        </h3>
-
-        {project.location && (
-          <p className="text-[0.85rem] text-text-muted mt-2 flex items-center gap-1.5">
-            📍 {project.location}
-          </p>
-        )}
-
-        {project.year && (
-          <p className="text-[0.85rem] text-text-muted mt-1 flex items-center gap-1.5">
-            📅 {project.year}
-          </p>
-        )}
-
-        <Link
-          href={`/${locale}/projects/${project.slug}`}
-          className={`inline-flex items-center gap-2 text-accent text-[0.875rem] font-semibold mt-4 transition-all duration-200 hover:gap-3 hover:text-[var(--brand-dark)] ${isRTL ? "hover:gap-3" : ""}`}
-        >
-          {isRTL ? "عرض التفاصيل" : "View Details"}
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8H13M13 8L9 4M13 8L9 12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={isRTL ? "rotate-180" : ""}
-            />
-          </svg>
-        </Link>
       </div>
-    </motion.div>
+      <div className="card-body">
+        <h3>{project.title}</h3>
+        <div className="card-meta">
+          {project.location && (
+            <span className="meta-item">
+              <LocationIcon />
+              {project.location}
+            </span>
+          )}
+          {project.area && (
+            <span className="meta-item">
+              <AreaIcon />
+              {project.area}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -147,7 +233,7 @@ export function ProjectsSection() {
     <section
       ref={ref}
       id="projects"
-      className="relative py-24 px-6 md:py-32 md:px-12 xl:px-24 bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.05)_0%,transparent_100%)] border-t border-border-default"
+      className="projects-section relative py-24 px-6 md:py-32 md:px-12 xl:px-24 bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.05)_0%,transparent_100%)] border-t border-border-default"
     >
       <div className="container-custom">
         {/* Header */}
@@ -224,7 +310,7 @@ export function ProjectsSection() {
               variants={staggerContainer(0.1)}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               {visibleProjects.map((project) => (
                 <ProjectCard key={project.id} project={project} locale={locale} />
