@@ -79,12 +79,12 @@ export default async function AboutPage({ params }: Props) {
       <Navbar />
       <main className="pt-[80px]">
         {/* Page Header */}
-        <div className="pt-20 pb-8 px-6 bg-[linear-gradient(180deg,rgba(var(--color-accent-rgb),0.04)_0%,transparent_100%)] border-b border-border-default text-center">
+        <div className="pt-20 pb-8 px-6 bg-[var(--color-olive-deep)] border-b border-[rgba(255,255,255,0.06)] text-center">
           <div className="container-custom">
-            <div className="section-label justify-center mb-4">ACEC</div>
-            <h1 className="font-heading text-[clamp(2.5rem,5vw,4rem)] font-bold text-text-primary">
+            <div className="section-label justify-center mb-4" style={{ color: "rgba(198,166,107,0.8)" }}>ACEC</div>
+            <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-[300] text-white tracking-[-0.02em]">
               {isArabic ? "عن " : "About "}
-              <span className="gold-text">{isArabic ? "مكتبنا" : "Us"}</span>
+              <strong className="text-[#C6A66B]">{isArabic ? "مكتبنا" : "Us"}</strong>
             </h1>
           </div>
         </div>
@@ -94,11 +94,11 @@ export default async function AboutPage({ params }: Props) {
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="section-label mb-4">{isArabic ? "قصتنا" : "Our Story"}</div>
-              <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
+              <h2 className="section-heading" style={{ marginBottom: "1.5rem" }}>
                 {isArabic ? "منذ 2006 في خدمة الوطن" : "Serving the Nation Since 2006"}
               </h2>
-              <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
-                <p className="text-text-muted leading-[1.9] text-[0.95rem] whitespace-pre-line">
+              <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-[#888888] leading-[1.9] text-[0.95rem] whitespace-pre-line">
                   {isArabic ? storyAr : storyEn}
                 </p>
               </div>
@@ -107,23 +107,23 @@ export default async function AboutPage({ params }: Props) {
         </section>
 
         {/* Founder's Message */}
-        <section className="section-padding bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.03)_0%,transparent_100%)] border-t border-border-default">
+        <section className="section-padding" style={{ background: "#F5F5F5", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="section-label mb-4">{isArabic ? "كلمة الرئيس العام" : "Founder's Message"}</div>
-              <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-4">
+              <h2 className="section-heading" style={{ marginBottom: "0.75rem" }}>
                 {isArabic ? "المهندس ماجد الذييب" : "Eng. Majed Al-Thuaiyb"}
               </h2>
-              <p className="text-text-muted text-sm mb-8">
+              <p className="text-[#888888] text-sm mb-8">
                 {isArabic ? "المالك والمدير العام" : "Founder & General Manager"}
               </p>
-              <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
-                <p className="text-text-muted leading-[1.9] text-[0.9rem] whitespace-pre-line">
+              <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-[#888888] leading-[1.9] text-[0.9rem] whitespace-pre-line">
                   {isArabic ? founderAr : founderEn}
                 </p>
               </div>
               <div className="mt-8 text-center">
-                <p className="text-accent font-semibold font-heading text-lg">
+                <p className="text-[#C6A66B] font-semibold text-lg">
                   {isArabic ? "— المهندس ماجد الذييب، المؤسس والمدير العام" : "— Engineer Majed Al-Thuaiyb, Founder & General Manager"}
                 </p>
               </div>
@@ -136,21 +136,21 @@ export default async function AboutPage({ params }: Props) {
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="section-label mb-4">{isArabic ? "رؤيتنا" : "Our Vision"}</div>
-              <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
+              <h2 className="section-heading" style={{ marginBottom: "1.5rem" }}>
                 {isArabic ? "الريادة في الاستشارات الهندسية" : "Leadership in Engineering Consultancy"}
               </h2>
-              <div className="bg-surface/50 border border-border-default rounded-2xl p-8 mb-8" dir={isArabic ? "rtl" : "ltr"}>
-                <p className="text-text-muted leading-[1.9] text-[0.95rem]">
+              <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-8 mb-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-[#888888] leading-[1.9] text-[0.95rem]">
                   {isArabic ? visionAr : visionEn}
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {visionPoints.map((point, i) => (
-                  <div key={i} className="flex items-start gap-3 bg-surface/30 border border-border-default rounded-xl p-5">
-                    <div className="w-6 h-6 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center shrink-0 mt-0.5">
-                      <span className="text-accent text-xs font-bold">{i + 1}</span>
+                  <div key={i} className="flex items-start gap-3 bg-white border border-[rgba(0,0,0,0.06)] rounded-xl p-5">
+                    <div className="w-6 h-6 rounded-full bg-[rgba(198,166,107,0.12)] border border-[rgba(198,166,107,0.25)] flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-[#C6A66B] text-xs font-bold">{i + 1}</span>
                     </div>
-                    <p className="text-text-muted text-[0.9rem] leading-[1.6]">{point}</p>
+                    <p className="text-[#888888] text-[0.9rem] leading-[1.6]">{point}</p>
                   </div>
                 ))}
               </div>
@@ -159,15 +159,15 @@ export default async function AboutPage({ params }: Props) {
         </section>
 
         {/* Mission */}
-        <section className="section-padding bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.03)_0%,transparent_100%)] border-t border-border-default">
+        <section className="section-padding" style={{ background: "#F5F5F5", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="section-label mb-4">{isArabic ? "رسالتنا" : "Our Mission"}</div>
-              <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
+              <h2 className="section-heading" style={{ marginBottom: "1.5rem" }}>
                 {isArabic ? "الارتقاء بفن وعلم الهندسة" : "Advancing the Art of Engineering"}
               </h2>
-              <div className="bg-surface/50 border border-border-default rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
-                <p className="text-text-muted leading-[1.9] text-[0.95rem]">
+              <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-8" dir={isArabic ? "rtl" : "ltr"}>
+                <p className="text-[#888888] leading-[1.9] text-[0.95rem]">
                   {isArabic ? missionAr : missionEn}
                 </p>
               </div>
@@ -180,16 +180,16 @@ export default async function AboutPage({ params }: Props) {
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="section-label mb-4">{isArabic ? "أهدافنا" : "Our Goals"}</div>
-              <h2 className="font-heading text-[clamp(1.8rem,3vw,2.8rem)] font-bold text-text-primary mb-8">
+              <h2 className="section-heading" style={{ marginBottom: "1.5rem" }}>
                 {isArabic ? "6 أهداف استراتيجية" : "6 Strategic Goals"}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {goals.map((goal, i) => (
-                  <div key={i} className="flex items-start gap-4 bg-surface/50 border border-border-default rounded-2xl p-6 hover:border-accent/30 transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center shrink-0">
-                      <span className="text-accent font-bold">{String(i + 1).padStart(2, "0")}</span>
+                  <div key={i} className="flex items-start gap-4 bg-white border border-[rgba(0,0,0,0.06)] rounded-2xl p-6">
+                    <div className="w-10 h-10 rounded-full bg-[rgba(198,166,107,0.1)] border border-[rgba(198,166,107,0.2)] flex items-center justify-center shrink-0">
+                      <span className="text-[#C6A66B] font-bold">{String(i + 1).padStart(2, "0")}</span>
                     </div>
-                    <p className="text-text-primary text-[0.95rem] leading-[1.7] pt-1.5">{goal}</p>
+                    <p className="text-[#1A1A1A] text-[0.95rem] leading-[1.7] pt-1.5">{goal}</p>
                   </div>
                 ))}
               </div>
@@ -198,19 +198,19 @@ export default async function AboutPage({ params }: Props) {
         </section>
 
         {/* Headquarters & Accreditations */}
-        <section className="section-padding bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.03)_0%,transparent_100%)] border-t border-border-default">
+        <section className="section-padding" style={{ background: "#F5F5F5", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Headquarters */}
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8">
+                <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-8">
                   <div className="section-label mb-4">{isArabic ? "المقر الرئيسي" : "Headquarters"}</div>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
                       <span className="text-xl shrink-0">📍</span>
                       <div>
-                        <p className="text-text-primary font-semibold mb-1">{isArabic ? "العنوان" : "Address"}</p>
-                        <p className="text-text-muted text-[0.9rem]" dir={isArabic ? "rtl" : "ltr"}>
+                        <p className="text-[#1A1A1A] font-semibold mb-1">{isArabic ? "العنوان" : "Address"}</p>
+                        <p className="text-[#888888] text-[0.9rem]" dir={isArabic ? "rtl" : "ltr"}>
                           {isArabic
                             ? "الرياض – حي الزهراء – شارع عمر بن عبد العزيز"
                             : "Omar Bin Abdulaziz Street, Al Zahraa District, Riyadh, Saudi Arabia"}
@@ -220,31 +220,31 @@ export default async function AboutPage({ params }: Props) {
                     <div className="flex items-start gap-3">
                       <span className="text-xl shrink-0">📞</span>
                       <div>
-                        <p className="text-text-primary font-semibold mb-1">{isArabic ? "الهاتف" : "Phone"}</p>
-                        <p className="text-text-muted text-[0.9rem]">+966 500 037 049</p>
+                        <p className="text-[#1A1A1A] font-semibold mb-1">{isArabic ? "الهاتف" : "Phone"}</p>
+                        <p className="text-[#888888] text-[0.9rem]">+966 500 037 049</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <span className="text-xl shrink-0">✉️</span>
                       <div>
-                        <p className="text-text-primary font-semibold mb-1">Email</p>
-                        <p className="text-text-muted text-[0.9rem]">info@ac-ec.com.sa</p>
+                        <p className="text-[#1A1A1A] font-semibold mb-1">Email</p>
+                        <p className="text-[#888888] text-[0.9rem]">info@ac-ec.com.sa</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Accreditations */}
-                <div className="bg-surface/50 border border-border-default rounded-2xl p-8">
+                <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-8">
                   <div className="section-label mb-4">{isArabic ? "الاعتمادات" : "Accreditations"}</div>
                   <div className="space-y-6">
                     <div className="flex items-start gap-3">
                       <span className="text-xl shrink-0">🛡️</span>
                       <div>
-                        <p className="text-text-primary font-semibold mb-1">
+                        <p className="text-[#1A1A1A] font-semibold mb-1">
                           {isArabic ? "الدفاع المدني" : "Civil Defense Authority"}
                         </p>
-                        <p className="text-text-muted text-[0.9rem]">
+                        <p className="text-[#888888] text-[0.9rem]">
                           {isArabic
                             ? "معتمد للعمل في جميع مدن المملكة العربية السعودية في مجال الحماية ومكافحة الحريق"
                             : "Accredited to operate across all KSA cities in fire protection and safety"}
@@ -254,8 +254,8 @@ export default async function AboutPage({ params }: Props) {
                     <div className="flex items-start gap-3">
                       <span className="text-xl shrink-0">🏭</span>
                       <div>
-                        <p className="text-text-primary font-semibold mb-1">MODON</p>
-                        <p className="text-text-muted text-[0.9rem]">
+                        <p className="text-[#1A1A1A] font-semibold mb-1">MODON</p>
+                        <p className="text-[#888888] text-[0.9rem]">
                           {isArabic
                             ? "الهيئة السعودية للمدن الصناعية ومناطق التقنية"
                             : "Saudi Authority for Industrial Cities & Technology Zones"}

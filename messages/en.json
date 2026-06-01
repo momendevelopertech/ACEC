@@ -18,18 +18,28 @@
         "sub": "Comprehensive engineering consultancy, fire protection, and safety engineering across Saudi Arabia — delivering excellence since 2006.",
         "cta_primary": "Explore Services",
         "cta_secondary": "Contact Us",
-        "scroll": "Scroll Down"
+        "scroll": "Scroll Down",
+        "eyebrow": "Engineering Consultants — Riyadh, KSA",
+        "enduring_word": "enduring",
+        "outcomes": "outcomes."
     },
     "stats": {
-        "projects": "Projects Completed",
-        "years": "Years of Experience",
-        "clients": "Satisfied Clients",
-        "compliance": "Established"
+        "projects": "Projects Delivered",
+        "years": "Years of Practice",
+        "clients": "Trusted Clients",
+        "compliance": "Established",
+        "code": "Saudi Code Aligned"
     },
     "services": {
         "title": "Our Services",
         "subtitle": "Comprehensive engineering solutions covering all your project needs",
         "learnMore": "Learn More",
+        "practice_label": "Practice",
+        "heading_line1": "Five disciplines.",
+        "heading_line2": "One standard.",
+        "description_line": "Providing comprehensive engineering solutions aligned with the highest global and local standards in Saudi Arabia.",
+        "all_services": "All Services",
+        "loading": "Loading...",
         "items": {
             "design": {
                 "title": "Design",
@@ -68,11 +78,21 @@
         "title": "About Our Office",
         "subtitle": "Specialized Engineering Consultancy",
         "description": "ACEC is a Saudi engineering consultancy firm established in 2006, headquartered in Riyadh, led by its founder and General Manager, Engineer Majed Al-Thuaiyb. It is one of the select few offices in Saudi Arabia accredited by the Civil Defense to operate across all cities of the Kingdom, specializing in fire protection and safety engineering — operating under the Saudi Building Code (SBC). Built to support the nation's vision of fostering large-scale projects, community development, and human advancement, ACEC operates with strong professional standards and high ethical values, housing a team of highly educated and experienced professionals dedicated to understanding client needs and delivering sustainable, cost-effective solutions on time and within scope.",
-        "learnMore": "Learn More About Us"
+        "learnMore": "Learn More About Us",
+        "eyebrow": "The Office",
+        "heading_line1": "Founded on rigour.",
+        "heading_line2": "Guided by care.",
+        "more_link": "More about the office",
+        "bullet_safety": "Specialized Safety Engineering & Safety Auditing",
+        "bullet_design": "Comprehensive Civil, Structural & Architectural Design",
+        "bullet_pm": "High-End Project Management & Construction Supervision"
     },
     "why": {
         "title": "Why Choose Us?",
         "subtitle": "What makes us the ideal choice for your project",
+        "eyebrow": "Why ACEC",
+        "heading_line1": "Four reasons",
+        "heading_line2": "clients return.",
         "items": {
             "experience": {
                 "title": "25+ Years Experience",
@@ -108,13 +128,28 @@
         "service": "Service Required",
         "submit": "Send Message",
         "success": "Message sent successfully! We'll contact you soon.",
-        "error": "An error occurred, please try again."
+        "error": "An error occurred, please try again.",
+        "sending": "Sending...",
+        "select_service": "Select Service",
+        "phone_placeholder": "+966 5x xxx xxxx",
+        "opt_consulting": "Engineering Consultancy",
+        "opt_safety": "Safety Engineering",
+        "opt_supervision": "Engineering Supervision",
+        "opt_interior": "Interior Design",
+        "opt_factory": "Factory Design",
+        "opt_modon": "MODON Compliance"
     },
     "footer": {
         "description": "Specialized engineering consultancy in Saudi Arabia — Civil Defense accredited, MODON approved since 2006",
         "quickLinks": "Quick Links",
         "contactInfo": "Contact Info",
         "rights": "All Rights Reserved",
-        "company": "Arabian Covenant Engineering Consultants"
+        "company": "Arabian Covenant Engineering Consultants",
+        "crafted": "Crafted with care",
+        "address_title": "Address",
+        "phone_title": "Phone",
+        "whatsapp_title": "WhatsApp",
+        "email_title": "Email",
+        "address_value": "Omar Bin Abdulaziz St, Al Zahraa, Riyadh, KSA"
     }
 }

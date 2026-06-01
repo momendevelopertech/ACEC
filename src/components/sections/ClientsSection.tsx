@@ -69,20 +69,20 @@ export function ClientsSection() {
 
     if (loading) {
         return (
-            <section className="py-24 px-6 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)] border-t border-border-default min-h-[500px] flex items-center justify-center">
-                <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+            <section className="py-24 px-6 min-h-[500px] flex items-center justify-center" style={{ background: "#f0ede6" }}>
+                <div className="w-8 h-8 border-4 border-[#C6A66B] border-t-transparent rounded-full animate-spin"></div>
             </section>
         );
     }
 
     if (clients.length === 0) {
         return (
-            <section className="py-24 px-6 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)] border-t border-border-default">
+            <section className="py-24 px-6" style={{ background: "#f0ede6" }}>
                 <div className="container-custom text-center">
-                    <div className="section-label justify-center mb-4">
+                    <div className="section-label justify-center mb-4" style={{ color: "#C6A66B" }}>
                         {isArabic ? "عملاؤنا" : "Our Clients"}
                     </div>
-                    <p className="text-text-muted mt-8">
+                    <p className="mt-8" style={{ color: "#8a8278" }}>
                         {isArabic ? "لا يوجد عملاء مضافين في قاعدة البيانات حالياً." : "No clients added in the database yet."}
                     </p>
                 </div>
@@ -91,7 +91,7 @@ export function ClientsSection() {
     }
 
     return (
-        <section className="py-24 px-6 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)] border-t border-border-default">
+        <section className="py-24 px-6" style={{ background: "#f0ede6" }}>
             <div className="container-custom">
                 {/* Header */}
                 <motion.div
@@ -101,23 +101,23 @@ export function ClientsSection() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <div className="section-label justify-center mb-4">
+                    <div className="section-label justify-center mb-4" style={{ color: "#C6A66B" }}>
                         {isArabic ? "عملاؤنا" : "Our Clients"}
                     </div>
-                    <h2 className="font-heading text-[clamp(2rem,5vw,3rem)] font-bold text-text-primary mb-4">
+                    <h2 className="font-heading text-[clamp(2rem,5vw,3rem)] font-bold mb-4" style={{ color: "#4a4540" }}>
                         {isArabic ? (
                             <>
                                 عملاؤنا{" "}
-                                <span className="text-accent">بفخر</span>
+                                <span style={{ color: "#C6A66B" }}>بفخر</span>
                             </>
                         ) : (
                             <>
                                 {" "}
-                                Our <span className="text-accent">Clients</span>
+                                Our <span style={{ color: "#C6A66B" }}>Clients</span>
                             </>
                         )}
                     </h2>
-                    <p className="text-[1.0625rem] text-text-muted max-w-[600px] mx-auto leading-[1.6]">
+                    <p className="text-[1.0625rem] max-w-[600px] mx-auto leading-[1.6]" style={{ color: "#8a8278" }}>
                         {isArabic
                             ? "نفخر بشراكتنا مع أكبر وأبرز الشركات والمؤسسات في المملكة العربية السعودية"
                             : "We are proud to partner with leading companies and organizations in Saudi Arabia"}
@@ -127,18 +127,32 @@ export function ClientsSection() {
                 {/* Infinite Marquee */}
                 <div className="relative w-full overflow-hidden flex items-center py-8 group" dir="ltr">
                     <div className="marquee-content flex flex-nowrap gap-4 md:gap-8 min-w-max">
-                        {/* Render the clients multiple times to ensure seamless scrolling */}
                         {[...displayClients, ...displayClients, ...displayClients].map((client, idx) => {
                             return (
                                 <motion.div
                                     key={idx}
                                     whileHover={{ scale: 1.05, y: -4 }}
-                                    className="relative flex flex-col items-center justify-center p-4 md:p-8 rounded-2xl bg-surface border border-border-default transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] w-[160px] md:w-[220px] h-[100px] md:h-[140px] hover:border-[#C6A66B] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] shrink-0 group"
+                                    className="relative flex flex-col items-center justify-center p-4 md:p-8 rounded-2xl w-[160px] md:w-[220px] h-[100px] md:h-[140px] shrink-0"
+                                    style={{ background: "#FFFFFF", border: "1px solid rgba(200,195,185,0.4)", transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)" }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.borderColor = "#C6A66B";
+                                        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.06)";
+                                        const wrapper = e.currentTarget.querySelector('.client-img-wrapper') as HTMLElement;
+                                        if (wrapper) { wrapper.style.opacity = '1'; wrapper.style.filter = 'grayscale(0)'; }
+                                        const span = e.currentTarget.querySelector('.client-name') as HTMLElement;
+                                        if (span) { span.style.color = '#C6A66B'; }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.borderColor = "rgba(200,195,185,0.4)";
+                                        e.currentTarget.style.boxShadow = "none";
+                                        const wrapper = e.currentTarget.querySelector('.client-img-wrapper') as HTMLElement;
+                                        if (wrapper) { wrapper.style.opacity = '0.75'; wrapper.style.filter = 'grayscale(1)'; }
+                                        const span = e.currentTarget.querySelector('.client-name') as HTMLElement;
+                                        if (span) { span.style.color = '#8a8278'; }
+                                    }}
                                 >
-
-                                    {/* Client Logo/Name */}
                                     <div className="relative z-[5] text-center flex flex-col items-center gap-4 w-full">
-                                        <div className="w-full h-[40px] md:h-[50px] relative flex items-center justify-center opacity-75 grayscale transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100">
+                                        <div className="client-img-wrapper w-full h-[40px] md:h-[50px] relative flex items-center justify-center" style={{ opacity: 0.75, filter: "grayscale(1)", transition: "all 0.3s" }}>
                                             <Image
                                                 src={client.logo}
                                                 alt={client.name}
@@ -147,7 +161,7 @@ export function ClientsSection() {
                                                 sizes="(max-width: 768px) 150px, 200px"
                                             />
                                         </div>
-                                        <span className="text-[0.7rem] md:text-sm font-semibold text-text-muted transition-colors duration-300 group-hover:text-accent whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                                        <span className="client-name text-[0.7rem] md:text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-full" style={{ color: "#8a8278", transition: "color 0.3s" }}>
                                             {client.name}
                                         </span>
                                     </div>
@@ -163,9 +177,10 @@ export function ClientsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
                     viewport={{ once: true }}
-                    className="text-center mt-16 pt-12 border-t border-border-default"
+                    className="text-center mt-16 pt-12"
+                    style={{ borderTop: "1px solid rgba(200,195,185,0.4)" }}
                 >
-                    <p className="text-base text-text-muted mb-6">
+                    <p className="text-base mb-6" style={{ color: "#8a8278" }}>
                         {isArabic
                             ? "هل تريد أن تكون من عملائنا المميزين؟"
                             : "Want to become one of our valued clients?"}
@@ -177,7 +192,8 @@ export function ClientsSection() {
                     >
                         <Link 
                             href={`/${locale}/contact`}
-                            className="inline-flex items-center gap-3 py-3.5 px-10 bg-[linear-gradient(135deg,var(--color-accent)_0%,rgba(var(--color-accent-rgb),0.8)_100%)] border-none rounded-lg text-text-on-accent font-semibold text-base cursor-pointer no-underline shadow-[0_4px_15px_rgba(var(--color-accent-rgb),0.3)] transition-all duration-300"
+                            className="inline-flex items-center gap-3 py-3.5 px-10 border-none rounded-lg font-semibold text-base cursor-pointer no-underline transition-all duration-300"
+                            style={{ background: "linear-gradient(135deg, #C6A66B 0%, rgba(198,166,107,0.8) 100%)", color: "#FFFFFF", boxShadow: "0 4px 15px rgba(198,166,107,0.3)" }}
                         >
                             {isArabic ? "احجز استشارة" : "Book Consultation"}
                             <span>{isArabic ? "←" : "→"}</span>
@@ -197,7 +213,6 @@ export function ClientsSection() {
                 .group:hover .marquee-content {
                     animation-play-state: paused;
                 }
-                /* Fade edges for the marquee */
                 .relative.w-full.overflow-hidden::before,
                 .relative.w-full.overflow-hidden::after {
                     content: "";
@@ -210,11 +225,11 @@ export function ClientsSection() {
                 }
                 .relative.w-full.overflow-hidden::before {
                     left: 0;
-                    background: linear-gradient(to right, var(--color-background) 0%, transparent 100%);
+                    background: linear-gradient(to right, #f0ede6 0%, transparent 100%);
                 }
                 .relative.w-full.overflow-hidden::after {
                     right: 0;
-                    background: linear-gradient(to left, var(--color-background) 0%, transparent 100%);
+                    background: linear-gradient(to left, #f0ede6 0%, transparent 100%);
                 }
             `}</style>
         </section>

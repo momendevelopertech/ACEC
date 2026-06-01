@@ -23,7 +23,7 @@ class ServicesController extends Controller
                     'image' => $s->image,
                     'is_featured' => $s->is_featured,
                 ];
-            });
+            })->values()->toArray();
         });
 
         return response()->json([

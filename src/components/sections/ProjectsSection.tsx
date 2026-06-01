@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { fadeUpVariant, staggerContainer } from "@/lib/animations";
+import { fadeUpVariant } from "@/lib/animations";
 
-export interface Project {
+interface Project {
   id: number;
   slug: string;
   title: string;
@@ -14,94 +14,35 @@ export interface Project {
   image: string | null;
   category: string;
   year: number;
-  is_featured: boolean;
   location: string;
   client: string;
-  area?: string;
+  is_featured: boolean;
 }
 
-const categoryKeys = [
-  { key: "all", label: { ar: "الكل", en: "All" } },
-  { key: "commercial", label: { ar: "تجاري", en: "Commercial" } },
-  { key: "residential", label: { ar: "سكني", en: "Residential" } },
-  { key: "industrial", label: { ar: "صناعي", en: "Industrial" } },
-  { key: "safety", label: { ar: "سلامة", en: "Safety" } },
-  { key: "interior", label: { ar: "تصميم داخلي", en: "Interior" } },
-  { key: "recreational", label: { ar: "ترفيهي", en: "Recreational" } },
-  { key: "educational", label: { ar: "تعليمي", en: "Educational" } },
-];
-
-function LocationIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B695A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
-function AreaIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B695A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="2" />
-      <path d="M3 9h18M9 3v18" />
-    </svg>
-  );
-}
-
-function ProjectCard({ project, locale }: { project: Project; locale: string }) {
-  const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
-  const imgSrc = project.image ? `${API_BASE}/storage/${project.image}` : `/images/projects/${project.slug}.jpg`;
-
-  return (
-    <div className="project-card">
-      <div className="card-image">
-        <img src={imgSrc} alt={project.title} loading="lazy" />
-        {project.category && (
-          <span className="badge">{project.category}</span>
-        )}
-      </div>
-      <div className="card-body">
-        <h3>{project.title}</h3>
-        <div className="card-meta">
-          {project.location && (
-            <span className="meta-item">
-              <LocationIcon />
-              {project.location}
-            </span>
-          )}
-          {project.area && (
-            <span className="meta-item">
-              <AreaIcon />
-              {project.area}
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+interface ProjectsSectionProps {
+  showHeader?: boolean;
 }
 
 const PROJECTS_PER_PAGE = 6;
 
-export function ProjectsSection() {
-  const t = useTranslations("projects");
+export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
   const locale = useLocale();
+  const isRtl = locale === "ar";
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(PROJECTS_PER_PAGE);
-
-  const isRTL = locale === "ar";
 
   useEffect(() => {
     const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
     fetch(`${API_BASE}/api/v1/projects/${locale}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
       .then(data => {
-        if (data.success && data.data) {
+        if (data.success && Array.isArray(data.data)) {
           setProjects(data.data);
         }
         setLoading(false);
@@ -109,155 +50,348 @@ export function ProjectsSection() {
       .catch(() => setLoading(false));
   }, [locale]);
 
-  useEffect(() => {
-    setVisibleCount(PROJECTS_PER_PAGE);
-  }, [activeCategory]);
-
-  const filteredProjects = activeCategory === "all"
-    ? projects
-    : projects.filter(p => p.category === activeCategory);
-
-  const visibleProjects = filteredProjects.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredProjects.length;
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  const visibleProjects = projects.slice(0, visibleCount);
+  const hasMore = visibleCount < projects.length;
 
   const loadMore = () => {
-    setVisibleCount(prev => Math.min(prev + PROJECTS_PER_PAGE, filteredProjects.length));
-  };
-
-  const getCategoryLabel = (key: string) => {
-    const cat = categoryKeys.find(c => c.key === key);
-    return cat ? (isRTL ? cat.label.ar : cat.label.en) : key;
+    setVisibleCount(prev => Math.min(prev + PROJECTS_PER_PAGE, projects.length));
   };
 
   return (
     <section
       ref={ref}
       id="projects"
-      className="projects-section relative py-24 px-6 md:py-32 md:px-12 xl:px-24 bg-[linear-gradient(135deg,rgba(var(--color-accent-rgb),0.05)_0%,transparent_100%)] border-t border-border-default"
+      dir={isRtl ? "rtl" : "ltr"}
+      style={{ backgroundColor: "#f0ede6", padding: showHeader ? "0 0 5rem" : "5rem 0" }}
     >
       <div className="container-custom">
-        {/* Header */}
-        <motion.div
-          variants={staggerContainer(0.1)}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-center mb-12"
-        >
-          <motion.div variants={fadeUpVariant} className="section-label justify-center mb-4">
-            {t("title")}
-          </motion.div>
-          <motion.h2
+        {/* Page Header */}
+        {showHeader && (
+          <motion.div
             variants={fadeUpVariant}
-            className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold text-text-primary leading-[1.2] mb-4"
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="projects-page-header"
           >
-            {t("subtitle")}
-          </motion.h2>
-          <motion.p
-            variants={fadeUpVariant}
-            className="text-base text-text-muted max-w-[600px] mx-auto mb-8"
-          >
-            {t("description")}
-          </motion.p>
-          <motion.div variants={fadeUpVariant}>
-            <Link
-              href={`/${locale}/projects`}
-              className="magnetic-btn magnetic-btn-primary"
-            >
-              {t("viewAll")} ({projects.length})
-            </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Category Filter Tabs */}
-        <motion.div
-          variants={fadeUpVariant}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="flex justify-center flex-wrap gap-3 mb-10"
-        >
-          {categoryKeys.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setActiveCategory(cat.key)}
-              className={`px-4 py-1.5 rounded-full border text-[0.85rem] font-medium transition-all duration-200 cursor-pointer ${
-                activeCategory === cat.key 
-                  ? "border-accent bg-accent text-text-on-accent" 
-                  : "border-border-default bg-transparent text-text-muted hover:border-accent hover:text-[var(--brand-dark)]"
-              }`}
-            >
-              {getCategoryLabel(cat.key)}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Projects Grid */}
-        {loading ? (
-          <div className="text-center p-12">
-            <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-text-muted">
-              {isRTL ? "جاري التحميل..." : "Loading..."}
+            <h1 className="projects-page-title">
+              {isRtl ? "مشاريعنا" : "Projects"}
+            </h1>
+            <p className="projects-page-subtitle">
+              {isRtl
+                ? "مجموعة مختارة من المشاريع الحديثة والمستمرة في جميع أنحاء المملكة."
+                : "A selection of recent and ongoing engagements across the Kingdom."}
             </p>
-          </div>
-        ) : filteredProjects.length === 0 ? (
-          <div className="text-center p-12 bg-surface/50 border border-border-default rounded-2xl">
-            <p className="text-text-muted">
-              {isRTL ? "لا توجد مشاريع في هذا التصنيف" : "No projects in this category"}
+          </motion.div>
+        )}
+
+        {/* Loading */}
+        {loading ? (
+          <div className="text-center py-24 flex flex-col items-center gap-6">
+            <div
+              className="w-10 h-10 rounded-full border-2 border-r-transparent animate-spin"
+              style={{ borderColor: "#C6A66B", borderRightColor: "transparent" }}
+            />
+            <p style={{ color: "#8a8278", fontSize: "0.9rem" }}>
+              {isRtl ? "جاري التحميل..." : "Loading..."}
             </p>
           </div>
         ) : (
           <>
+            {/* Project Grid */}
             <motion.div
-              variants={staggerContainer(0.1)}
+              variants={fadeUpVariant}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="projects-grid"
             >
               {visibleProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} locale={locale} />
+                <Link
+                  key={project.id}
+                  href={`/${locale}/projects/${project.slug}`}
+                  className="project-card-link"
+                >
+                  <article className="project-card">
+                    <div className="project-card-image-wrap">
+                      <img
+                        src={
+                          project.image
+                            ? `${API_BASE}/storage/${project.image}`
+                            : `/images/projects/${project.slug}.jpg`
+                        }
+                        alt={project.title}
+                        loading="lazy"
+                        className="project-card-img"
+                      />
+                    </div>
+                    <div className="project-card-meta">
+                      <span className="project-card-category">
+                        {project.category.toUpperCase()}
+                      </span>
+                      <span className="project-card-location">
+                        {project.location}
+                        {project.year ? ` · ${project.year}` : ""}
+                      </span>
+                    </div>
+                    <h3 className="project-card-title">
+                      {project.title}
+                    </h3>
+                  </article>
+                </Link>
               ))}
             </motion.div>
 
             {/* Pagination / Load More */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col items-center gap-4 mt-12"
-            >
-              <p className="text-text-muted text-[0.85rem]">
-                {isRTL
-                  ? `عرض ${visibleCount} من ${filteredProjects.length} مشروع`
-                  : `Showing ${visibleCount} of ${filteredProjects.length} projects`}
-              </p>
-              {hasMore && (
-                <motion.button
-                  onClick={loadMore}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full border border-accent/40 bg-accent/5 text-accent font-semibold text-[0.95rem] cursor-pointer transition-all duration-300 overflow-hidden hover:bg-accent hover:text-text-on-accent hover:border-accent"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    {isRTL ? "تحميل المزيد" : "Load More"}
+            {projects.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex flex-col items-center gap-4 mt-12"
+              >
+                <p style={{ color: "#8a8278", fontSize: "0.85rem" }}>
+                  {isRtl
+                    ? `عرض ${visibleCount} من ${projects.length} مشروع`
+                    : `Showing ${visibleCount} of ${projects.length} projects`}
+                </p>
+                {hasMore && (
+                  <button
+                    onClick={loadMore}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      padding: "0.85rem 2rem",
+                      borderRadius: "999px",
+                      border: "1px solid rgba(198,166,107,0.4)",
+                      backgroundColor: "rgba(198,166,107,0.05)",
+                      color: "#C6A66B",
+                      fontSize: "0.9rem",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.backgroundColor = "#C6A66B";
+                      e.currentTarget.style.color = "#fff";
+                      e.currentTarget.style.borderColor = "#C6A66B";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.backgroundColor = "rgba(198,166,107,0.05)";
+                      e.currentTarget.style.color = "#C6A66B";
+                      e.currentTarget.style.borderColor = "rgba(198,166,107,0.4)";
+                    }}
+                  >
+                    {isRtl ? "تحميل المزيد" : "Load More"}
                     <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 16 16"
                       fill="none"
+                      style={isRtl ? { transform: "scaleX(-1)" } : {}}
+                    >
+                      <path
+                        d="M3 8H13M13 8L9 4M13 8L9 12"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </motion.div>
+            )}
+
+            {/* Homepage: "View All" link (when all projects already shown) */}
+            {!showHeader && !hasMore && projects.length > 0 && (
+              <motion.div
+                variants={fadeUpVariant}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className="text-center mt-12"
+              >
+                <Link
+                  href={`/${locale}/projects`}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "#4a4540",
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    textDecoration: "none",
+                    paddingBottom: "0.25rem",
+                    borderBottom: "1px solid rgba(74,69,64,0.3)",
+                    transition: "color 0.2s, border-color 0.2s",
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.color = "#8a7a5a";
+                    e.currentTarget.style.borderBottomColor = "rgba(138,122,90,0.3)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.color = "#4a4540";
+                    e.currentTarget.style.borderBottomColor = "rgba(74,69,64,0.3)";
+                  }}
+                >
+                  {isRtl ? "عرض جميع المشاريع" : "View All Projects"}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    style={isRtl ? { transform: "scaleX(-1)" } : {}}
+                  >
+                    <path
+                      d="M3 8H13M13 8L9 4M13 8L9 12"
                       stroke="currentColor"
-                      strokeWidth="2.5"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="transition-transform duration-300 group-hover:translate-y-0.5"
-                    >
-                      <path d="M12 5v14M5 12l7 7 7-7" />
-                    </svg>
-                  </span>
-                </motion.button>
-              )}
-            </motion.div>
+                    />
+                  </svg>
+                </Link>
+              </motion.div>
+            )}
           </>
         )}
       </div>
+
+      <style>{`
+        .projects-page-header {
+          padding-top: 4rem;
+          padding-bottom: 0;
+          text-align: center;
+        }
+
+        .projects-page-title {
+          font-size: clamp(2.5rem, 4vw, 3rem);
+          font-family: var(--font-serif, Georgia, serif);
+          color: #2e2b26;
+          font-weight: 400;
+          margin: 0;
+          line-height: 1.2;
+        }
+
+        .projects-page-subtitle {
+          color: #8a8278;
+          font-size: 1rem;
+          margin-top: 1rem;
+          margin-bottom: 3.75rem;
+          line-height: 1.6;
+        }
+
+        .projects-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 24px;
+          align-items: start;
+        }
+
+        @media (min-width: 640px) {
+          .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+          }
+        }
+
+        @media (min-width: 900px) {
+          .projects-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .projects-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+          }
+        }
+
+        .project-card-link {
+          text-decoration: none;
+          display: block;
+          cursor: pointer;
+        }
+
+        .project-card {
+          display: flex;
+          flex-direction: column;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+        }
+
+        .project-card-image-wrap {
+          overflow: hidden;
+          border-radius: 3px;
+          width: 100%;
+        }
+
+        .project-card-img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+          border-radius: 2px;
+        }
+
+        .project-card-link:hover .project-card-img {
+          transform: scale(1.02);
+        }
+
+        .project-card-meta {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 0.65rem;
+          width: 100%;
+        }
+
+        .project-card-category {
+          font-size: 0.65rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #8a8278;
+          font-weight: 500;
+        }
+
+        .project-card-location {
+          font-size: 0.65rem;
+          color: #8a8278;
+          text-align: right;
+        }
+
+        [dir=rtl] .project-card-meta {
+          direction: ltr;
+        }
+
+        [dir=rtl] .project-card-category {
+          order: 1;
+        }
+
+        [dir=rtl] .project-card-location {
+          order: 0;
+        }
+
+        .project-card-title {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #2e2b26;
+          font-family: var(--font-serif, Georgia, serif);
+          margin: 4px 0 0;
+          line-height: 1.3;
+        }
+
+        [dir=rtl] .project-card-title {
+          text-align: right;
+        }
+      `}</style>
     </section>
   );
 }

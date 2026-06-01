@@ -3,11 +3,12 @@
 namespace App\Filament\Resources\BlogPosts\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class BlogPostsTable
@@ -33,9 +34,10 @@ class BlogPostsTable
                 TextColumn::make('author.name')
                     ->label(__('admin.col_author'))
                     ->searchable(),
-                IconColumn::make('is_published')
+                ToggleColumn::make('is_published')
                     ->label(__('admin.col_is_published'))
-                    ->boolean(),
+                    ->onColor('success')
+                    ->offColor('gray'),
                 TextColumn::make('published_at')
                     ->label(__('admin.col_published_at'))
                     ->dateTime()
@@ -67,6 +69,7 @@ class BlogPostsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

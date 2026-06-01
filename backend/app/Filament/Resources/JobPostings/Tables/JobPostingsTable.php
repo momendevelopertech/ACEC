@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\JobPostings\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class JobPostingsTable
@@ -33,9 +34,10 @@ class JobPostingsTable
                 TextColumn::make('salary_range')
                     ->label(__('admin.col_salary_range'))
                     ->searchable(),
-                IconColumn::make('is_active')
+                ToggleColumn::make('is_active')
                     ->label(__('admin.col_is_active'))
-                    ->boolean(),
+                    ->onColor('success')
+                    ->offColor('gray'),
                 TextColumn::make('expires_at')
                     ->label(__('admin.col_expires_at'))
                     ->dateTime()
@@ -57,6 +59,7 @@ class JobPostingsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

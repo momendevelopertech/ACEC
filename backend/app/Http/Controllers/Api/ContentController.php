@@ -18,8 +18,8 @@ class ContentController extends Controller
 
         $data = Cache::remember("content.index.{$lang}", 3600, function () use ($lang) {
             return [
-                'hero' => HeroSection::where('lang', $lang)->first(),
-                'clients' => Client::where('is_active', true)->orderBy('order')->get(),
+                'hero' => HeroSection::where('lang', $lang)->first()?->toArray(),
+                'clients' => Client::where('is_active', true)->orderBy('order')->get()->toArray(),
             ];
         });
 
@@ -34,7 +34,7 @@ class ContentController extends Controller
         $lang = in_array($lang, ['ar', 'en']) ? $lang : 'ar';
 
         $data = Cache::remember("hero.{$lang}", 3600, function () use ($lang) {
-            return HeroSection::where('lang', $lang)->first();
+            return HeroSection::where('lang', $lang)->first()?->toArray();
         });
 
         return response()->json([
@@ -46,7 +46,7 @@ class ContentController extends Controller
     public function clients()
     {
         $data = Cache::remember("clients.all", 3600, function () {
-            return Client::where('is_active', true)->orderBy('order')->get();
+            return Client::where('is_active', true)->orderBy('order')->get()->toArray();
         });
 
         return response()->json([
@@ -74,7 +74,7 @@ class ContentController extends Controller
                         'expiry_date' => $c->expiry_date,
                         'order' => $c->order,
                     ];
-                });
+                })->values()->toArray();
         });
 
         return response()->json([
@@ -101,7 +101,7 @@ class ContentController extends Controller
                         'salary_range' => $j->salary_range,
                         'is_active' => $j->is_active,
                     ];
-                });
+                })->values()->toArray();
         });
 
         return response()->json([
@@ -113,7 +113,7 @@ class ContentController extends Controller
     public function whyUs($lang)
     {
         $data = Cache::remember("whyus.{$lang}", 3600, function () {
-            return WhyUsItem::where('is_active', true)->orderBy('order')->get();
+            return WhyUsItem::where('is_active', true)->orderBy('order')->get()->toArray();
         });
 
         return response()->json([

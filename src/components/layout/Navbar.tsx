@@ -113,8 +113,8 @@ export function Navbar() {
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#474A4D] ${
-                scrolled ? "py-2 px-4 backdrop-blur-2xl border-b border-[rgba(198,166,107,0.2)]" : "py-3 px-4 backdrop-blur-none border-transparent"
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#f0ede6] ${
+                scrolled ? "py-2 px-4 shadow-soft border-b border-[#ddd8d0]" : "py-3 px-4 border-b border-[#ddd8d0]"
             }`}
         >
             <div dir="ltr" className="container-custom flex items-center justify-between gap-3 flex-nowrap min-h-[3.4rem] md:min-h-auto w-full">
@@ -131,10 +131,10 @@ export function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`no-underline text-[0.9rem] xl:text-[0.925rem] font-medium py-2 px-3 xl:px-3.5 rounded-lg transition-all duration-200 tracking-[0.01em] whitespace-nowrap ${
+                                className={`no-underline text-[0.875rem] xl:text-[0.9rem] font-medium py-2 px-3 xl:px-3.5 rounded-lg transition-all duration-200 tracking-[0.01em] whitespace-nowrap ${
                                     active
-                                        ? "text-[#D4B06A] bg-white/[0.07]"
-                                        : "text-[#F5F1E8] hover:text-[#C6A66B] hover:bg-white/[0.06]"
+                                        ? "text-[#C6A66B] bg-[#C6A66B]/10"
+                                        : "text-[#4a4540]/70 hover:text-[#4a4540] hover:bg-[#e8e4dc]"
                                 }`}
                             >
                                 {link.label}
@@ -145,21 +145,29 @@ export function Navbar() {
                     <div className="relative hidden lg:block" ref={dropdownRef}>
                         <button
                             onClick={() => setMoreOpen(!moreOpen)}
-                            className="border border-[#F5F1E8]/40 rounded-lg text-[#F5F1E8] text-[0.9rem] font-medium py-2 px-3.5 cursor-pointer transition-all duration-200 bg-transparent hover:bg-white/[0.06] hover:text-[#C6A66B] hover:border-[#C6A66B]"
+                            className="border border-[#ddd8d0] rounded-lg text-[#4a4540] text-[0.875rem] font-medium py-2 px-3.5 cursor-pointer transition-all duration-200 bg-transparent hover:bg-[#e8e4dc] hover:text-[#4a4540] hover:border-[#C6A66B]"
                             aria-haspopup="true"
                             aria-expanded={moreOpen}
                         >
                             {t("more")}
                         </button>
                         {moreOpen && (
-                            <div className="more-dropdown">
-                                {secondaryNavLinks.map((link) => {
+                            <div
+                                className={`absolute top-full mt-1 bg-[#f0ede6] border border-[#ddd8d0] rounded-lg shadow-lg min-w-[200px] py-2 z-50 ${isRTL ? "left-0" : "right-0"}`}
+                                style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.10)" }}
+                            >
+                                {secondaryNavLinks.map((link, i) => {
                                     const active = isActive(link.href);
+                                    const showSep = secondaryNavLinks.length > 4 && i === 4;
                                     return (
                                         <Link
                                             key={link.href}
                                             href={link.href}
-                                            className={active ? "active" : ""}
+                                            className={`block px-5 py-3 text-[0.875rem] tracking-wide text-[#4a4540] no-underline transition-all duration-200 ${
+                                                active
+                                                    ? "text-[#C6A66B] bg-[#C6A66B]/10 font-semibold"
+                                                    : "hover:bg-[#e8e4dc] hover:text-[#2e2b26]"
+                                            } ${showSep ? "border-b border-[rgba(0,0,0,0.06)] pb-3 mb-1" : ""}`}
                                             onClick={() => setMoreOpen(false)}
                                         >
                                             {link.label}
@@ -173,17 +181,21 @@ export function Navbar() {
 
                 {/* Right side actions */}
                 <div className="flex items-center gap-2 xl:gap-3 flex-nowrap justify-end min-w-0 flex-shrink-0">
-                    {/* Language switcher — text only, no flags */}
-                    <div className="lang-switcher">
+                    {/* Language switcher */}
+                    <div className="flex items-center border border-[#ddd8d0] bg-[#e8e4dc] rounded-full p-0.5">
                       <button
                         onClick={() => { if (locale !== "ar") { const newLocale = "ar"; const segs = pathname.split("/"); segs[1] = newLocale; router.push(segs.join("/") || `/${newLocale}`); }}}
-                        className={`lang-btn ${locale === "ar" ? "active" : ""}`}
+                        className={`px-3 py-1 text-xs font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                          locale === "ar" ? "bg-[#4a4540] text-[#f0ede6]" : "text-[#4a4540]/60 hover:text-[#4a4540]"
+                        }`}
                       >
                         AR
                       </button>
                       <button
                         onClick={() => { if (locale !== "en") { const newLocale = "en"; const segs = pathname.split("/"); segs[1] = newLocale; router.push(segs.join("/") || `/${newLocale}`); }}}
-                        className={`lang-btn ${locale === "en" ? "active" : ""}`}
+                        className={`px-3 py-1 text-xs font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                          locale === "en" ? "bg-[#4a4540] text-[#f0ede6]" : "text-[#4a4540]/60 hover:text-[#4a4540]"
+                        }`}
                       >
                         EN
                       </button>
@@ -192,7 +204,7 @@ export function Navbar() {
                     {/* CTA Button */}
                     <Link
                         href={`/${locale}/contact`}
-                        className="hidden lg:inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-[#6B695A] hover:bg-[#C6A66B] transition-all duration-200 whitespace-nowrap no-underline"
+                        className="hidden lg:inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-[#f0ede6] bg-[#3d3a34] hover:bg-[#4a4540] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap no-underline shadow-soft"
                     >
                         {t("consultation")}
                     </Link>
@@ -200,13 +212,13 @@ export function Navbar() {
                     {/* Mobile Menu Toggle */}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="lg:hidden border border-[#F5F1E8]/40 rounded-lg cursor-pointer flex flex-col gap-1 py-2.5 px-3 min-w-[3.2rem] items-center justify-center bg-transparent hover:bg-white/[0.08] transition-colors"
+                        className="lg:hidden border border-[#ddd8d0] rounded-lg cursor-pointer flex flex-col gap-1 py-2.5 px-3 min-w-[3.2rem] items-center justify-center bg-transparent hover:bg-[#e8e4dc] transition-colors"
                         aria-label={menuOpen ? (locale === "ar" ? "إغلاق" : "Close") : (locale === "ar" ? "افتح" : "Open")}
                     >
                         {[0, 1, 2].map((i) => (
                             <span
                                 key={i}
-                                className={`block w-[20px] h-[2px] bg-[#F5F1E8] rounded-[2px] transition-all duration-300 ${
+                                className={`block w-[20px] h-[2px] bg-[#4a4540] rounded-[2px] transition-all duration-300 ${
                                     menuOpen && i === 0 ? "translate-y-[6px] rotate-45" :
                                     menuOpen && i === 2 ? "-translate-y-[6px] -rotate-45" :
                                     menuOpen && i === 1 ? "scale-x-0" : ""
@@ -219,13 +231,13 @@ export function Navbar() {
 
             {/* Mobile Menu */}
             {menuOpen && (
-                <div className="fixed inset-0 z-[65] bg-[#474A4D] flex flex-col overflow-y-auto overflow-x-hidden lg:hidden">
-                    <div className="flex items-center justify-between p-4 px-6 border-b border-[rgba(198,166,107,0.15)] sticky top-0 bg-[#474A4D] z-10">
-                        <span className="text-[#F5F1E8] font-bold text-lg tracking-wide">ACEC</span>
+                <div className="fixed inset-0 z-[65] bg-[#f0ede6] flex flex-col overflow-y-auto overflow-x-hidden lg:hidden">
+                    <div className="flex items-center justify-between p-4 px-6 border-b border-[#ddd8d0] sticky top-0 bg-[#f0ede6] z-10">
+                        <span className="text-[#4a4540] font-serif font-bold text-xl tracking-wide">ACEC</span>
                         <button
                             onClick={() => setMenuOpen(false)}
                             aria-label={locale === "ar" ? "إغلاق القائمة" : "Close menu"}
-                            className="w-10 h-10 rounded-lg border border-[rgba(198,166,107,0.25)] bg-white/[0.06] text-[#F5F1E8] flex items-center justify-center cursor-pointer text-xl flex-shrink-0 hover:bg-white/[0.12] transition-colors"
+                            className="w-10 h-10 rounded-lg border border-[#ddd8d0] bg-[#e8e4dc] text-[#4a4540] flex items-center justify-center cursor-pointer text-xl flex-shrink-0 hover:bg-[#ddd8d0] transition-colors"
                         >
                             ✕
                         </button>
@@ -237,34 +249,38 @@ export function Navbar() {
                                 key={item.href}
                                 href={item.href}
                                 onClick={() => setMenuOpen(false)}
-                                className="flex items-center gap-4 py-3.5 px-6 border-b border-[rgba(198,166,107,0.08)] text-[#F5F1E8] no-underline text-base font-medium transition-colors hover:bg-white/[0.06]"
+                                className="flex items-center gap-4 py-3.5 px-6 border-b border-[#ddd8d0]/50 text-[#4a4540] no-underline text-base font-medium transition-colors hover:bg-[#e8e4dc]"
                             >
                                 <span>{item.label}</span>
-                                <span className="ms-auto text-[#C6A66B]/60 text-sm">
+                                <span className="ms-auto text-[#8a8278] text-sm">
                                     {isRTL ? "←" : "→"}
                                 </span>
                             </Link>
                         ))}
                     </nav>
 
-                    <div className="p-6 border-t border-[rgba(198,166,107,0.15)] bg-[#474A4D] sticky bottom-0 flex flex-col gap-3">
+                    <div className="p-6 border-t border-[#ddd8d0] bg-[#f0ede6] sticky bottom-0 flex flex-col gap-3">
                         <Link
                             href={`/${locale}/contact`}
                             onClick={() => setMenuOpen(false)}
-                            className="block w-full py-3.5 bg-[#6B695A] text-white rounded-lg text-center font-semibold text-base no-underline cursor-pointer hover:bg-[#C6A66B] transition-colors"
+                            className="block w-full py-3.5 bg-[#3d3a34] text-[#f0ede6] rounded-lg text-center font-semibold text-base no-underline cursor-pointer hover:bg-[#4a4540] transition-colors shadow-soft"
                         >
                             {t("consultation")}
                         </Link>
                         <div className="flex items-center justify-center gap-2">
                             <button
                                 onClick={() => { setMenuOpen(false); const segs = pathname.split("/"); segs[1] = "ar"; router.push(segs.join("/")); }}
-                                className={`lang-btn ${locale === "ar" ? "active" : ""}`}
+                                className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                                  locale === "ar" ? "bg-[#4a4540] text-[#f0ede6]" : "text-[#4a4540]/60 hover:text-[#4a4540] hover:bg-[#e8e4dc]"
+                                }`}
                             >
                                 AR
                             </button>
                             <button
                                 onClick={() => { setMenuOpen(false); const segs = pathname.split("/"); segs[1] = "en"; router.push(segs.join("/")); }}
-                                className={`lang-btn ${locale === "en" ? "active" : ""}`}
+                                className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                                  locale === "en" ? "bg-[#4a4540] text-[#f0ede6]" : "text-[#4a4540]/60 hover:text-[#4a4540] hover:bg-[#e8e4dc]"
+                                }`}
                             >
                                 EN
                             </button>

@@ -25,11 +25,12 @@ export function Logo({ size = "md", href, className = "" }: LogoProps) {
 
   const content = (
     <Image
-      src={`${API_BASE}/images/logo.png`}
+      src="/images/logo.png"
       alt="ACEC - Arabian Covenant Engineering Consultants"
       width={dimensions.width}
       height={dimensions.height}
       className={`object-contain transition-opacity duration-200 hover:opacity-80 ${className}`}
+      style={{ width: "auto", height: "auto" }}
       priority
     />
   );

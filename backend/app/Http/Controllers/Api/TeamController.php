@@ -26,7 +26,9 @@ class TeamController extends Controller
                         'linkedin' => $m->linkedin,
                         'order' => $m->order,
                     ];
-                });
+                })
+                ->values()
+                ->toArray();
         });
 
         return response()->json([

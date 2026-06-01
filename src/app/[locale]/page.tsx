@@ -1,13 +1,13 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { StatsSection } from "@/components/sections/StatsSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
-import { ProjectsSection } from "@/components/sections/ProjectsSection";
+import { ClientsSection } from "@/components/sections/ClientsSection";
+import { StatsSection } from "@/components/sections/StatsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { WhySection } from "@/components/sections/WhySection";
 import { CTASection } from "@/components/sections/CTASection";
-import { ClientsSection } from "@/components/sections/ClientsSection";
+import { FeaturedWorkSection } from "@/components/sections/FeaturedWorkSection";
 
 export const dynamic = 'force-static';
 
@@ -17,12 +17,12 @@ export default function HomePage() {
             <Navbar />
             <main>
                 <HeroSection />
-                <StatsSection />
+                <FeaturedWorkSection />
+                <ClientsSection />
                 <ServicesSection />
-                <ProjectsSection />
+                <StatsSection />
                 <AboutSection />
                 <WhySection />
-                <ClientsSection />
                 <CTASection />
             </main>
             <Footer />

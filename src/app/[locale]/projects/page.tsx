@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
-import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 type Props = {
@@ -26,34 +25,8 @@ export default async function ProjectsPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main className="pt-[80px]">
-        <div
-          style={{
-            padding: "5rem 1.5rem 2rem",
-            background:
-              "linear-gradient(180deg, rgba(var(--color-gold-rgb), 0.04) 0%, transparent 100%)",
-            borderBottom: "1px solid var(--color-border)",
-            textAlign: "center",
-          }}
-        >
-          <div className="container-custom">
-            <div className="section-label justify-center mb-4">
-              ACEC
-            </div>
-            <h1
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                fontWeight: 700,
-                color: "var(--color-text)",
-              }}
-            >
-              {isArabic ? "مشاريعنا " : "Our "}
-              <span className="gold-text">{isArabic ? "المميزة" : "Projects"}</span>
-            </h1>
-          </div>
-        </div>
-        <ProjectsSection />
+      <main style={{ backgroundColor: "#f0ede6", minHeight: "100vh", paddingTop: "80px" }}>
+        <ProjectsSection showHeader />
       </main>
       <Footer />
     </>

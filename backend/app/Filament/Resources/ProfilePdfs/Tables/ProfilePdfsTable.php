@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\ProfilePdfs\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,9 +28,10 @@ class ProfilePdfsTable
                     ->label(__('admin.col_created_at'))
                     ->dateTime()
                     ->sortable(),
-                IconColumn::make('is_active')
+                ToggleColumn::make('is_active')
                     ->label(__('admin.col_is_active'))
-                    ->boolean(),
+                    ->onColor('success')
+                    ->offColor('gray'),
             ])
             ->stackedOnMobile()
             ->recordUrl(fn ($record) => $record->file_url)
@@ -37,6 +39,11 @@ class ProfilePdfsTable
             ->recordActions([
                 EditAction::make()
                     ->label(__('admin.btn_edit')),
+                DeleteAction::make()
+                    ->label(__('admin.btn_delete'))
+                    ->after(function ($record) {
+                        Storage::disk('public')->delete($record->file_path);
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Services\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class ServicesTable
@@ -37,9 +39,10 @@ class ServicesTable
                     ->label(__('admin.col_order'))
                     ->numeric()
                     ->sortable(),
-                IconColumn::make('is_active')
+                ToggleColumn::make('is_active')
                     ->label(__('admin.col_is_active'))
-                    ->boolean(),
+                    ->onColor('success')
+                    ->offColor('gray'),
                 TextColumn::make('meta_title_ar')
                     ->label(__('admin.col_meta_title_ar'))
                     ->searchable(),
@@ -63,6 +66,7 @@ class ServicesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

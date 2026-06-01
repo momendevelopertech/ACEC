@@ -75,7 +75,7 @@ export function ContactForm() {
             {/* Name + Email row */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }} className="form-row">
                 <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#C6A66B", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                         {t("name")}
                     </label>
                     <input
@@ -89,7 +89,7 @@ export function ContactForm() {
                     />
                 </div>
                 <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#A88B52", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#C6A66B", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                         {t("email")}
                     </label>
                     <input
@@ -130,7 +130,7 @@ export function ContactForm() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+966 5x xxx xxxx"
+                    placeholder={t("phone_placeholder")}
                     className="form-input"
                 />
             </div>
@@ -147,13 +147,13 @@ export function ContactForm() {
                     className="form-input"
                     style={{ cursor: "pointer" }}
                 >
-                    <option value="">{locale === "ar" ? "اختر الخدمة" : "Select Service"}</option>
-                    <option value="consulting">{locale === "ar" ? "الاستشارات الهندسية" : "Engineering Consultancy"}</option>
-                    <option value="safety">{locale === "ar" ? "هندسة السلامة" : "Safety Engineering"}</option>
-                    <option value="supervision">{locale === "ar" ? "الإشراف الهندسي" : "Engineering Supervision"}</option>
-                    <option value="interior">{locale === "ar" ? "التصميم الداخلي" : "Interior Design"}</option>
-                    <option value="factory">{locale === "ar" ? "تصميم المصانع" : "Factory Design"}</option>
-                    <option value="modon">{locale === "ar" ? "التوافق مع MODON" : "MODON Compliance"}</option>
+                    <option value="">{t("select_service")}</option>
+                    <option value="consulting">{t("opt_consulting")}</option>
+                    <option value="safety">{t("opt_safety")}</option>
+                    <option value="supervision">{t("opt_supervision")}</option>
+                    <option value="interior">{t("opt_interior")}</option>
+                    <option value="factory">{t("opt_factory")}</option>
+                    <option value="modon">{t("opt_modon")}</option>
                 </select>
             </div>
 
@@ -182,7 +182,7 @@ export function ContactForm() {
                         borderRadius: "var(--radius-sm)",
                         background: "rgba(198, 166, 107, 0.1)",
                         border: "1px solid rgba(198, 166, 107, 0.3)",
-                        color: "#6B695A",
+                        color: "#1A1A1A",
                         fontSize: "0.9rem",
                         textAlign: "center",
                         fontWeight: 500,
@@ -219,18 +219,16 @@ export function ContactForm() {
                     fontWeight: 600,
                     cursor: status === "loading" ? "wait" : "pointer",
                     opacity: status === "loading" ? 0.7 : 1,
-                    background: "#6B695A",
+                    background: "#C6A66B",
                     color: "#FFFFFF",
                     border: "none",
                     transition: "all 0.3s ease",
                 }}
-                onMouseEnter={(e) => { if (status !== "loading") e.currentTarget.style.background = "#C6A66B"; }}
-                onMouseLeave={(e) => { if (status !== "loading") e.currentTarget.style.background = "#6B695A"; }}
+                onMouseEnter={(e) => { if (status !== "loading") e.currentTarget.style.background = "#B89555"; }}
+                onMouseLeave={(e) => { if (status !== "loading") e.currentTarget.style.background = "#C6A66B"; }}
             >
                 {status === "loading"
-                    ? locale === "ar"
-                        ? "جاري الإرسال..."
-                        : "Sending..."
+                    ? t("sending")
                     : t("submit")}
             </button>
 

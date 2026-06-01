@@ -51,7 +51,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning data-scroll-behavior="smooth">
       <body suppressHydrationWarning>
         <CustomCursor />
         {children}

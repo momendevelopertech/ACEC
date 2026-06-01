@@ -1,191 +1,97 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { staggerContainer, fadeUpVariant, slideInVariant, textRevealVariant } from "@/lib/animations";
-
-interface HeroData {
-  id: number;
-  lang: string;
-  title: string;
-  subtitle: string | null;
-  description: string | null;
-  stat1_number: string | null;
-  stat1_label: string | null;
-  stat2_number: string | null;
-  stat2_label: string | null;
-  stat3_number: string | null;
-  stat3_label: string | null;
-  stat4_number: string | null;
-  stat4_label: string | null;
-  cta1_text: string | null;
-  cta1_link: string | null;
-  cta2_text: string | null;
-  cta2_link: string | null;
-  image: string | null;
-}
+import { fadeUpVariant } from "@/lib/animations";
 
 export function HeroSection() {
   const locale = useLocale();
-  const isRTL = locale === "ar";
-  const [hero, setHero] = useState<HeroData | null>(null);
-  const t = useTranslations("hero");
+  const isAr = locale === "ar";
 
-  useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
-    fetch(`${API_BASE}/api/v1/hero/${locale}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && data.data) {
-          setHero(data.data);
-        }
-      })
-      .catch(() => {});
-  }, [locale]);
-
-  const stats = hero
-    ? [
-        { num: hero.stat1_number, label: hero.stat1_label },
-        { num: hero.stat2_number, label: hero.stat2_label },
-        { num: hero.stat3_number, label: hero.stat3_label },
-      ].filter((s) => s.num || s.label)
-    : [];
-
-  const cta1Text = hero?.cta1_text || t("cta_primary");
-  const cta1Link = hero?.cta1_link || `/${locale}/services`;
-  const cta2Text = hero?.cta2_text || t("cta_secondary");
-  const cta2Link = hero?.cta2_link || `/${locale}/contact`;
+  const eyebrow = isAr ? "استشارات هندسية — الرياض" : "Engineering Consultants — Riyadh, KSA";
+  const companyName = isAr ? "الميثاق العربي للاستشارات الهندسية" : "Arabian Covenant Engineering Consultants";
+  const subtitle = isAr
+    ? "استشارات هندسية شاملة، حماية من الحرائق، وهندسة سلامة في جميع أنحاء المملكة العربية السعودية — نقدم التميز منذ 2006."
+    : "Comprehensive engineering consultancy, fire protection, and safety engineering across Saudi Arabia — delivering excellence since 2006.";
+  const enduringWord = isAr ? "مستدامة" : "Enduring";
+  const outcomes = isAr ? "النتائج" : "Outcomes.";
+  const tagline = isAr ? "من التخطيط إلى الحيازة" : "From Plan to Possession";
 
   return (
-    <section className="hero-section">
-      {/* Left: Content */}
-      <motion.div
-        variants={staggerContainer(0.15, 0.2)}
-        initial="hidden"
-        animate="visible"
-        className="hero-content"
-      >
-        {/* Label */}
+    <section className="hero-section relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24">
+      <div className="hero-bg absolute inset-0 z-0">
+        <img
+          src="/images/hero-architecture.jpg"
+          alt=""
+          loading="eager"
+          className="w-full h-full object-cover opacity-45 scale-[1.05] transition-transform duration-10000 ease-out"
+        />
+      </div>
+      <div className="hero-overlay absolute inset-0 z-0" />
+
+      <div className="container-edit relative z-10 w-full">
         <motion.div
-          variants={slideInVariant("left")}
-          className="section-label"
-          style={{ marginBottom: "1.5rem" }}
+          initial="hidden"
+          animate="visible"
+          className="hero-content max-w-4xl text-left rtl:text-right"
         >
-          Arabian Covenant Engineering Consultants — ACEC
-        </motion.div>
-
-        {/* Tagline */}
-        <div style={{ overflow: "hidden", paddingBottom: "10px" }}>
-          <motion.h1
-            variants={textRevealVariant}
-            className="font-heading hero-title"
-          >
-            {hero?.title || t("tagline")}
-          </motion.h1>
-        </div>
-
-        {/* Subtitle */}
-        <motion.p
-          variants={fadeUpVariant}
-          className="hero-subtitle"
-        >
-          {hero?.subtitle || hero?.description || t("sub")}
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          variants={fadeUpVariant}
-          className="hero-cta"
-        >
-          <Link
-            href={cta1Link}
-            className="magnetic-btn magnetic-btn-primary"
-          >
-            {cta1Text}
-            <ArrowIcon />
-          </Link>
-          <Link
-            href={cta2Link}
-            className="btn-contact"
-          >
-            {cta2Text}
-          </Link>
-        </motion.div>
-
-        {/* Stats */}
-        {stats.length > 0 && (
-          <motion.div
-            variants={fadeUpVariant}
-            className="hero-stats"
-          >
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <div className="number">{stat.num}</div>
-                <div className="label">{stat.label}</div>
-              </div>
-            ))}
+          <motion.div variants={fadeUpVariant} className="eyebrow mb-6" style={{ color: "#8a8278" }}>
+            {eyebrow}
           </motion.div>
-        )}
-      </motion.div>
 
-      {/* Right: Collage */}
-      <div className="hero-collage">
-        <div className="img-wrapper img-1">
-          <img
-            className="collage-img"
-            src="/images/hero/hero-tower.jpg"
-            alt="Modern Tower"
-            loading="eager"
-          />
-        </div>
-        <div className="img-wrapper img-2">
-          <img
-            className="collage-img"
-            src="/images/hero/hero-interior.jpg"
-            alt="Interior Design"
-            loading="lazy"
-          />
-        </div>
-        <div className="img-wrapper img-3">
-          <img
-            className="collage-img"
-            src="/images/hero/hero-construction.jpg"
-            alt="Construction"
-            loading="lazy"
-          />
-        </div>
+          <motion.h1 variants={fadeUpVariant} className="display-1 text-[#2e2b26] tracking-tight mb-8">
+            {tagline}<br />
+            <strong className="font-serif italic font-normal" style={{ color: "#8a7a5a" }}>{enduringWord}</strong> {outcomes}
+          </motion.h1>
+
+          <p className="text-lg md:text-xl text-[#4a4540] max-w-2xl leading-relaxed mb-4">
+            {subtitle}
+          </p>
+          <p className="text-base md:text-lg text-[#8a7a5a] max-w-2xl leading-relaxed mb-10 font-semibold">
+            {companyName}
+          </p>
+
+          <motion.div variants={fadeUpVariant} className="hero-cta flex flex-wrap gap-4 items-center">
+            <Link
+              href={`/${locale}/services`}
+              className="bg-[#3d3a34] text-[#f0ede6] hover:bg-[#4a4540] border-none shadow-lg px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
+            >
+              {isAr ? "خدماتنا" : "Our Services"}
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="rtl:rotate-180">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+            <Link
+              href={`/${locale}/contact`}
+              className="border border-[#4a4540] text-[#4a4540] hover:bg-[#4a4540] hover:text-[#f0ede6] px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
+            >
+              {isAr ? "تواصل معنا" : "Contact Us"}
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="hero-scroll"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 cursor-pointer text-xs uppercase tracking-widest"
+        style={{ color: "#8a8278" }}
       >
-        <span>{t("scroll")}</span>
+        <span>{isAr ? "اسفل" : "Scroll"}</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="scroll-line"
-        />
+          className="w-[1px] h-12 relative"
+          style={{ background: "rgba(138,130,120,0.4)" }}
+        >
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[3px] h-[3px] rounded-full"
+            style={{ background: "#8a8278" }}
+          />
+        </motion.div>
       </motion.div>
     </section>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path
-        d="M3 8H13M13 8L9 4M13 8L9 12"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

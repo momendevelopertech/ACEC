@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   return [
@@ -55,40 +55,41 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
           style={{
             padding: "6rem 1.5rem 3rem",
             textAlign: "center",
-            background: "linear-gradient(180deg, var(--color-surface) 0%, transparent 100%)",
+            background: "var(--color-olive-deep)",
           }}
         >
           <div className="container-custom">
             <div
               className="section-label justify-center mb-4"
+              style={{ color: "rgba(198,166,107,0.8)" }}
             >
               {isAr ? "فريقنا" : "Our Team"}
             </div>
             <h1
               style={{
-                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                fontWeight: 700,
-                color: "var(--color-text-primary)",
+                fontWeight: 300,
+                color: "#FFFFFF",
                 marginBottom: "1rem",
+                letterSpacing: "-0.02em",
               }}
             >
               {isAr ? (
                 <>
                   فريق من{" "}
-                  <span className="gold-text">المتخصصين</span>
+                  <strong style={{ color: "#C6A66B" }}>المتخصصين</strong>
                 </>
               ) : (
                 <>
                   A Team of{" "}
-                  <span className="gold-text">Specialists</span>
+                  <strong style={{ color: "#C6A66B" }}>Specialists</strong>
                 </>
               )}
             </h1>
             <p
               style={{
                 fontSize: "1.1rem",
-                color: "var(--color-muted)",
+                color: "rgba(255,255,255,0.5)",
                 maxWidth: "600px",
                 margin: "0 auto",
                 lineHeight: 1.7,
@@ -115,11 +116,10 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                 {teamData.map((member: any) => (
                   <div
                     key={member.id}
-                    className="gradient-border"
                     style={{
-                      background: "var(--color-surface)",
-                      backdropFilter: "blur(20px)",
-                      borderRadius: "var(--radius-lg)",
+                      background: "#FFFFFF",
+                      border: "1px solid rgba(0,0,0,0.08)",
+                      borderRadius: "16px",
                       padding: "2rem",
                       textAlign: "center",
                       transition: "transform 0.3s, border-color 0.3s",
@@ -130,14 +130,14 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                         width: "120px",
                         height: "120px",
                         borderRadius: "50%",
-                        background: "rgba(var(--color-accent-rgb), 0.1)",
-                        border: "2px solid rgba(var(--color-accent-rgb), 0.3)",
+                        background: "rgba(198,166,107,0.08)",
+                        border: "2px solid rgba(198,166,107,0.2)",
                         margin: "0 auto 1.5rem",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: "2.5rem",
-                        color: "var(--color-gold)",
+                        color: "#C6A66B",
                         overflow: "hidden",
                       }}
                     >
@@ -148,10 +148,9 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                     </div>
                     <h3
                       style={{
-                        fontFamily: "var(--font-heading)",
                         fontSize: "1.25rem",
                         fontWeight: 600,
-                        color: "var(--color-text-primary)",
+                        color: "#1A1A1A",
                         marginBottom: "0.5rem",
                       }}
                     >
@@ -159,7 +158,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                     </h3>
                     <p
                       style={{
-                        color: "var(--color-gold)",
+                        color: "#C6A66B",
                         fontSize: "0.9rem",
                         fontWeight: 600,
                         marginBottom: "1rem",
@@ -170,7 +169,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                     {member.bio && (
                       <p
                         style={{
-                          color: "var(--color-muted)",
+                          color: "#888888",
                           fontSize: "0.85rem",
                           lineHeight: 1.7,
                         }}
@@ -187,7 +186,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
                       )}
                       {member.email && (
                         <a href={`mailto:${member.email}`}
-                           className="text-accent hover:text-accent-hover transition-colors">
+                           className="text-[#C6A66B] hover:text-[#B89555] transition-colors">
                           Email ✉
                         </a>
                       )}
@@ -197,9 +196,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: s
               </div>
             ) : (
               <div className="text-center py-16">
-                <p
-                  className="text-xl text-text-muted"
-                >
+                <p className="text-xl" style={{ color: "#8a8278" }}>
                   {isAr ? "قريباً..." : "Coming Soon..."}
                 </p>
               </div>

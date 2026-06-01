@@ -10,7 +10,6 @@ export function Footer() {
     const nav = useTranslations("nav");
     const services = useTranslations("services");
     const locale = useLocale();
-    const isArabic = locale === "ar";
 
     const currentYear = new Date().getFullYear();
 
@@ -33,24 +32,22 @@ export function Footer() {
 
     const contactDetails = [
         {
-            title: isArabic ? "العنوان" : "Address",
-            value: isArabic
-                ? "شارع عمر بن عبدالعزيز، ح الزهراء، الرياض"
-                : "Omar Bin Abdulaziz St, Al Zahraa, Riyadh, KSA",
+            title: t("address_title"),
+            value: t("address_value"),
             href: null,
         },
         {
-            title: isArabic ? "الهاتف" : "Phone",
+            title: t("phone_title"),
             value: "+966 500 037 049",
             href: "tel:+966500037049",
         },
         {
-            title: "WhatsApp",
+            title: t("whatsapp_title"),
             value: "+966 500 037 049",
             href: "https://wa.me/966500037049",
         },
         {
-            title: "Email",
+            title: t("email_title"),
             value: "info@ac-ec.com.sa",
             href: "mailto:info@ac-ec.com.sa",
         },
@@ -88,13 +85,10 @@ export function Footer() {
     ];
 
     return (
-        <footer className="relative overflow-hidden bg-[#474A4D] pt-20 pb-8 px-6">
-            {/* Subtle gold accent line at top */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(198,166,107,0.4)] to-transparent" />
-
+        <footer className="relative overflow-hidden bg-[#e8e4dc] pt-20 pb-8 px-6 border-t border-[#ddd8d0]">
             <div className="container-custom relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-12 mb-16">
-                    {/* Column 1: Logo + Description */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr] gap-12 mb-16">
+                    {/* Column 1: Logo + Description + Social */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -103,10 +97,9 @@ export function Footer() {
                         <div className="mb-5">
                             <Logo size="md" href={`/${locale}`} />
                         </div>
-                        <p className="text-[#B8B4AC] text-[0.9rem] leading-[1.8] mb-6">
+                        <p className="text-[#4a4540]/70 text-[0.9rem] leading-[1.8] mb-6">
                             {t("description")}
                         </p>
-
                         <div className="flex gap-3">
                             {socialLinks.map((social, index) => (
                                 <motion.a
@@ -117,7 +110,7 @@ export function Footer() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: index * 0.1 }}
                                     whileHover={{ y: -3, scale: 1.1 }}
-                                    className="w-[42px] h-[42px] rounded-full bg-[rgba(198,166,107,0.1)] border border-[rgba(198,166,107,0.2)] flex items-center justify-center text-[#B8B4AC] no-underline transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[rgba(198,166,107,0.2)] hover:border-[#C6A66B] hover:text-[#C6A66B]"
+                                    className="w-[40px] h-[40px] rounded-full bg-[rgba(198,166,107,0.12)] border border-[rgba(198,166,107,0.2)] flex items-center justify-center text-[#4a4540]/60 no-underline transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[rgba(198,166,107,0.2)] hover:border-[#C6A66B] hover:text-[#C6A66B]"
                                 >
                                     {social.icon}
                                 </motion.a>
@@ -125,7 +118,7 @@ export function Footer() {
                         </div>
                     </motion.div>
 
-                    {/* Column 2: Quick Links */}
+                    {/* Column 2: Navigate */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -145,11 +138,8 @@ export function Footer() {
                                 >
                                     <Link
                                         href={link.href}
-                                        className="text-[#B8B4AC] no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-[#C6A66B] group"
+                                        className="text-[#4a4540]/70 no-underline text-[0.875rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-[#C6A66B] group"
                                     >
-                                        <span className="opacity-0 transition-opacity duration-200 text-[0.7rem] group-hover:opacity-100">
-                                            {isArabic ? "←" : "→"}
-                                        </span>
                                         {link.label}
                                     </Link>
                                 </motion.div>
@@ -157,7 +147,7 @@ export function Footer() {
                         </nav>
                     </motion.div>
 
-                    {/* Column 3: Services */}
+                    {/* Column 3: Get in Touch */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -165,55 +155,23 @@ export function Footer() {
                     >
                         <h3 className="text-[#C6A66B] text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
                             <span className="w-5 h-px bg-[#C6A66B]" />
-                            {services("title")}
-                        </h3>
-                        <nav className="flex flex-col gap-3">
-                            {serviceLinks.map((link, index) => (
-                                <motion.div
-                                    key={link.href + index}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                                >
-                                    <Link
-                                        href={link.href}
-                                        className="text-[#B8B4AC] no-underline text-[0.9rem] transition-colors duration-200 inline-flex items-center gap-2 hover:text-[#C6A66B] group"
-                                    >
-                                        <span className="opacity-0 transition-opacity duration-200 text-[0.7rem] group-hover:opacity-100">
-                                            {isArabic ? "←" : "→"}
-                                        </span>
-                                        {link.label}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </nav>
-                    </motion.div>
-
-                    {/* Column 4: Contact Info */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                    >
-                        <h3 className="text-[#C6A66B] text-xs font-semibold tracking-[0.15em] uppercase mb-6 flex items-center gap-2">
-                            <span className="w-5 h-px bg-[#C6A66B]" />
                             {t("contactInfo")}
                         </h3>
-                        <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-4">
                             {contactDetails.map((item) => (
                                 <div key={item.title} className="flex flex-col gap-0.5">
-                                    <div className="text-[0.65rem] text-[#C6A66B] font-semibold tracking-[0.1em] uppercase">
+                                    <div className="text-[0.6rem] text-[#C6A66B] font-semibold tracking-[0.1em] uppercase">
                                         {item.title}
                                     </div>
                                     {item.href ? (
                                         <a
                                             href={item.href}
-                                            className="text-[#F5F1E8] no-underline text-[0.875rem] transition-colors duration-200 leading-[1.5] hover:text-[#C6A66B]"
+                                            className="text-[#4a4540] no-underline text-[0.875rem] transition-colors duration-200 leading-[1.5] hover:text-[#C6A66B]"
                                         >
                                             {item.value}
                                         </a>
                                     ) : (
-                                        <span className="text-[#F5F1E8] text-[0.875rem] leading-[1.5]">
+                                        <span className="text-[#4a4540] text-[0.875rem] leading-[1.5]">
                                             {item.value}
                                         </span>
                                     )}
@@ -228,7 +186,7 @@ export function Footer() {
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     transition={{ duration: 0.8 }}
-                    className="h-px bg-gradient-to-r from-transparent via-[rgba(198,166,107,0.2)] to-transparent my-12 origin-center"
+                    className="h-px bg-[#ddd8d0] my-12 origin-center"
                 />
 
                 {/* Bottom bar */}
@@ -238,11 +196,11 @@ export function Footer() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                     className="flex items-center justify-between flex-wrap gap-4 pb-4"
                 >
-                    <p className="text-[#B8B4AC] text-[0.8125rem] m-0">
+                    <p className="text-[#4a4540]/60 text-[0.8125rem] m-0">
                         © {currentYear} {t("company")} — {t("rights")}
                     </p>
-                    <p className="text-[#B8B4AC] text-[0.8125rem] m-0">
-                        {isArabic ? "تصميم وتطوير" : "Designed & Developed"}
+                    <p className="text-[#4a4540]/60 text-[0.8125rem] m-0">
+                        {t("crafted")}
                     </p>
                 </motion.div>
             </div>

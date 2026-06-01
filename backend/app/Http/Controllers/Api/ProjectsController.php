@@ -26,7 +26,7 @@ class ProjectsController extends Controller
                     'location' => $lang === 'ar' ? $p->location_ar : $p->location_en,
                     'client' => $lang === 'ar' ? $p->client_ar : $p->client_en,
                 ];
-            });
+            })->values()->toArray();
         });
 
         return response()->json([

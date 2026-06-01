@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: locale === "ar" ? "خدماتنا | ACEC" : "Our Services | ACEC",
     description:
       locale === "ar"
-        ? "خدماتنا الهندسية المتكاملة — استشارات، سلامة، إشراف، تصميم داخلي، وتصميم مصانع"
-        : "Our comprehensive engineering services — consultancy, safety, supervision, interior design, and factory design",
+        ? "خدماتنا الهندسية المتكاملة — تصميم، تصميم داخلي، إشراف، حماية من الحريق، مساحة، واستشارات شاملة"
+        : "Our comprehensive engineering services — design, interior design, supervision, fire protection, land surveying, and full consulting",
   };
 }
 
@@ -31,30 +31,29 @@ export default async function ServicesPage({ params }: Props) {
         <div
           style={{
             padding: "5rem 1.5rem 2rem",
-            background:
-              "linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.04) 0%, transparent 100%)",
-            borderBottom: "1px solid var(--color-border)",
+            background: "var(--color-olive-deep)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
             textAlign: "center",
           }}
         >
           <div className="container-custom">
-            <div className="section-label justify-center mb-4">
+            <div className="section-label justify-center mb-4" style={{ color: "rgba(198,166,107,0.8)" }}>
               ACEC
             </div>
             <h1
               style={{
-                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                fontWeight: 700,
-                color: "var(--color-text-primary)",
+                fontWeight: 300,
+                color: "#FFFFFF",
+                letterSpacing: "-0.02em",
               }}
             >
               {isArabic ? "خدماتنا " : "Our "}
-              <span className="gold-text">{isArabic ? "الهندسية" : "Services"}</span>
+              <strong style={{ color: "#C6A66B" }}>{isArabic ? "الهندسية" : "Services"}</strong>
             </h1>
           </div>
         </div>
-        <ServicesSection />
+        <ServicesSection showAll={true} />
       </main>
       <Footer />
     </>

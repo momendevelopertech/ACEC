@@ -79,20 +79,20 @@ export default async function ContactPage({ params }: Props) {
                 </div>
                 <h1
                   style={{
-                    fontFamily: "var(--font-heading)",
                     fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                    fontWeight: 700,
-                    color: "var(--color-text-primary)",
+                    fontWeight: 300,
+                    color: "#1A1A1A",
                     lineHeight: 1.2,
                     marginBottom: "1.5rem",
+                    letterSpacing: "-0.02em",
                   }}
                 >
                   {isArabic ? "تواصل " : "Contact "}
-                  <span className="gold-text">{isArabic ? "معنا" : "Us"}</span>
+                  <strong style={{ color: "#C6A66B" }}>{isArabic ? "معنا" : "Us"}</strong>
                 </h1>
                 <p
                   style={{
-                    color: "rgba(var(--color-text-rgb), 0.6)",
+                    color: "#888888",
                     lineHeight: 1.8,
                     marginBottom: "3rem",
                     fontSize: "1rem",
@@ -115,9 +115,9 @@ export default async function ContactPage({ params }: Props) {
                         style={{
                           width: "48px",
                           height: "48px",
-                          borderRadius: "var(--radius-sm)",
-                          background: "rgba(var(--color-gold-rgb), 0.08)",
-                          border: "1px solid rgba(var(--color-gold-rgb), 0.15)",
+                          borderRadius: "8px",
+                          background: "rgba(198,166,107,0.06)",
+                          border: "1px solid rgba(198,166,107,0.12)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -131,7 +131,7 @@ export default async function ContactPage({ params }: Props) {
                         <div
                           style={{
                             fontSize: "0.75rem",
-                            color: "var(--color-muted)",
+                            color: "#888888",
                             fontWeight: 600,
                             letterSpacing: "0.1em",
                             textTransform: "uppercase",
@@ -144,7 +144,7 @@ export default async function ContactPage({ params }: Props) {
                           <a
                             href={item.href}
                             style={{
-                              color: "var(--color-text-primary)",
+                              color: "#1A1A1A",
                               textDecoration: "none",
                               fontSize: "0.9375rem",
                               transition: "color 0.2s",
@@ -155,7 +155,7 @@ export default async function ContactPage({ params }: Props) {
                         ) : (
                           <span
                             style={{
-                              color: "var(--color-text-primary)",
+                              color: "#1A1A1A",
                               fontSize: "0.9375rem",
                             }}
                           >
@@ -172,7 +172,7 @@ export default async function ContactPage({ params }: Props) {
                   <h3
                     style={{
                       fontSize: "0.75rem",
-                      color: "var(--color-accent)",
+                      color: "#C6A66B",
                       fontWeight: 600,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
@@ -183,9 +183,9 @@ export default async function ContactPage({ params }: Props) {
                   </h3>
                   <div
                     style={{
-                      background: "rgba(var(--color-gold-rgb), 0.04)",
-                      border: "1px solid rgba(var(--color-gold-rgb), 0.1)",
-                      borderRadius: "var(--radius-md)",
+                      background: "rgba(198,166,107,0.03)",
+                      border: "1px solid rgba(198,166,107,0.08)",
+                      borderRadius: "12px",
                       overflow: "hidden",
                     }}
                   >
@@ -196,13 +196,13 @@ export default async function ContactPage({ params }: Props) {
                           display: "flex",
                           justifyContent: "space-between",
                           padding: "0.875rem 1.25rem",
-                          borderBottom: i < workingHours.length - 1 ? "1px solid rgba(var(--color-gold-rgb), 0.08)" : "none",
+                          borderBottom: i < workingHours.length - 1 ? "1px solid rgba(198,166,107,0.06)" : "none",
                         }}
                       >
-                        <span style={{ color: "var(--color-text-primary)", fontSize: "0.875rem", fontWeight: 500 }}>
+                        <span style={{ color: "#1A1A1A", fontSize: "0.875rem", fontWeight: 500 }}>
                           {wh.day}
                         </span>
-                        <span style={{ color: "var(--color-muted)", fontSize: "0.875rem" }}>
+                        <span style={{ color: "#888888", fontSize: "0.875rem" }}>
                           {wh.hours}
                         </span>
                       </div>
