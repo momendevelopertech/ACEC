@@ -82,7 +82,7 @@ export default async function AboutPage({ params }: Props) {
         <div className="pt-20 pb-8 px-6 bg-[var(--color-olive-deep)] border-b border-[rgba(255,255,255,0.06)] text-center">
           <div className="container-custom">
             <div className="section-label justify-center mb-4" style={{ color: "rgba(198,166,107,0.8)" }}>ACEC</div>
-            <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-[300] text-white tracking-[-0.02em]">
+            <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-[300] tracking-[-0.02em]" style={{ color: "#FFFFFF" }}>
               {isArabic ? "عن " : "About "}
               <strong className="text-[#C6A66B]">{isArabic ? "مكتبنا" : "Us"}</strong>
             </h1>
