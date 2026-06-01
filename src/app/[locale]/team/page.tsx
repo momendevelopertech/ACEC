@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isAr = locale === "ar";
   return {
-    title: isAr ? "فريقنا | الميثاق العربي" : "Our Team | ACEC",
+    title: isAr ? "فريقنا" : "Our Team",
     description: isAr
       ? "فريق من المهندسين المتخصصين ذوي الخبرة العالية"
       : "A team of highly experienced specialized engineers",

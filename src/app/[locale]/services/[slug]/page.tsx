@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!service) return { title: isAr ? "الخدمة غير موجودة" : "Service Not Found" };
 
     return {
-      title: `${service.title} | ACEC`,
+      title: service.title,
       description: service.description,
     };
   } catch {

@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!post) return { title: isAr ? "المقال غير موجود" : "Post Not Found" };
 
     return {
-      title: `${post.title} | ACEC`,
+      title: post.title,
       description: post.excerpt,
     };
   } catch {

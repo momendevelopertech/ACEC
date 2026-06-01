@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!project) return { title: isAr ? "المشروع غير موجود" : "Project Not Found" };
 
     return {
-      title: `${isAr ? project.title_ar : project.title_en} | ACEC`,
+      title: isAr ? project.title_ar : project.title_en,
       description: isAr ? project.description_ar : project.description_en,
     };
   } catch {
