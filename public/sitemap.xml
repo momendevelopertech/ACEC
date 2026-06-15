@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ac-ec.com.sa/ar</loc><priority>1.0</priority></url>
+  <url><loc>https://ac-ec.com.sa/en</loc><priority>1.0</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/about</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/about</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/services</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/services</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/projects</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/projects</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/blog</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/blog</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/contact</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/contact</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/team</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/team</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/clients</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/clients</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/certifications</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/certifications</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/career</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/career</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/ar/profile</loc><priority>0.8</priority></url>
+  <url><loc>https://ac-ec.com.sa/en/profile</loc><priority>0.8</priority></url>
+</urlset>

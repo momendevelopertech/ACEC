@@ -5,8 +5,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 
-export const dynamic = 'force-dynamic';
-
 export async function generateStaticParams() {
   return [
     { locale: 'ar' },

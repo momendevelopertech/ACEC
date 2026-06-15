@@ -27,7 +27,9 @@ class BlogController extends Controller
                         'published_at' => $post->published_at,
                         'views' => $post->views,
                     ];
-                });
+                })
+                ->values()
+                ->toArray();
         });
 
         return response()->json([
