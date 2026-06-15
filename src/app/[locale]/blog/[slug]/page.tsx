@@ -22,6 +22,13 @@ export async function generateStaticParams() {
         }
       }
     } catch {}
+    if (!params.some(p => p.locale === locale)) {
+      params.push(
+        { locale, slug: "importance-safety-engineering" },
+        { locale, slug: "modon-requirements-guide" },
+        { locale, slug: "fire-protection-sbc" },
+      );
+    }
   }
   return params;
 }

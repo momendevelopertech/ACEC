@@ -22,6 +22,13 @@ export async function generateStaticParams() {
         }
       }
     } catch {}
+    if (!params.some(p => p.locale === locale)) {
+      params.push(
+        { locale, slug: "design" },
+        { locale, slug: "interior" },
+        { locale, slug: "supervision" },
+      );
+    }
   }
   return params;
 }

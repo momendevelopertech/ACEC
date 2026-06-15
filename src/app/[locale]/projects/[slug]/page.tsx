@@ -22,6 +22,13 @@ export async function generateStaticParams() {
         }
       }
     } catch {}
+    if (!params.some(p => p.locale === locale)) {
+      params.push(
+        { locale, slug: "najd-complex-tower" },
+        { locale, slug: "juin-mixed-use" },
+        { locale, slug: "hotel-riyadh" },
+      );
+    }
   }
   return params;
 }
