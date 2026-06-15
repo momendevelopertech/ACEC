@@ -18,16 +18,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+import { apiRequest, API_BASE } from "@/lib/api";
 
 async function getClientsData(locale: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/v1/clients`, {
-      next: { revalidate: 300 },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.data ?? null;
+    const res = await apiRequest<{ success: boolean; data: unknown[] }>("/api/v1/clients");
+    return res.data ?? null;
   } catch {
     return null;
   }
