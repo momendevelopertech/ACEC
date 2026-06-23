@@ -154,6 +154,10 @@ export function ContactForm() {
                     <option value="interior">{t("opt_interior")}</option>
                     <option value="factory">{t("opt_factory")}</option>
                     <option value="modon">{t("opt_modon")}</option>
+                    <option value="gis">{t("opt_gis")}</option>
+                    <option value="surveying">{t("opt_surveying")}</option>
+                    <option value="plans-review">{t("opt_plans_review")}</option>
+                    <option value="arbitration">{t("opt_arbitration")}</option>
                 </select>
             </div>
 

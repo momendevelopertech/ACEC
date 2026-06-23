@@ -58,12 +58,24 @@
                 "description": "Fire fighting system design, hydraulic calculations, evacuation planning, and Civil Defense approval"
             },
             "surveying": {
-                "title": "Land Surveying",
-                "description": "Topographic and cadastral surveys, grid leveling, benchmarking, and land subdivision planning"
+                "title": "Surveying",
+                "description": "Topographic and building surveys, leveling, land subdivision, and site planning"
             },
             "consulting": {
                 "title": "Full Consulting",
                 "description": "Comprehensive consulting across all engineering disciplines with project management and technical support"
+            },
+            "gis": {
+                "title": "GIS Consulting",
+                "description": "Specialized Geographic Information Systems consulting for spatial data analysis and project management"
+            },
+            "plans-review": {
+                "title": "Plans Review & Approval",
+                "description": "Comprehensive engineering plan review ensuring compliance with Saudi Building Code and regulations"
+            },
+            "arbitration": {
+                "title": "Engineering Arbitration",
+                "description": "Specialized arbitration in engineering disputes, technical expertise, and neutral expert reporting"
             }
         }
     },
@@ -139,7 +151,11 @@
         "opt_supervision": "Engineering Supervision",
         "opt_interior": "Interior Design",
         "opt_factory": "Factory Design",
-        "opt_modon": "MODON Compliance"
+        "opt_modon": "MODON Compliance",
+        "opt_gis": "GIS Consulting",
+        "opt_surveying": "Surveying",
+        "opt_plans_review": "Plans Review & Approval",
+        "opt_arbitration": "Engineering Arbitration"
     },
     "footer": {
         "description": "Specialized engineering consultancy in Saudi Arabia — Civil Defense accredited, MODON approved since 2006",

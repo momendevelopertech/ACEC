@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 export function Footer() {
     const t = useTranslations("footer");
     const nav = useTranslations("nav");
-    const services = useTranslations("services");
     const locale = useLocale();
 
     const currentYear = new Date().getFullYear();
@@ -19,15 +18,6 @@ export function Footer() {
         { href: `/${locale}/about`, label: nav("about") },
         { href: `/${locale}/team`, label: nav("team") },
         { href: `/${locale}/clients`, label: nav("clients") },
-    ];
-
-    const serviceLinks = [
-        { href: `/${locale}/services/design`, label: services("items.design.title") },
-        { href: `/${locale}/services/interior`, label: services("items.interior.title") },
-        { href: `/${locale}/services/supervision`, label: services("items.supervision.title") },
-        { href: `/${locale}/services/fire-protection`, label: services("items.fire.title") },
-        { href: `/${locale}/services/land-surveying`, label: services("items.surveying.title") },
-        { href: `/${locale}/services/consulting`, label: services("items.consulting.title") },
     ];
 
     const contactDetails = [
