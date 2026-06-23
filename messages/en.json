@@ -72,7 +72,9 @@
         "subtitle": "A selection of our work across Saudi Arabia",
         "description": "Explore our latest engineering projects delivered with world-class quality standards",
         "viewAll": "View All Projects",
-        "drag": "Drag to browse"
+        "drag": "Drag to browse",
+        "all": "All",
+        "filter": "Filter by"
     },
     "about": {
         "title": "About Our Office",

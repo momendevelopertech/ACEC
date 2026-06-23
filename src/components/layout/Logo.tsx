@@ -30,7 +30,7 @@ export function Logo({ size = "md", href, className = "" }: LogoProps) {
       width={dimensions.width}
       height={dimensions.height}
       className={`object-contain transition-opacity duration-200 hover:opacity-80 ${className}`}
-      style={{ width: "auto", height: "auto" }}
+      style={{ maxWidth: "100%", height: "auto" }}
       priority
     />
   );

@@ -5,6 +5,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
   const locales = ["ar", "en"];

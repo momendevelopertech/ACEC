@@ -95,7 +95,7 @@ export function Footer() {
                         transition={{ duration: 0.6 }}
                     >
                         <div className="mb-5">
-                            <Logo size="md" href={`/${locale}`} />
+                            <Logo size="sm" href={`/${locale}`} />
                         </div>
                         <p className="text-[#4a4540]/70 text-[0.9rem] leading-[1.8] mb-6">
                             {t("description")}
@@ -158,25 +158,29 @@ export function Footer() {
                             {t("contactInfo")}
                         </h3>
                         <div className="flex flex-col gap-4">
-                            {contactDetails.map((item) => (
-                                <div key={item.title} className="flex flex-col gap-0.5">
-                                    <div className="text-[0.6rem] text-[#C6A66B] font-semibold tracking-[0.1em] uppercase">
-                                        {item.title}
+                            {contactDetails.map((item) => {
+                                const isPhone = item.href?.startsWith("tel:") || item.href?.startsWith("https://wa.me");
+                                return (
+                                    <div key={item.title} className="flex flex-col gap-0.5">
+                                        <div className="text-[0.6rem] text-[#C6A66B] font-semibold tracking-[0.1em] uppercase">
+                                            {item.title}
+                                        </div>
+                                        {item.href ? (
+                                            <a
+                                                href={item.href}
+                                                dir={isPhone ? "ltr" : undefined}
+                                                className="text-[#4a4540] no-underline text-[0.875rem] transition-colors duration-200 leading-[1.5] hover:text-[#C6A66B]"
+                                            >
+                                                {item.value}
+                                            </a>
+                                        ) : (
+                                            <span className="text-[#4a4540] text-[0.875rem] leading-[1.5]">
+                                                {item.value}
+                                            </span>
+                                        )}
                                     </div>
-                                    {item.href ? (
-                                        <a
-                                            href={item.href}
-                                            className="text-[#4a4540] no-underline text-[0.875rem] transition-colors duration-200 leading-[1.5] hover:text-[#C6A66B]"
-                                        >
-                                            {item.value}
-                                        </a>
-                                    ) : (
-                                        <span className="text-[#4a4540] text-[0.875rem] leading-[1.5]">
-                                            {item.value}
-                                        </span>
-                                    )}
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </motion.div>
                 </div>

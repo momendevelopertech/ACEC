@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { useLocale } from "next-intl";
+import { useRef, useState, useEffect, useMemo } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
 
 interface Project {
@@ -27,11 +27,13 @@ const PROJECTS_PER_PAGE = 6;
 
 export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
   const locale = useLocale();
+  const t = useTranslations("projects");
   const isRtl = locale === "ar";
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(PROJECTS_PER_PAGE);
 
   useEffect(() => {
@@ -50,12 +52,26 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
       .catch(() => setLoading(false));
   }, [locale]);
 
+  const categories = useMemo(() => {
+    const cats = new Set(projects.map(p => p.category).filter(Boolean));
+    return ["all", ...Array.from(cats)];
+  }, [projects]);
+
+  const filtered = useMemo(() => {
+    if (activeCategory === "all") return projects;
+    return projects.filter(p => p.category === activeCategory);
+  }, [projects, activeCategory]);
+
+  useEffect(() => {
+    setVisibleCount(PROJECTS_PER_PAGE);
+  }, [activeCategory]);
+
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
-  const visibleProjects = projects.slice(0, visibleCount);
-  const hasMore = visibleCount < projects.length;
+  const visibleProjects = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   const loadMore = () => {
-    setVisibleCount(prev => Math.min(prev + PROJECTS_PER_PAGE, projects.length));
+    setVisibleCount(prev => Math.min(prev + PROJECTS_PER_PAGE, filtered.length));
   };
 
   return (
@@ -98,6 +114,29 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
           </div>
         ) : (
           <>
+            {/* Filter Bar */}
+            {categories.length > 1 && (
+              <motion.div
+                variants={fadeUpVariant}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className="projects-filter"
+              >
+                {categories.map((cat, i) => (
+                  <motion.button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.35, delay: 0.05 * i }}
+                    className={`projects-filter-btn ${activeCategory === cat ? "active" : ""}`}
+                  >
+                    {cat === "all" ? t("all") : cat}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+
             {/* Project Grid */}
             <motion.div
               variants={fadeUpVariant}
@@ -105,44 +144,63 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
               animate={inView ? "visible" : "hidden"}
               className="projects-grid"
             >
-              {visibleProjects.map((project) => (
-                <Link
-                  key={project.id}
-                  href={`/${locale}/projects/${project.slug}`}
-                  className="project-card-link"
-                >
-                  <article className="project-card">
-                    <div className="project-card-image-wrap">
-                      <img
-                        src={
-                          project.image
-                            ? `${API_BASE}/storage/${project.image}`
-                            : `/images/projects/${project.slug}.jpg`
-                        }
-                        alt={project.title}
-                        loading="lazy"
-                        className="project-card-img"
-                      />
-                    </div>
-                    <div className="project-card-meta">
-                      <span className="project-card-category">
-                        {project.category.toUpperCase()}
-                      </span>
-                      <span className="project-card-location">
-                        {project.location}
-                        {project.year ? ` · ${project.year}` : ""}
-                      </span>
-                    </div>
-                    <h3 className="project-card-title">
-                      {project.title}
-                    </h3>
-                  </article>
-                </Link>
-              ))}
+              <AnimatePresence mode="popLayout">
+                {visibleProjects.map((project) => (
+                  <motion.div
+                    key={project.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <Link
+                      href={`/${locale}/projects/${project.slug}`}
+                      className="project-card-link"
+                    >
+                      <article className="project-card">
+                        <div className="project-card-image-wrap">
+                          <img
+                            src={
+                              project.image
+                                ? `${API_BASE}/storage/${project.image}`
+                                : `/images/projects/${project.slug}.jpg`
+                            }
+                            alt={project.title}
+                            loading="lazy"
+                            className="project-card-img"
+                          />
+                        </div>
+                        <div className="project-card-meta">
+                          <span className="project-card-category">
+                            {project.category.toUpperCase()}
+                          </span>
+                          <span className="project-card-location">
+                            {project.location}
+                            {project.year ? ` · ${project.year}` : ""}
+                          </span>
+                        </div>
+                        <h3 className="project-card-title">
+                          {project.title}
+                        </h3>
+                      </article>
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </motion.div>
 
+            {/* Empty state */}
+            {filtered.length === 0 && (
+              <div className="text-center py-16">
+                <p style={{ color: "#8a8278", fontSize: "0.9rem" }}>
+                  {isRtl ? "لا توجد مشاريع في هذا التصنيف" : "No projects in this category"}
+                </p>
+              </div>
+            )}
+
             {/* Pagination / Load More */}
-            {projects.length > 0 && (
+            {filtered.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -151,8 +209,8 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
               >
                 <p style={{ color: "#8a8278", fontSize: "0.85rem" }}>
                   {isRtl
-                    ? `عرض ${visibleCount} من ${projects.length} مشروع`
-                    : `Showing ${visibleCount} of ${projects.length} projects`}
+                    ? `عرض ${visibleCount} من ${filtered.length} مشروع`
+                    : `Showing ${visibleCount} of ${filtered.length} projects`}
                 </p>
                 {hasMore && (
                   <button
@@ -204,7 +262,7 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
             )}
 
             {/* Homepage: "View All" link (when all projects already shown) */}
-            {!showHeader && !hasMore && projects.length > 0 && (
+            {!showHeader && !hasMore && filtered.length > 0 && (
               <motion.div
                 variants={fadeUpVariant}
                 initial="hidden"
@@ -281,6 +339,39 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
           margin-top: 1rem;
           margin-bottom: 3.75rem;
           line-height: 1.6;
+        }
+
+        .projects-filter {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          justify-content: center;
+          margin-bottom: 2.5rem;
+        }
+
+        .projects-filter-btn {
+          padding: 0.5rem 1.25rem;
+          border-radius: 999px;
+          border: 1px solid #ddd8d0;
+          background: transparent;
+          color: #4a4540;
+          font-size: 0.8125rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          white-space: nowrap;
+        }
+
+        .projects-filter-btn:hover {
+          border-color: #C6A66B;
+          color: #C6A66B;
+          background: rgba(198, 166, 107, 0.05);
+        }
+
+        .projects-filter-btn.active {
+          background: #C6A66B;
+          border-color: #C6A66B;
+          color: #fff;
         }
 
         .projects-grid {

@@ -91,16 +91,8 @@ export function Navbar() {
     ];
 
     const allNavItems = [
-        { href: `/${locale}/services`, label: t("services") },
-        { href: `/${locale}/projects`, label: t("projects") },
-        { href: `/${locale}/about`, label: t("about") },
-        { href: `/${locale}/team`, label: t("team") },
-        { href: `/${locale}/clients`, label: t("clients") },
-        { href: `/${locale}/blog`, label: t("blog") },
-        { href: `/${locale}/certifications`, label: t("certifications") },
-        { href: `/${locale}/profile`, label: t("profile") },
-        { href: `/${locale}/career`, label: t("career") },
-        { href: `/${locale}/contact`, label: t("contact") },
+        ...mainNavLinks,
+        ...secondaryNavLinks,
     ];
 
     const isActive = (href: string) => {
@@ -124,7 +116,7 @@ export function Navbar() {
                 </div>
 
                 {/* Desktop Nav */}
-                <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 flex-nowrap relative min-w-0 flex-1 justify-center">
+                <nav dir={isRTL ? "rtl" : "ltr"} className="hidden lg:flex items-center gap-0.5 xl:gap-1 flex-nowrap relative min-w-0 flex-1 justify-center">
                     {mainNavLinks.map((link) => {
                         const active = isActive(link.href);
                         return (
