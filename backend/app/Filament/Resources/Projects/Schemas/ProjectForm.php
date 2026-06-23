@@ -51,8 +51,10 @@ class ProjectForm
                     ->directory('models/projects/gallery')
                     ->maxSize(2048)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
-                TextInput::make('category')
-                    ->label(__('admin.col_category')),
+                TextInput::make('category_ar')
+                    ->label(__('admin.col_category_ar')),
+                TextInput::make('category_en')
+                    ->label(__('admin.col_category_en')),
                 TextInput::make('location_ar')
                     ->label(__('admin.col_location_ar')),
                 TextInput::make('location_en')

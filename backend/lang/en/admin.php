@@ -44,6 +44,8 @@ return [
     'col_order'          => 'Order',
     'col_icon'           => 'Icon',
     'col_category'       => 'Category',
+    'col_category_ar'    => 'Category (Arabic)',
+    'col_category_en'    => 'Category (English)',
     'col_location'       => 'Location',
     'col_location_ar'    => 'Location (Arabic)',
     'col_location_en'    => 'Location (English)',

@@ -15,7 +15,7 @@ class Project extends Model
     protected $fillable = [
         'slug', 'title_ar', 'title_en',
         'description_ar', 'description_en', 'content_ar', 'content_en',
-        'image', 'gallery', 'category',
+        'image', 'gallery', 'category', 'category_ar', 'category_en',
         'location_ar', 'location_en', 'client_ar', 'client_en',
         'year', 'is_featured', 'order', 'is_active',
         'meta_title_ar', 'meta_title_en',

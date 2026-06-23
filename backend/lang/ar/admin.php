@@ -44,6 +44,8 @@ return [
     'col_order'          => 'الترتيب',
     'col_icon'           => 'الأيقونة',
     'col_category'       => 'التصنيف',
+    'col_category_ar'    => 'التصنيف (عربي)',
+    'col_category_en'    => 'التصنيف (إنجليزي)',
     'col_location'       => 'الموقع',
     'col_location_ar'    => 'الموقع بالعربية',
     'col_location_en'    => 'الموقع بالإنجليزية',

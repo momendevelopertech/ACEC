@@ -29,8 +29,11 @@ class ProjectsTable
                     ->searchable(),
                 ImageColumn::make('image')
                     ->label(__('admin.col_image')),
-                TextColumn::make('category')
-                    ->label(__('admin.col_category'))
+                TextColumn::make('category_ar')
+                    ->label(__('admin.col_category_ar'))
+                    ->searchable(),
+                TextColumn::make('category_en')
+                    ->label(__('admin.col_category_en'))
                     ->searchable(),
                 TextColumn::make('location_ar')
                     ->label(__('admin.col_location_ar'))
