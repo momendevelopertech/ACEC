@@ -332,8 +332,19 @@ class ContentSeeder extends Seeder
             ['slug' => 'villa-saadon', 'title_ar' => 'فيلا سعدون', 'title_en' => 'Villa Saadon', 'category' => 'interior', 'location_ar' => '-', 'location_en' => '-', 'client_ar' => '-', 'client_en' => '-', 'year' => 2024, 'area' => '-', 'desc_ar' => 'تصميم عصري بخطوط أنيقة وإضاءة طبيعية.', 'desc_en' => 'Modern contemporary with sleek lines and natural lighting.', 'content_ar' => 'تصميم داخلي عصري بخطوط أنيقة وإضاءة طبيعية.', 'content_en' => 'Modern contemporary interior with sleek lines and natural lighting.', 'featured' => false, 'order' => 69],
         ];
 
+        $categoryNames = [
+            'commercial'   => ['ar' => 'تجاري',    'en' => 'Commercial'],
+            'recreational' => ['ar' => 'ترفيهي',   'en' => 'Recreational'],
+            'residential'  => ['ar' => 'سكني',     'en' => 'Residential'],
+            'educational'  => ['ar' => 'تعليمي',   'en' => 'Educational'],
+            'industrial'   => ['ar' => 'صناعي',    'en' => 'Industrial'],
+            'safety'       => ['ar' => 'سلامة',    'en' => 'Safety'],
+            'interior'     => ['ar' => 'تصميم داخلي', 'en' => 'Interior Design'],
+        ];
+
         foreach ($projects as $p) {
             $slug = $p['slug'];
+            $catName = $categoryNames[$p['category']] ?? ['ar' => $p['category'], 'en' => $p['category']];
             $img = $this->generatePlaceholderImage("models/projects/{$slug}.jpg", "project-{$slug}");
             DB::table('projects')->insert([
                 'slug' => $p['slug'],
@@ -344,6 +355,8 @@ class ContentSeeder extends Seeder
                 'content_ar' => $p['content_ar'],
                 'content_en' => $p['content_en'],
                 'category' => $p['category'],
+                'category_ar' => $catName['ar'],
+                'category_en' => $catName['en'],
                 'location_ar' => $p['location_ar'],
                 'location_en' => $p['location_en'],
                 'client_ar' => $p['client_ar'],
