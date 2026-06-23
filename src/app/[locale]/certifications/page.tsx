@@ -1,9 +1,9 @@
-import { use } from "react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
+import { CertificationsGallery } from "@/components/sections/CertificationsGallery";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
@@ -297,77 +297,7 @@ export default async function CertificationsPage({ params }: { params: Promise<{
               <h2 className="font-heading text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-text-primary mb-10">
                 {isAr ? "شهادات الترخيص" : "License Certificates"}
               </h2>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-                  gap: "2rem",
-                }}
-              >
-                {certs.map((cert: any) => (
-                  <div
-                    key={cert.id}
-                    className="gradient-border"
-                    style={{
-                      background: "var(--color-card-bg)",
-                      backdropFilter: "blur(20px)",
-                      borderRadius: "var(--radius-lg)",
-                      padding: "2rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "64px",
-                        height: "64px",
-                        borderRadius: "var(--radius-md)",
-                        background: "rgba(var(--color-accent-rgb), 0.1)",
-                        border: "1px solid rgba(var(--color-accent-rgb), 0.2)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginBottom: "1.5rem",
-                        fontSize: "1.5rem",
-                      }}
-                    >
-                      {cert.image ? (
-                        <img src={`${API_BASE}/storage/${cert.image}`} alt={cert.name} style={{ width: "40px", height: "40px" }} />
-                      ) : (
-                        "🏅"
-                      )}
-                    </div>
-                    <h3
-                      style={{
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "1.2rem",
-                        fontWeight: 600,
-                        color: "var(--color-text-primary)",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      {cert.name}
-                    </h3>
-                    <p
-                      style={{
-                        color: "var(--color-gold)",
-                        fontSize: "0.85rem",
-                        fontWeight: 600,
-                        marginBottom: "1rem",
-                      }}
-                    >
-                      {cert.issuer}
-                    </p>
-                    <p
-                      style={{
-                        color: "var(--color-muted)",
-                        fontSize: "0.9rem",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {cert.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <CertificationsGallery certs={certs} />
             </div>
           </section>
         )}
