@@ -85,39 +85,6 @@ export default async function CertificationsPage({ params }: { params: Promise<{
           </div>
         </section>
 
-        {/* Download Company Profile */}
-        <section className="py-16 px-6">
-          <div className="container-custom">
-            <div className="text-center max-w-2xl mx-auto gradient-border" style={{
-              background: "var(--color-card-bg)",
-              backdropFilter: "blur(20px)",
-              borderRadius: "var(--radius-lg)",
-              padding: "3rem 2rem",
-            }}>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>📄</div>
-              <h2 className="font-heading text-[clamp(1.3rem,2.5vw,2rem)] font-bold text-text-primary mb-4">
-                {isAr ? "تحميل الملف التعريفي للمكتب" : "Download Company Profile"}
-              </h2>
-              <p className="text-text-muted text-[0.95rem] mb-8 max-w-md mx-auto leading-[1.7]">
-                {isAr
-                  ? "تعرف على المزيد عن مكتبنا، خدماتنا، مشاريعنا، واعتماداتنا من خلال الملف التعريفي"
-                  : "Learn more about our office, services, projects, and accreditations through our company profile"}
-              </p>
-              <Link
-                href={`/${locale}/profile`}
-                className="inline-flex items-center gap-3 py-3.5 px-10 bg-[linear-gradient(135deg,var(--color-accent)_0%,rgba(var(--color-accent-rgb),0.8)_100%)] border-none rounded-lg text-text-on-accent font-semibold text-base cursor-pointer no-underline shadow-[0_4px_15px_rgba(var(--color-accent-rgb),0.3)] transition-all duration-300"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                {isAr ? "عرض الملف التعريفي" : "View Company Profile"}
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* License Gallery */}
         {certs && certs.length > 0 && (
           <section className="py-16 px-6 md:pb-24 bg-[linear-gradient(180deg,transparent_0%,rgba(var(--color-accent-rgb),0.02)_100%)]">
