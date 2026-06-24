@@ -398,6 +398,15 @@ class ContentSeeder extends Seeder
             $slug = $p['slug'];
             $catName = $categoryNames[$p['category']] ?? ['ar' => $p['category'], 'en' => $p['category']];
             $img = $this->generatePlaceholderImage("models/projects/{$slug}.jpg", "project-{$slug}");
+
+            $gallery = [];
+            for ($gi = 1; $gi <= 3; $gi++) {
+                $gallery[] = $this->generatePlaceholderImage(
+                    "models/projects/gallery/{$slug}-{$gi}.jpg",
+                    "gallery-{$slug}-{$gi}"
+                );
+            }
+
             DB::table('projects')->insert([
                 'slug' => $p['slug'],
                 'title_ar' => $p['title_ar'],
@@ -416,6 +425,7 @@ class ContentSeeder extends Seeder
                 'year' => $p['year'],
                 'area' => $p['area'] ?? null,
                 'image' => $img,
+                'gallery' => json_encode($gallery),
                 'is_featured' => $p['featured'],
                 'order' => $p['order'],
                 'is_active' => true,

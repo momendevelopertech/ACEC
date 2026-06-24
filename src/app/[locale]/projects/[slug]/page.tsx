@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
+import { ProjectGallery } from "@/components/ui/ProjectGallery";
 
 export const dynamicParams = true;
 
@@ -152,6 +153,15 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
             </div>
           </section>
+        )}
+
+        {/* Gallery */}
+        {project.gallery && Array.isArray(project.gallery) && project.gallery.length > 0 && (
+          <ProjectGallery
+            images={project.gallery}
+            apiBase={API_BASE}
+            label={isAr ? "معرض الصور" : "Gallery"}
+          />
         )}
 
         {/* Project Details */}
