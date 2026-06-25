@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
+import { ImageWithLoader } from "@/components/ui/ImageWithLoader";
 
 interface Project {
   id: number;
@@ -160,15 +161,15 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
                     >
                       <article className="project-card">
                         <div className="project-card-image-wrap">
-                          <img
+                          <ImageWithLoader
                             src={
                               project.image
                                 ? `${API_BASE}/storage/${project.image}`
                                 : `/images/projects/${project.slug}.jpg`
                             }
                             alt={project.title}
-                            loading="lazy"
                             className="project-card-img"
+                            wrapperClassName="w-full h-full"
                           />
                         </div>
                         <div className="project-card-meta">

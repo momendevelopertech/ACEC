@@ -5,6 +5,7 @@ import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
+import { ImageWithLoader } from "@/components/ui/ImageWithLoader";
 
 interface Project {
   id: number;
@@ -75,15 +76,15 @@ export function FeaturedWorkSection() {
             {/* Image Column */}
             <div className="featured-image-col">
               <div className="featured-image-wrap">
-                <img
+                <ImageWithLoader
                   src={
                     project.image
                       ? `${API_BASE}/storage/${project.image}`
                       : `/images/projects/${project.slug}.jpg`
                   }
                   alt={project.title}
-                  loading="lazy"
                   className="featured-image"
+                  wrapperClassName="w-full h-full"
                 />
               </div>
             </div>

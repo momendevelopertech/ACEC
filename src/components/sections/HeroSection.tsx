@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -26,12 +26,29 @@ function buildImageUrl(path: string, v: string | null): string {
   return `${API_BASE}/storage/${path}?v=${v ?? Date.now()}`;
 }
 
+function preloadImages(urls: string[]): Promise<void> {
+  return new Promise((resolve) => {
+    if (urls.length === 0) { resolve(); return; }
+    let loaded = 0;
+    for (const url of urls) {
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        loaded++;
+        if (loaded === urls.length) resolve();
+      };
+      img.src = url;
+    }
+  });
+}
+
 export function HeroSection() {
   const locale = useLocale();
   const isAr = locale === "ar";
   const [hero, setHero] = useState<HeroData | null>(null);
+  const [imagesReady, setImagesReady] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const preloadingRef = useRef(false);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/v1/hero/${locale}`)
@@ -67,7 +84,15 @@ export function HeroSection() {
   }
 
   useEffect(() => {
-    if (allImages.length < 2) {
+    if (allImages.length === 0 || preloadingRef.current) return;
+    preloadingRef.current = true;
+    preloadImages(allImages).then(() => {
+      setImagesReady(true);
+    });
+  }, [allImages.length, hero?.updated_at]);
+
+  useEffect(() => {
+    if (allImages.length < 2 || !imagesReady) {
       if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
@@ -77,7 +102,7 @@ export function HeroSection() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [allImages.length, hero?.updated_at]);
+  }, [allImages.length, imagesReady, hero?.updated_at]);
 
   const eyebrow = isAr ? "استشارات هندسية — الرياض" : "Engineering Consultants — Riyadh, KSA";
   const enduringWord = isAr ? "مستدامة" : "Enduring";
@@ -99,18 +124,18 @@ export function HeroSection() {
   const cta2Text = hero?.cta2_text || defaultCta2Text;
   const cta2Link = hero?.cta2_link || `/${locale}/contact`;
 
-  const showSlider = allImages.length > 0;
+  const hasImages = hero !== null && allImages.length > 0;
 
   return (
     <section className="hero-section relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24">
       <div className="hero-bg absolute inset-0 z-0">
-        {showSlider ? (
+        {hasImages && imagesReady ? (
           allImages.map((src, i) => (
             <img
               key={`${src}-${i}`}
               src={src}
               alt=""
-              loading={i === 0 ? "eager" : "lazy"}
+              loading="eager"
               className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out"
               style={{
                 opacity: i === slideIndex ? 0.45 : 0,
