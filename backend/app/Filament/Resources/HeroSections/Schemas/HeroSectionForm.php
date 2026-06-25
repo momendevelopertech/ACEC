@@ -38,6 +38,7 @@ class HeroSectionForm
                     ]),
 
                 Section::make(__('admin.section_media'))
+                    ->columns(2)
                     ->schema([
                         FileUpload::make('image')
                             ->label(__('admin.col_image'))
@@ -47,6 +48,17 @@ class HeroSectionForm
                             ->maxSize(5120)
                             ->imageEditor()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif']),
+                        FileUpload::make('images')
+                            ->label(__('admin.col_images'))
+                            ->image()
+                            ->multiple()
+                            ->reorderable()
+                            ->disk('public')
+                            ->directory('models/hero')
+                            ->maxSize(5120)
+                            ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make(__('admin.section_hero_stats'))

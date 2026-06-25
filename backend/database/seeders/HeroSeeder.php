@@ -17,6 +17,15 @@ class HeroSeeder extends Seeder
         $arImage = $this->generatePlaceholderImage('models/hero/ar.jpg', 'hero-ar', 1920, 800);
         $enImage = $this->generatePlaceholderImage('models/hero/en.jpg', 'hero-en', 1920, 800);
 
+        $arImages = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $arImages[] = $this->generatePlaceholderImage("models/hero/ar-slide-{$i}.jpg", "hero-ar-{$i}", 1920, 800);
+        }
+        $enImages = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $enImages[] = $this->generatePlaceholderImage("models/hero/en-slide-{$i}.jpg", "hero-en-{$i}", 1920, 800);
+        }
+
         DB::table('hero_sections')->insert([
             [
                 'lang' => 'ar',
@@ -28,6 +37,7 @@ class HeroSeeder extends Seeder
                 'stat3_number' => '300+', 'stat3_label' => 'عميل',
                 'stat4_number' => '10', 'stat4_label' => 'خدمات متخصصة',
                 'image' => $arImage,
+                'images' => json_encode($arImages),
                 'cta1_text' => 'خدماتنا',
                 'cta1_link' => '/ar/services',
                 'cta2_text' => 'تواصل معنا',
@@ -45,6 +55,7 @@ class HeroSeeder extends Seeder
                 'stat3_number' => '300+', 'stat3_label' => 'Trusted Clients',
                 'stat4_number' => '10', 'stat4_label' => 'Specialized Services',
                 'image' => $enImage,
+                'images' => json_encode($enImages),
                 'cta1_text' => 'Our Services',
                 'cta1_link' => '/en/services',
                 'cta2_text' => 'Contact Us',

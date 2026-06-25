@@ -140,4 +140,5 @@ return [
     'col_hero_title'       => 'Title',
     'col_hero_subtitle'    => 'Subtitle',
     'col_hero_description' => 'Description',
+    'col_images'           => 'Gallery Images (Slider)',
 ];

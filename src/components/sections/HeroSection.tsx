@@ -1,18 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+const SLIDE_INTERVAL = 6000;
 
 interface HeroData {
   title: string;
   subtitle: string;
   description: string;
   image: string | null;
+  images: string[] | null;
   cta1_text: string | null;
   cta1_link: string | null;
   cta2_text: string | null;
@@ -20,31 +22,62 @@ interface HeroData {
   updated_at: string | null;
 }
 
+function buildImageUrl(path: string, v: string | null): string {
+  return `${API_BASE}/storage/${path}?v=${v ?? Date.now()}`;
+}
+
 export function HeroSection() {
   const locale = useLocale();
   const isAr = locale === "ar";
   const [hero, setHero] = useState<HeroData | null>(null);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/v1/hero/${locale}`)
       .then((res) => res.ok ? res.json() : null)
       .then((data) => {
         if (data?.data) {
+          const d = data.data;
+          const images: string[] | null = Array.isArray(d.images) && d.images.length > 0 ? d.images : null;
           setHero({
-            title: data.data.title ?? "",
-            subtitle: data.data.subtitle ?? "",
-            description: data.data.description ?? "",
-            image: data.data.image ?? null,
-            cta1_text: data.data.cta1_text ?? null,
-            cta1_link: data.data.cta1_link ?? null,
-            cta2_text: data.data.cta2_text ?? null,
-            cta2_link: data.data.cta2_link ?? null,
-            updated_at: data.data.updated_at ?? null,
+            title: d.title ?? "",
+            subtitle: d.subtitle ?? "",
+            description: d.description ?? "",
+            image: d.image ?? null,
+            images,
+            cta1_text: d.cta1_text ?? null,
+            cta1_link: d.cta1_link ?? null,
+            cta2_text: d.cta2_text ?? null,
+            cta2_link: d.cta2_link ?? null,
+            updated_at: d.updated_at ?? null,
           });
         }
       })
       .catch(() => {});
   }, [locale]);
+
+  const allImages: string[] = [];
+  if (hero?.images && hero.images.length > 0) {
+    for (const img of hero.images) {
+      allImages.push(buildImageUrl(img, hero.updated_at));
+    }
+  } else if (hero?.image) {
+    allImages.push(buildImageUrl(hero.image, hero.updated_at));
+  }
+
+  useEffect(() => {
+    if (allImages.length < 2) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+    timerRef.current = setInterval(() => {
+      setSlideIndex((prev) => (prev + 1) % allImages.length);
+    }, SLIDE_INTERVAL);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [allImages.length, hero?.updated_at]);
 
   const eyebrow = isAr ? "استشارات هندسية — الرياض" : "Engineering Consultants — Riyadh, KSA";
   const enduringWord = isAr ? "مستدامة" : "Enduring";
@@ -65,17 +98,35 @@ export function HeroSection() {
   const cta1Link = hero?.cta1_link || `/${locale}/services`;
   const cta2Text = hero?.cta2_text || defaultCta2Text;
   const cta2Link = hero?.cta2_link || `/${locale}/contact`;
-  const heroImage = hero?.image ? `${API_BASE}/storage/${hero.image}?v=${hero.updated_at ?? Date.now()}` : null;
+
+  const showSlider = allImages.length > 0;
 
   return (
     <section className="hero-section relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24">
       <div className="hero-bg absolute inset-0 z-0">
-        <img
-          src={heroImage || "/images/hero-architecture.jpg"}
-          alt=""
-          loading="eager"
-          className="w-full h-full object-cover opacity-45 scale-[1.05] transition-transform duration-10000 ease-out"
-        />
+        {showSlider ? (
+          allImages.map((src, i) => (
+            <img
+              key={`${src}-${i}`}
+              src={src}
+              alt=""
+              loading={i === 0 ? "eager" : "lazy"}
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out"
+              style={{
+                opacity: i === slideIndex ? 0.45 : 0,
+                transform: "scale(1.05)",
+                willChange: "opacity",
+              }}
+            />
+          ))
+        ) : (
+          <img
+            src="/images/hero-architecture.jpg"
+            alt=""
+            loading="eager"
+            className="w-full h-full object-cover opacity-45 scale-[1.05]"
+          />
+        )}
       </div>
       <div className="hero-overlay absolute inset-0 z-0" />
 

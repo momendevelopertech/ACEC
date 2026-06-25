@@ -140,4 +140,5 @@ return [
     'col_hero_title'       => 'العنوان',
     'col_hero_subtitle'    => 'العنوان الفرعي',
     'col_hero_description' => 'الوصف',
+    'col_images'           => 'صور المعرض (السلايدر)',
 ];
