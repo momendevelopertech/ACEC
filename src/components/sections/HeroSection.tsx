@@ -145,12 +145,16 @@ export function HeroSection() {
             />
           ))
         ) : (
-          <img
-            src="/images/hero-architecture.jpg"
-            alt=""
-            loading="eager"
-            className="w-full h-full object-cover opacity-45 scale-[1.05]"
-          />
+          <div className="absolute inset-0" style={{ background: "#2e2b26" }}>
+            <div className="loading-spinner" style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "32px",
+              height: "32px",
+            }} />
+          </div>
         )}
       </div>
       <div className="hero-overlay absolute inset-0 z-0" />
