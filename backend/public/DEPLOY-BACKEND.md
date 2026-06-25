@@ -139,15 +139,18 @@ php artisan db:seed --class=HeroSeeder
 # 5. امسح كل الكاش (مهم جداً — عشان config و CORS يتحدثوا)
 php artisan optimize:clear
 
-# 6. عيد الكاش للبرودكشن
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# 7. لو الـ storage link مش موجود
+# 6. File storage link
 php artisan storage:link
 
-# 8. صلاحيات الملفات
+# 7. ⚠️ لا تشغّل php artisan route:cache
+#    Filament ما بيشتغلش مع route caching.
+#    بداله شغّل:
+php artisan filament:cache
+
+# 8. Cache config بس (من غير routes)
+php artisan config:cache
+
+# 9. صلاحيات الملفات
 chmod -R 775 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 ```
@@ -160,9 +163,9 @@ chown -R www-data:www-data storage bootstrap/cache
 | `php artisan migrate` | يضيف عمود `images` JSON لجدول `hero_sections` |
 | `php artisan db:seed --class=HeroSeeder` | يحط 3 صور سلايدر تجريبية (عربي + إنجليزي) |
 | `php artisan optimize:clear` | يمسح كل الكاش — عشان التغييرات اللي في config و CORS تشتغل |
-| `php artisan config:cache` | يخزن config في ملف واحد للسرعة |
-| `php artisan route:cache` | يخزن routes في ملف واحد |
 | `php artisan storage:link` | يعمل `public/storage` → `storage/app/public` |
+| `php artisan filament:cache` | يعمل cache لـ Filament components (بديل route cache) |
+| `php artisan config:cache` | يخزن config في ملف واحد للسرعة (ممنوع route cache مع Filament) |
 
 **لو ظهرت أخطاء:** ارجع شغل `php artisan optimize:clear` أول حاجة.
 
@@ -196,7 +199,38 @@ rm deploy-check.php
 
 ---
 
-## 6. Quick Checklist
+## 6. Troubleshooting — Route [filament.admin.resources.hero-sections.index] not defined
+
+### السبب:
+`php artisan route:cache` مش بيشتغل مع Filament. ولَّا `optimize:clear` مسح ملف الـ route cache و اتضرب تاني.
+
+### الحل الفوري (شغّله على السيرفر):
+```bash
+cd /path/to/backend
+php artisan optimize:clear
+php artisan filament:cache
+php artisan config:cache
+```
+
+### إزاي تمنعها:
+- **ممنوع** تشغّل `php artisan route:cache` خالص — Filament ما بيستحملش route caching
+- دايماً استعمل `php artisan filament:cache` بداله
+- لو مسحت الكاش بـ `optimize:clear`، برضه شغّل `filament:cache` تاني
+
+### لو لسه المشكلة موجودة:
+```bash
+# امسح ملفات الكاش يدوي
+rm -rf bootstrap/cache/*.php
+
+# ارجع شغّل
+php artisan optimize:clear
+php artisan filament:cache
+php artisan config:cache
+```
+
+---
+
+## 7. Quick Checklist
 
 - [ ] **تصدير الداتا بيز** من phpMyAdmin اللوكال (ملف `.sql`)
 - [ ] **استيراد الداتا بيز** على السيرفر (phpMyAdmin أو command line)
@@ -206,8 +240,8 @@ rm deploy-check.php
 - [ ] `php artisan migrate` (لو في ميجريشن جديد)
 - [ ] `php artisan db:seed --class=HeroSeeder` (لو أول مرة)
 - [ ] `php artisan optimize:clear`
+- [ ] `php artisan filament:cache` (⚠️ مش route:cache — Filament ما بيشتغلش معاه)
 - [ ] `php artisan config:cache`
-- [ ] `php artisan route:cache`
 - [ ] `php artisan storage:link`
 - [ ] `chmod -R 775 storage bootstrap/cache`
 - [ ] `chown -R www-data:www-data storage bootstrap/cache`
