@@ -1,5 +1,32 @@
 # ACEC Backend Deployment Guide
 
+## 0. Database (Import Manual)
+
+**هتصدر الداتا بيز من اللوكال وتعمل import على السيرفر — صح كده.**
+
+### تصدير من اللوكال (phpMyAdmin):
+1. افتح `http://localhost/phpmyadmin`
+2. اختار قاعدة بيانات `acec`
+3. تبويب **Export** → طريقة **Quick** → تنسيق **SQL** → **Go**
+4. هينزل ملف `.sql`
+
+### استيراد على السيرفر:
+**Option A — phpMyAdmin:**
+1. افتح phpMyAdmin على السيرفر
+2. اختار قاعدة البيانات (أو اعملها جديدة)
+3. تبويب **Import** → اختار ملف `.sql` → **Go**
+
+**Option B — Command line (أسرع للـ SQL الكبير):**
+```bash
+mysql -u username -p acec_database < /path/to/exported-file.sql
+```
+
+### مهم بعد الاستيراد:
+- تأكد إن الجداول كلها موجودة (hero_sections, projects, clients, ...)
+- لو في migrations جديدة بعد التصدير، شغّل: `php artisan migrate`
+
+---
+
 ## 1. What to Upload
 
 ارفَع **فولدر `backend/` كامل** على السيرفر (عبر FTP, rsync, cPanel, File Manager, إلخ).
@@ -171,11 +198,13 @@ rm deploy-check.php
 
 ## 6. Quick Checklist
 
+- [ ] **تصدير الداتا بيز** من phpMyAdmin اللوكال (ملف `.sql`)
+- [ ] **استيراد الداتا بيز** على السيرفر (phpMyAdmin أو command line)
 - [ ] رفعت فولدر `backend/` كامل على السيرفر (من غير `.env` و `vendor`)
 - [ ] رفعت الـ storage files (صور + PDF) في `storage/app/public/`
 - [ ] `composer install --no-dev --optimize-autoloader`
-- [ ] `php artisan migrate`
-- [ ] `php artisan db:seed --class=HeroSeeder` (مرة واحدة)
+- [ ] `php artisan migrate` (لو في ميجريشن جديد)
+- [ ] `php artisan db:seed --class=HeroSeeder` (لو أول مرة)
 - [ ] `php artisan optimize:clear`
 - [ ] `php artisan config:cache`
 - [ ] `php artisan route:cache`
