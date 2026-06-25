@@ -112,8 +112,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                     minHeight: "70vh",
                   }}
                 >
-                  <iframe
-                    src={`${pdfUrl}#toolbar=1&navpanes=0`}
+                  <object
+                    data={pdfUrl}
+                    type="application/pdf"
                     title={pdf?.name || (isAr ? "الملف التعريفي للمكتب" : "Company Profile PDF")}
                     style={{
                       width: "100%",
@@ -121,7 +122,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                       border: "none",
                       display: "block",
                     }}
-                  />
+                  >
+                    <p style={{ color: "var(--color-muted)", textAlign: "center", padding: "2rem" }}>
+                      {isAr ? "لا يمكن عرض الملف. استخدم رابط التحميل أدناه." : "Cannot display PDF. Use the download link below."}
+                    </p>
+                  </object>
                 </div>
 
                 {/* Fallback download option */}

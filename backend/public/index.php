@@ -39,11 +39,13 @@ if (strpos($requestUri, '/storage/') === 0) {
         // Send headers (with CORS support)
         header('Content-Type: ' . $mime);
         header('Content-Length: ' . filesize($realPath));
+        header('Content-Disposition: inline; filename="' . basename($realPath) . '"');
         header('Cache-Control: public, max-age=86400, must-revalidate');
         header('Accept-Ranges: bytes');
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, HEAD, OPTIONS');
         header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization');
+        header('X-Content-Type-Options: nosniff');
         header('X-Content-Type-Options: nosniff');
         
         // Send file
