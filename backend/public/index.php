@@ -1,5 +1,63 @@
 <?php
 
+// ============================================================
+// HANDLE STORAGE REQUESTS (Bypass .htaccess)
+// ============================================================
+$requestUri = $_SERVER['REQUEST_URI'];
+
+if (strpos($requestUri, '/storage/') === 0) {
+    // Extract the file path (URL-decode for filenames with spaces or special chars)
+    $file = urldecode(substr($requestUri, 9)); // Remove '/storage/'
+    
+    // Security: prevent directory traversal
+    $file = str_replace(['..', '//', '\\'], '', $file);
+    
+    // Build the real path
+    $realPath = __DIR__ . '/../storage/app/public/' . $file;
+    
+    // Check if file exists
+    if (file_exists($realPath) && is_file($realPath)) {
+        // Get file extension for MIME type
+        $ext = strtolower(pathinfo($realPath, PATHINFO_EXTENSION));
+        $mimeTypes = [
+            'png' => 'image/png',
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+            'svg' => 'image/svg+xml',
+            'pdf' => 'application/pdf',
+            'json' => 'application/json',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'txt' => 'text/plain'
+        ];
+        $mime = $mimeTypes[$ext] ?? 'application/octet-stream';
+        
+        // Send headers (with CORS support)
+        header('Content-Type: ' . $mime);
+        header('Content-Length: ' . filesize($realPath));
+        header('Cache-Control: public, max-age=86400, must-revalidate');
+        header('Accept-Ranges: bytes');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, HEAD, OPTIONS');
+        header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization');
+        header('X-Content-Type-Options: nosniff');
+        
+        // Send file
+        readfile($realPath);
+        exit;
+    } else {
+        // File not found
+        http_response_code(404);
+        echo "File not found: " . $file;
+        exit;
+    }
+}
+// ============================================================
+// END STORAGE HANDLER
+// ============================================================
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 

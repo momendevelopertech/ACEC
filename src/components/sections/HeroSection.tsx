@@ -1,13 +1,28 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+
 export function HeroSection() {
   const locale = useLocale();
   const isAr = locale === "ar";
+  const [heroImage, setHeroImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/v1/hero/${locale}`)
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (data?.data?.image) {
+          setHeroImage(`${API_BASE}/storage/${data.data.image}`);
+        }
+      })
+      .catch(() => {});
+  }, [locale]);
 
   const eyebrow = isAr ? "استشارات هندسية — الرياض" : "Engineering Consultants — Riyadh, KSA";
   const companyName = isAr ? "الميثاق العربي للاستشارات الهندسية" : "Arabian Covenant Engineering Consultants";
@@ -22,7 +37,7 @@ export function HeroSection() {
     <section className="hero-section relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24">
       <div className="hero-bg absolute inset-0 z-0">
         <img
-          src="/images/hero-architecture.jpg"
+          src={heroImage || "/images/hero-architecture.jpg"}
           alt=""
           loading="eager"
           className="w-full h-full object-cover opacity-45 scale-[1.05] transition-transform duration-10000 ease-out"

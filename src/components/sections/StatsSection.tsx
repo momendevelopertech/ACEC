@@ -12,10 +12,9 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-    { value: 50, suffix: "+", labelKey: "projects" },
-    { value: 15, suffix: "+", labelKey: "years" },
-    { value: 30, suffix: "+", labelKey: "clients" },
-    { value: 100, suffix: "%", labelKey: "code" },
+    { value: 500, suffix: "+", labelKey: "projects" },
+    { value: 25, suffix: "+", labelKey: "years" },
+    { value: 300, suffix: "+", labelKey: "clients" },
 ];
 
 export function StatsSection() {
@@ -39,7 +38,7 @@ export function StatsSection() {
                 <motion.div
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
-                    className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 text-center"
+                    className="grid grid-cols-3 gap-x-8 gap-y-12 text-center max-w-3xl mx-auto"
                 >
                     {stats.map((stat) => (
                         <motion.div
