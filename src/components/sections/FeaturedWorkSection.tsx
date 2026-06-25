@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
 import { ImageWithLoader } from "@/components/ui/ImageWithLoader";
+import { usePageReady } from "@/lib/page-ready";
 
 interface Project {
   id: number;
@@ -25,6 +26,7 @@ export function FeaturedWorkSection() {
   const isRtl = locale === "ar";
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { signalReady } = usePageReady();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -42,8 +44,12 @@ export function FeaturedWorkSection() {
           setProject(featured || null);
         }
         setLoading(false);
+        signalReady();
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setLoading(false);
+        signalReady();
+      });
   }, [locale]);
 
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";

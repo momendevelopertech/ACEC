@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
+import { usePageReady } from "@/lib/page-ready";
 
 export interface Service {
   id: number;
@@ -25,6 +26,7 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
     const inView = useInView(ref, { once: true, margin: "-80px" });
     const locale = useLocale();
     const isRtl = locale === "ar";
+    const { signalReady } = usePageReady();
     const [services, setServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -43,10 +45,12 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
                     setError(true);
                 }
                 setLoading(false);
+                signalReady();
             })
             .catch(() => {
                 setError(true);
                 setLoading(false);
+                signalReady();
             });
     }, [locale]);
 

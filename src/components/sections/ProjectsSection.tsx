@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
 import { ImageWithLoader } from "@/components/ui/ImageWithLoader";
+import { usePageReady } from "@/lib/page-ready";
 
 interface Project {
   id: number;
@@ -32,6 +33,7 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
   const isRtl = locale === "ar";
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { signalReady } = usePageReady();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
@@ -49,8 +51,12 @@ export function ProjectsSection({ showHeader = false }: ProjectsSectionProps) {
           setProjects(data.data);
         }
         setLoading(false);
+        signalReady();
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setLoading(false);
+        signalReady();
+      });
   }, [locale]);
 
   const categories = useMemo(() => {

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { API_BASE } from "@/lib/api";
+import { usePageReady } from "@/lib/page-ready";
 
 interface Client {
   id: number;
@@ -19,6 +20,7 @@ interface Client {
 export function ClientsSection() {
     const locale = useLocale();
     const isArabic = locale === "ar";
+    const { signalReady } = usePageReady();
     const [clients, setClients] = useState<Client[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -36,6 +38,7 @@ export function ClientsSection() {
                 console.error("Failed to fetch clients:", e);
             } finally {
                 setLoading(false);
+                signalReady();
             }
         }
         fetchClients();
