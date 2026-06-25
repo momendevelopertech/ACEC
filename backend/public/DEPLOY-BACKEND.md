@@ -1,111 +1,70 @@
 # ACEC Backend Deployment Guide
 
-## 1. Files to Upload (via git pull)
+## 1. What to Upload
 
+ارفَع **فولدر `backend/` كامل** على السيرفر (عبر FTP, rsync, cPanel, File Manager, إلخ).
+
+### مهم — استبعد الملفات دي:
+| ملف | ليه تستبعده |
+|-----|-------------|
+| `backend/.env` | ده خاص بجهازك — السيرفر عنده `.env` بتاعه |
+| `backend/storage/app/public/` | الملفات المرفوعة (صور، PDF) بتنرفع لوحدها |
+| `backend/storage/framework/cache/data/` | كاش محلي مش لازم يتنقل |
+| `backend/storage/logs/` | لوجات محلية |
+| `backend/vendor/` | الأحسن تعمل `composer install` على السيرفر |
+
+### لو عايز تعمل rsync مباشر:
 ```bash
-cd /path/to/backend  # e.g., /home/forge/acec-backend
-git pull origin main
+# من جهازك اللوكال
+rsync -avz --delete \
+  --exclude='.env' \
+  --exclude='storage/app/public/models/' \
+  --exclude='storage/app/public/profile-pdfs/' \
+  --exclude='storage/framework/cache/' \
+  --exclude='storage/logs/' \
+  --exclude='vendor/' \
+  --exclude='.git/' \
+  ./backend/ user@server.com:/path/to/backend/
 ```
-
-### All changed backend files (latest commits):
-
-| File | Purpose |
-|------|---------|
-| `backend/public/index.php` | Storage handler + Content-Disposition inline header |
-| `backend/config/cors.php` | CORS origins (added localhost:3006, vercel, api/backend subdomains) |
-| `backend/app/Filament/Resources/HeroSections/Schemas/HeroSectionForm.php` | Multi-image upload (slideshow) |
-| `backend/app/Models/HeroSection.php` | `images` JSON array field |
-| `backend/database/migrations/2026_06_25_082349_add_images_to_hero_sections_table.php` | DB migration: adds `images` column |
-| `backend/database/seeders/HeroSeeder.php` | Seeds 3 slideshow images per locale |
-| `backend/lang/ar/admin.php` | Arabic translation keys |
-| `backend/lang/en/admin.php` | English translation keys |
-| `backend/app/Http/Controllers/Api/ContentController.php` | Hero API cache TTL 3600→300s |
 
 ---
 
-## 2. Run Commands (SSH into server)
+## 2. Storage Files (صور، PDF)
 
-```bash
-# Navigate to backend directory
-cd /path/to/backend
+الستوريج مش في git و مش في الـ zip. ارفعها لوحدها.
 
-# 1. Install/update dependencies
-composer install --no-dev --optimize-autoloader
-
-# 2. Run new migrations
-php artisan migrate
-
-# 3. Seed hero slideshow images (first time only)
-php artisan db:seed --class=HeroSeeder
-
-# 4. Clear ALL cache (MANDATORY — config changed, cache busting)
-php artisan optimize:clear
-
-# 5. Re-cache for production
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan event:cache
-
-# 6. Verify storage link (must exist)
-php artisan storage:link
-# Expected: "The [public/storage] link has been connected."
-```
-
-### What each command does:
-
-| Command | Why |
-|---------|-----|
-| `composer install` | Ensures PHP dependencies are up to date |
-| `php artisan migrate` | Creates the `images` JSON column in `hero_sections` table |
-| `php artisan db:seed --class=HeroSeeder` | Inserts 3 sample slideshow images (ar + en) |
-| `php artisan optimize:clear` | Clears config cache (CORS changes take effect), route cache, view cache, app cache |
-| `php artisan config:cache` | Re-caches config for performance |
-| `php artisan route:cache` | Re-caches routes |
-| `php artisan view:cache` | Re-caches Blade views |
-| `php artisan storage:link` | Creates `public/storage` symlink → `storage/app/public` |
-
----
-
-## 3. Storage Files
-
-Storage files (images, PDFs) are **NOT in git**. You must upload them separately.
-
-### Directory structure on server:
+### المسارات المطلوبة على السيرفر:
 
 ```
-storage/app/public/
+backend/storage/app/public/
 ├── models/
-│   ├── hero/              ← Hero slider images + slideshow gallery
-│   ├── projects/          ← Project main images
-│   │   └── gallery/       ← Project gallery (multiple images per project)
-│   ├── clients/           ← Client logos
-│   ├── certifications/    ← Certification images
-│   ├── services/          ← Service images
-│   ├── team-members/      ← Team photos
-│   ├── blog-posts/        ← Blog images
-│   ├── users/             ← User avatars
-│   └── profile/           ← Profile images (not PDF)
-└── profile-pdfs/          ← Company profile PDF files
+│   ├── hero/              ← صور الهيرو (ar.jpg, en.jpg, ar-slide-1.jpg, ...)
+│   ├── projects/          ← صور المشاريع
+│   │   └── gallery/       ← معارض المشاريع (صور متعددة لكل مشروع)
+│   ├── clients/           ← شعارات العملاء
+│   ├── certifications/    ← صور الشهادات
+│   ├── services/          ← صور الخدمات
+│   ├── team-members/      ← صور فريق العمل
+│   ├── blog-posts/        ← صور المقالات
+│   ├── users/             ← صور المستخدمين
+│   └── profile/
+└── profile-pdfs/          ← ملفات PDF التعريفية
 ```
 
-### How to upload storage:
+### طريقة الرفع:
 
-**Option A — rsync (SSH, recommended for first deploy):**
+**Option A — rsync من جهازك:**
 ```bash
-rsync -avz --rsync-path="cd /path/to/backend && rsync" \
-  storage/app/public/ \
-  user@server:/path/to/backend/storage/app/public/
+rsync -avz ./backend/storage/app/public/ user@server.com:/path/to/backend/storage/app/public/
 ```
 
-**Option B — Upload via Admin Dashboard:**
-Upload each image through the Filament admin panel (`/admin`). The `HasImageCleanup` trait handles file storage automatically.
+**Option B — ارفع via Admin Dashboard:**
+ادخل `/admin` و ارفع الصور من الـ Filament forms — هي automatically تتحط في المكان الصح.
 
-**Option C — Upload PHPMyAdmin + manual file copy:**
-- Copy files to the correct directory
-- Ensure paths in DB match (e.g., `models/hero/ar.jpg`)
+**Option C — يدوي:**
+انسخ الملفات في المسار الصح باستخدام cPanel File Manager أو FTP.
 
-### Correct file permissions:
+### الصلاحيات:
 ```bash
 chmod -R 775 storage/app/public
 chmod -R 775 storage/framework
@@ -115,101 +74,114 @@ chown -R www-data:www-data storage bootstrap/cache
 
 ---
 
-## 4. Environment (.env)
+## 3. Environment (.env)
 
-Ensure these values on the server:
+**لا ترفع `.env` من جهازك.** السيرفر لازم يكون عنده `.env` خاص بيه:
 
 ```env
 APP_URL=https://backend.ac-ec.com.sa
+APP_KEY=base64:...                      # php artisan key:generate
 FILESYSTEM_DISK=public
-
-# Cache — file is fine, redis is better
 CACHE_DRIVER=file
 
-# Database — your production credentials
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=acec
-DB_USERNAME=...
+DB_USERNAME=acec_user
 DB_PASSWORD=...
 ```
 
 ---
 
-## 5. Verify Deployment
-
-### Test API endpoints:
+## 4. الأوامر اللي تشغّلها (SSH)
 
 ```bash
-# Hero with slideshow images
-curl https://backend.ac-ec.com.sa/api/v1/hero/ar
-# → "images": ["models/hero/ar-slide-1.jpg", ...]
+# 1. ادخل على مسار الباك اند
+cd /path/to/backend
 
-# All clients
-curl https://backend.ac-ec.com.sa/api/v1/clients
+# 2. نزل dependencies (مش محتاج ترفع مجلد vendor)
+composer install --no-dev --optimize-autoloader
 
-# All projects
-curl https://backend.ac-ec.com.sa/api/v1/projects/ar
+# 3. شغّل الميجرشن الجديد (إضافة عمود images لجدول hero_sections)
+php artisan migrate
 
-# Active profile PDF
-curl https://backend.ac-ec.com.sa/api/v1/profile-pdf/active
+# 4. سييد صور الهيرو السلايدر (أول مرة بس)
+php artisan db:seed --class=HeroSeeder
+
+# 5. امسح كل الكاش (مهم جداً — عشان config و CORS يتحدثوا)
+php artisan optimize:clear
+
+# 6. عيد الكاش للبرودكشن
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# 7. لو الـ storage link مش موجود
+php artisan storage:link
+
+# 8. صلاحيات الملفات
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
 ```
 
-### Test image serving:
+### شرح كل أمر:
 
+| الأمر | ليه؟ |
+|-------|------|
+| `composer install --no-dev` | ينزل PHP packages بدون أدوات التطوير |
+| `php artisan migrate` | يضيف عمود `images` JSON لجدول `hero_sections` |
+| `php artisan db:seed --class=HeroSeeder` | يحط 3 صور سلايدر تجريبية (عربي + إنجليزي) |
+| `php artisan optimize:clear` | يمسح كل الكاش — عشان التغييرات اللي في config و CORS تشتغل |
+| `php artisan config:cache` | يخزن config في ملف واحد للسرعة |
+| `php artisan route:cache` | يخزن routes في ملف واحد |
+| `php artisan storage:link` | يعمل `public/storage` → `storage/app/public` |
+
+**لو ظهرت أخطاء:** ارجع شغل `php artisan optimize:clear` أول حاجة.
+
+---
+
+## 5. Verification
+
+### API:
+```bash
+curl https://backend.ac-ec.com.sa/api/v1/hero/ar
+# لازم تشوف "images": ["models/hero/ar-slide-1.jpg", ...]
+
+curl https://backend.ac-ec.com.sa/api/v1/clients
+# لازم تشوف قائمة العملاء
+```
+
+### صورة:
 ```bash
 curl -I https://backend.ac-ec.com.sa/storage/models/hero/ar.jpg
-# → 200 OK, Content-Type: image/jpeg, Access-Control-Allow-Origin: *
+# لازم 200 OK و Content-Type: image/jpeg
 ```
 
-### Test CORS:
+### CORS:
+افتح المتصفح على `https://acec-iota.vercel.app` — لو API شغال و CORS مضبوط، الداتا تظهر.
 
+### Health Check:
+افتح `https://backend.ac-ec.com.sa/deploy-check.php` في المتصفح — هيعرض كل حاجة (PHP, database, storage, API, CORS). **احذف الملف بعد ما تتأكد**:
 ```bash
-curl -H "Origin: https://acec-iota.vercel.app" \
-  -H "Access-Control-Request-Method: GET" \
-  -X OPTIONS \
-  https://backend.ac-ec.com.sa/api/v1/hero/ar
-# → 200 OK, Access-Control-Allow-Origin: https://acec-iota.vercel.app
+rm deploy-check.php
 ```
 
 ---
 
-## 6. Common Issues
+## 6. Quick Checklist
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| API returns old data | Cache not cleared | `php artisan cache:clear` |
-| Images return 404 | Storage files not uploaded | Upload files, check paths in DB |
-| CORS errors in browser | Origin not in `cors.php` | Add to `allowed_origins`, `php artisan config:cache` |
-| Migration error | Already run | `php artisan migrate --pretend` to check |
-| 500 error after deploy | Cache mismatch | `php artisan optimize:clear` |
-| "No application encryption key" | Missing APP_KEY | `php artisan key:generate` |
-| Storage URL returns 404 | No symlink | `php artisan storage:link` |
-
----
-
-## 7. Files NOT tracked in git (must upload manually)
-
-- `backend/storage/app/public/models/*` — All uploaded images
-- `backend/storage/app/public/profile-pdfs/*` — PDF files
-- `backend/.env` — Environment configuration
-- `backend/vendor/` — Composer dependencies (run `composer install`)
-
----
-
-## 8. Quick Deploy Checklist
-
-- [ ] `git pull origin main`
+- [ ] رفعت فولدر `backend/` كامل على السيرفر (من غير `.env` و `vendor`)
+- [ ] رفعت الـ storage files (صور + PDF) في `storage/app/public/`
 - [ ] `composer install --no-dev --optimize-autoloader`
 - [ ] `php artisan migrate`
-- [ ] `php artisan db:seed --class=HeroSeeder` (first time only)
+- [ ] `php artisan db:seed --class=HeroSeeder` (مرة واحدة)
 - [ ] `php artisan optimize:clear`
 - [ ] `php artisan config:cache`
 - [ ] `php artisan route:cache`
 - [ ] `php artisan storage:link`
-- [ ] Upload storage files (rsync or via admin)
-- [ ] Set correct permissions: `chmod -R 775 storage bootstrap/cache`
-- [ ] Test API: `/api/v1/hero/ar`, `/api/v1/clients`
-- [ ] Test CORS: curl with `-H "Origin: https://acec-iota.vercel.app"`
-- [ ] Test image: `/storage/models/hero/ar.jpg`
+- [ ] `chmod -R 775 storage bootstrap/cache`
+- [ ] `chown -R www-data:www-data storage bootstrap/cache`
+- [ ] اختبرت API: `/api/v1/hero/ar`, `/api/v1/clients`
+- [ ] اختبرت CORS من المتصفح
+- [ ] حذفت `deploy-check.php`
