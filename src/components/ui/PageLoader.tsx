@@ -1,44 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { usePageReady } from "@/lib/page-ready";
 
 export function PageLoader() {
+  const { ready } = usePageReady();
   const [visible, setVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
+  const [windowLoaded, setWindowLoaded] = useState(false);
+
+  const finish = useCallback(() => {
+    setFadeOut(true);
+    setTimeout(() => setVisible(false), 500);
+  }, []);
 
   useEffect(() => {
-    const minTime = 900;
-    const maxTime = 2800;
     const startTime = Date.now();
+    const minTime = 900;
+    const maxTime = 4000;
     let timeoutId: ReturnType<typeof setTimeout>;
-    let hideRequested = false;
 
-    const finish = () => {
-      if (hideRequested) return;
-      hideRequested = true;
-      const elapsed = Date.now() - startTime;
-      const delay = Math.max(0, minTime - elapsed);
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setFadeOut(true);
-        setTimeout(() => setVisible(false), 500);
-      }, delay);
+    const onLoad = () => {
+      setWindowLoaded(true);
     };
 
-    const onLoad = () => finish();
-
     if (document.readyState === "complete") {
-      finish();
+      setWindowLoaded(true);
     } else {
       window.addEventListener("load", onLoad, { once: true });
-      timeoutId = setTimeout(finish, maxTime);
     }
+
+    timeoutId = setTimeout(() => {
+      setWindowLoaded(true);
+    }, maxTime);
 
     return () => {
       window.removeEventListener("load", onLoad);
       clearTimeout(timeoutId);
     };
   }, []);
+
+  useEffect(() => {
+    if (windowLoaded && ready) {
+      const elapsed = Date.now() - 900;
+      const delay = Math.max(0, 900 - (Date.now() - elapsed));
+      setTimeout(() => finish(), delay);
+    }
+  }, [windowLoaded, ready, finish]);
 
   if (!visible) return null;
 

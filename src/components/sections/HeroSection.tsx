@@ -5,6 +5,7 @@ import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUpVariant } from "@/lib/animations";
+import { usePageReady } from "@/lib/page-ready";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 const SLIDE_INTERVAL = 6000;
@@ -44,6 +45,7 @@ function preloadImages(urls: string[]): Promise<void> {
 export function HeroSection() {
   const locale = useLocale();
   const isAr = locale === "ar";
+  const { signalReady } = usePageReady();
   const [hero, setHero] = useState<HeroData | null>(null);
   const [imagesReady, setImagesReady] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -88,8 +90,9 @@ export function HeroSection() {
     preloadingRef.current = true;
     preloadImages(allImages).then(() => {
       setImagesReady(true);
+      signalReady();
     });
-  }, [allImages.length, hero?.updated_at]);
+  }, [allImages.length, hero?.updated_at, signalReady]);
 
   useEffect(() => {
     if (allImages.length < 2 || !imagesReady) {

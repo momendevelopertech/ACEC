@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { ReactNode } from "react";
+import { PageReadyProvider } from "@/lib/page-ready";
 
 const PageLoader = dynamic(
   () => import("@/components/ui/PageLoader").then((m) => m.PageLoader),
@@ -20,10 +21,10 @@ const PageTransitionWrapper = dynamic(
 
 export function ClientShell({ children }: { children: ReactNode }) {
   return (
-    <>
+    <PageReadyProvider>
       <PageLoader />
       <CustomCursor />
       <PageTransitionWrapper>{children}</PageTransitionWrapper>
-    </>
+    </PageReadyProvider>
   );
 }
