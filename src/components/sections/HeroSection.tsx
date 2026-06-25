@@ -17,6 +17,7 @@ interface HeroData {
   cta1_link: string | null;
   cta2_text: string | null;
   cta2_link: string | null;
+  updated_at: string | null;
 }
 
 export function HeroSection() {
@@ -38,6 +39,7 @@ export function HeroSection() {
             cta1_link: data.data.cta1_link ?? null,
             cta2_text: data.data.cta2_text ?? null,
             cta2_link: data.data.cta2_link ?? null,
+            updated_at: data.data.updated_at ?? null,
           });
         }
       })
@@ -63,7 +65,7 @@ export function HeroSection() {
   const cta1Link = hero?.cta1_link || `/${locale}/services`;
   const cta2Text = hero?.cta2_text || defaultCta2Text;
   const cta2Link = hero?.cta2_link || `/${locale}/contact`;
-  const heroImage = hero?.image ? `${API_BASE}/storage/${hero.image}` : null;
+  const heroImage = hero?.image ? `${API_BASE}/storage/${hero.image}?v=${hero.updated_at ?? Date.now()}` : null;
 
   return (
     <section className="hero-section relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24">

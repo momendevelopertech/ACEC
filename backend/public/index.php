@@ -6,8 +6,10 @@
 $requestUri = $_SERVER['REQUEST_URI'];
 
 if (strpos($requestUri, '/storage/') === 0) {
+    // Strip query string for cache-busting support (?v=timestamp)
+    $pathOnly = parse_url($requestUri, PHP_URL_PATH);
     // Extract the file path (URL-decode for filenames with spaces or special chars)
-    $file = urldecode(substr($requestUri, 9)); // Remove '/storage/'
+    $file = urldecode(substr($pathOnly, 9)); // Remove '/storage/'
     
     // Security: prevent directory traversal
     $file = str_replace(['..', '//', '\\'], '', $file);

@@ -33,7 +33,7 @@ class ContentController extends Controller
     {
         $lang = in_array($lang, ['ar', 'en']) ? $lang : 'ar';
 
-        $data = Cache::remember("hero.{$lang}", 3600, function () use ($lang) {
+        $data = Cache::remember("hero.{$lang}", 300, function () use ($lang) {
             return HeroSection::where('lang', $lang)->first()?->toArray();
         });
 
