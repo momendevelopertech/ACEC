@@ -135,6 +135,8 @@ return [
     'col_cta_link'         => 'رابط الزر',
     'section_hero_stats'   => 'الإحصائيات',
     'section_hero_ctas'    => 'أزرار الإجراء',
+    'section_basic_info'   => 'المعلومات الأساسية',
+    'section_media'        => 'الوسائط',
     'col_hero_title'       => 'العنوان',
     'col_hero_subtitle'    => 'العنوان الفرعي',
     'col_hero_description' => 'الوصف',

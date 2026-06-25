@@ -135,6 +135,8 @@ return [
     'col_cta_link'         => 'Button Link',
     'section_hero_stats'   => 'Statistics',
     'section_hero_ctas'    => 'CTA Buttons',
+    'section_basic_info'   => 'Basic Information',
+    'section_media'        => 'Media',
     'col_hero_title'       => 'Title',
     'col_hero_subtitle'    => 'Subtitle',
     'col_hero_description' => 'Description',
