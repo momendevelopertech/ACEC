@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransitionWrapper } from "@/components/layout/PageTransitionWrapper";
+import { PdfViewer } from "@/components/ui/PdfViewer";
 
 export const dynamic = 'force-static';
 
@@ -26,6 +27,8 @@ async function getActiveProfilePdf() {
   }
 }
 
+const PDF_PROXY_URL = "/api/pdf/profile";
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const isAr = locale === "ar";
@@ -41,7 +44,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   const isAr = locale === "ar";
   const pdf = await getActiveProfilePdf();
-  const pdfUrl = pdf?.file_url || null;
+  const hasPdf = pdf !== null;
 
   return (
     <PageTransitionWrapper>
@@ -99,62 +102,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
         {/* PDF Viewer */}
         <section className="pb-16 px-6 md:pb-24">
           <div className="container-custom">
-            {pdfUrl ? (
-              <>
-                <div
-                  className="gradient-border"
-                  style={{
-                    background: "var(--color-card-bg)",
-                    backdropFilter: "blur(20px)",
-                    borderRadius: "var(--radius-lg)",
-                    overflow: "hidden",
-                    width: "100%",
-                    minHeight: "70vh",
-                  }}
-                >
-                  <object
-                    data={pdfUrl}
-                    type="application/pdf"
-                    title={pdf?.name || (isAr ? "الملف التعريفي للمكتب" : "Company Profile PDF")}
-                    style={{
-                      width: "100%",
-                      height: "85vh",
-                      border: "none",
-                      display: "block",
-                    }}
-                  >
-                    <p style={{ color: "var(--color-muted)", textAlign: "center", padding: "2rem" }}>
-                      {isAr ? "لا يمكن عرض الملف. استخدم رابط التحميل أدناه." : "Cannot display PDF. Use the download link below."}
-                    </p>
-                  </object>
-                </div>
-
-                {/* Fallback download option */}
-                <div className="text-center mt-8">
-                  <p
-                    style={{
-                      color: "var(--color-muted)",
-                      fontSize: "0.9rem",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    {isAr ? "لا يعمل العرض؟" : "Having trouble viewing?"}
-                  </p>
-                  <a
-                    href={pdfUrl}
-                    download
-                    className="magnetic-btn magnetic-btn-primary"
-                    style={{ textDecoration: "none", display: "inline-flex" }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    {isAr ? "تحميل الملف" : "Download PDF"}
-                  </a>
-                </div>
-              </>
+            {hasPdf ? (
+              <PdfViewer
+                src={PDF_PROXY_URL}
+                fileName={pdf?.name ? `${pdf.name}.pdf` : "ACEC-Profile.pdf"}
+                isAr={isAr}
+              />
             ) : (
               <div className="text-center py-24">
                 <div
