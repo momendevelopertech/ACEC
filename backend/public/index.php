@@ -46,7 +46,6 @@ if (strpos($requestUri, '/storage/') === 0) {
         header('Access-Control-Allow-Methods: GET, HEAD, OPTIONS');
         header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization');
         header('X-Content-Type-Options: nosniff');
-        header('X-Content-Type-Options: nosniff');
         
         // Send file
         readfile($realPath);
