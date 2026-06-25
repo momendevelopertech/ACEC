@@ -27,5 +27,29 @@ trait HasImageCleanup
                 }
             }
         });
+
+        static::saving(function ($model) {
+            $fields = $model->imageFields ?? [];
+            foreach ($fields as $field) {
+                if ($model->exists && $model->isDirty($field)) {
+                    $original = $model->getOriginal($field);
+                    if ($original) {
+                        Storage::disk('public')->delete($original);
+                    }
+                }
+            }
+
+            $arrayFields = $model->imageArrayFields ?? [];
+            foreach ($arrayFields as $field) {
+                if ($model->exists && $model->isDirty($field)) {
+                    $original = $model->getOriginal($field);
+                    if (is_array($original)) {
+                        foreach ($original as $value) {
+                            Storage::disk('public')->delete($value);
+                        }
+                    }
+                }
+            }
+        });
     }
 }
