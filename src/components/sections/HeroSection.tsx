@@ -154,9 +154,9 @@ export function HeroSection() {
 
   return (
     <section className="hero-section relative overflow-hidden" dir={isAr ? "rtl" : "ltr"}>
-      <div className="flex flex-col-reverse lg:flex-row min-h-[92vh]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[92vh]">
 
-        <div className="w-full lg:w-1/2 flex items-center p-6 lg:p-8 xl:p-12" style={{ backgroundColor: "#f0ede6" }}>
+        <div className="order-2 lg:order-none flex items-center p-6 lg:p-8 xl:p-12" style={{ backgroundColor: "#f0ede6" }}>
           <div className="w-full max-w-2xl mx-auto lg:mx-0">
             <motion.div
               initial="hidden"
@@ -212,7 +212,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-8 xl:p-12" style={{ backgroundColor: "#f0ede6" }}>
+        <div className="order-1 lg:order-none flex items-center justify-center p-6 lg:p-8 xl:p-12" style={{ backgroundColor: "#f0ede6" }}>
           <div className="relative w-full aspect-[4/3] lg:aspect-[5/4] max-h-[75vh] rounded-sm overflow-hidden shadow-lg">
             {hasImages && imagesReady ? (
               allImages.map((src, i) => (
