@@ -94,10 +94,7 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
                                     {t("practice_label")}
                                 </div>
                                 <h2 className="service-section-heading">
-                                    {showAll
-                                        ? (locale === "ar" ? `${services.length} تخصصات.` : `${services.length} disciplines.`)
-                                        : t("heading_line1")
-                                    } <br />
+                                    {locale === "ar" ? `${displayServices.length} تخصصات.` : `${displayServices.length} disciplines.`} <br />
                                     <strong>{t("heading_line2")}</strong>
                                 </h2>
                             </div>
