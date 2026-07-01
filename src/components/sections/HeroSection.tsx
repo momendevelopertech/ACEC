@@ -153,10 +153,10 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="hero-section relative overflow-hidden">
-      <div className={`flex flex-col-reverse lg:flex-row min-h-[92vh] ${isAr ? 'lg:flex-row-reverse' : ''}`}>
+    <section className="hero-section relative overflow-hidden" dir={isAr ? "rtl" : "ltr"}>
+      <div className="flex flex-col-reverse lg:flex-row min-h-[92vh]">
 
-        <div className="w-full lg:w-1/2 flex items-center py-24 px-6 lg:px-12 xl:px-16" style={{ backgroundColor: "#f0ede6" }}>
+        <div className="w-full lg:w-1/2 flex items-center p-6 lg:p-8 xl:p-12" style={{ backgroundColor: "#f0ede6" }}>
           <div className="w-full max-w-2xl mx-auto lg:mx-0">
             <motion.div
               initial="hidden"
@@ -166,43 +166,43 @@ export function HeroSection() {
                 {eyebrow}
               </motion.div>
 
-              <motion.h1 variants={fadeUpVariant} className="display-1 text-[#2e2b26] tracking-tight mb-8">
+              <motion.h1 variants={fadeUpVariant} className="text-[#2e2b26] tracking-tight mb-6 font-serif" style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.25rem)", lineHeight: 1 }}>
                 {title}<br />
                 <strong className="font-serif italic font-normal" style={{ color: "#8a7a5a" }}>{enduringWord}</strong> {outcomes}
               </motion.h1>
 
-              <p className="text-lg md:text-xl text-[#4a4540] max-w-2xl leading-relaxed mb-4">
+              <p className="text-base md:text-lg text-[#4a4540] max-w-2xl leading-relaxed mb-3">
                 {description}
               </p>
-              <p className="text-base md:text-lg text-[#8a7a5a] max-w-2xl leading-relaxed mb-10 font-semibold">
+              <p className="text-sm md:text-base text-[#8a7a5a] max-w-2xl leading-relaxed mb-8 font-semibold">
                 {subtitle}
               </p>
 
-              <motion.div variants={fadeUpVariant} className="flex flex-wrap gap-4 items-center mb-12">
+              <motion.div variants={fadeUpVariant} className="flex flex-wrap gap-3 items-center mb-8">
                 <Link
                   href={cta1Link}
-                  className="bg-[#3d3a34] text-[#f0ede6] hover:bg-[#4a4540] border-none shadow-lg px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
+                  className="bg-[#3d3a34] text-[#f0ede6] hover:bg-[#4a4540] border-none shadow-lg px-6 py-3 md:px-8 md:py-4 text-[0.8rem] md:text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
                 >
                   {cta1Text}
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="rtl:rotate-180">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="rtl:rotate-180 md:w-[14px] md:h-[14px]">
                     <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
                 <Link
                   href={cta2Link}
-                  className="border border-[#4a4540] text-[#4a4540] hover:bg-[#4a4540] hover:text-[#f0ede6] px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
+                  className="border border-[#4a4540] text-[#4a4540] hover:bg-[#4a4540] hover:text-[#f0ede6] px-6 py-3 md:px-8 md:py-4 text-[0.8rem] md:text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
                 >
                   {cta2Text}
                 </Link>
               </motion.div>
 
-              <motion.div variants={fadeUpVariant} className="grid grid-cols-3 gap-6 border-t border-[#e0dcd4] pt-8">
+              <motion.div variants={fadeUpVariant} className="grid grid-cols-3 gap-4 border-t border-[#e0dcd4] pt-6">
                 {stats.map((stat) => (
-                  <div key={stat.label} className="flex flex-col items-start gap-1">
-                    <span className="text-2xl md:text-3xl font-serif" style={{ color: "#2e2b26", lineHeight: 1 }}>
+                  <div key={stat.label} className="flex flex-col items-start gap-0.5">
+                    <span className="text-xl md:text-2xl font-serif" style={{ color: "#2e2b26", lineHeight: 1 }}>
                       {stat.value}<span style={{ color: "#8a7a5a" }}>+</span>
                     </span>
-                    <span className="text-[0.65rem] tracking-[0.15em] uppercase" style={{ color: "#8a8278" }}>
+                    <span className="text-[0.6rem] md:text-[0.65rem] tracking-[0.15em] uppercase" style={{ color: "#8a8278" }}>
                       {stat.label}
                     </span>
                   </div>
@@ -212,8 +212,8 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-6" style={{ backgroundColor: "#f0ede6" }}>
-          <div className="relative w-full aspect-[4/3] lg:aspect-[5/4] max-h-[80vh] rounded-sm overflow-hidden shadow-lg">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-8 xl:p-12" style={{ backgroundColor: "#f0ede6" }}>
+          <div className="relative w-full aspect-[4/3] lg:aspect-[5/4] max-h-[75vh] rounded-sm overflow-hidden shadow-lg">
             {hasImages && imagesReady ? (
               allImages.map((src, i) => (
                 <img
