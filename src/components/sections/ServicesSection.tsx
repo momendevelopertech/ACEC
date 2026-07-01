@@ -20,6 +20,8 @@ interface ServicesSectionProps {
     showAll?: boolean;
 }
 
+const DISPLAY_LIMIT = 6;
+
 export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
     const t = useTranslations("services");
     const ref = useRef<HTMLElement>(null);
@@ -54,7 +56,13 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
             });
     }, [locale]);
 
-    const displayServices = showAll ? services : services;
+    const displayServices = showAll
+        ? services
+        : (() => {
+            const featured = services.filter(s => s.is_featured);
+            const rest = services.filter(s => !s.is_featured);
+            return [...featured, ...rest].slice(0, DISPLAY_LIMIT);
+        })();
 
     return (
         <section
@@ -86,7 +94,10 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
                                     {t("practice_label")}
                                 </div>
                                 <h2 className="service-section-heading">
-                                    {locale === "ar" ? `${services.length} تخصصات.` : `${services.length} disciplines.`} <br />
+                                    {showAll
+                                        ? (locale === "ar" ? `${services.length} تخصصات.` : `${services.length} disciplines.`)
+                                        : t("heading_line1")
+                                    } <br />
                                     <strong>{t("heading_line2")}</strong>
                                 </h2>
                             </div>
@@ -94,17 +105,6 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
                                 <p className="service-section-desc">
                                     {t("description_line")}
                                 </p>
-                                {!showAll && (
-                                    <Link
-                                        href={`/${locale}/services`}
-                                        className="service-all-link"
-                                    >
-                                        {t("all_services")}
-                                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="service-arrow">
-                                            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                    </Link>
-                                )}
                             </div>
                         </div>
 
@@ -144,6 +144,20 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
                                 </motion.div>
                             ))}
                         </div>
+
+                        {!showAll && (
+                            <div className="services-footer">
+                                <Link
+                                    href={`/${locale}/services`}
+                                    className="services-view-all-btn"
+                                >
+                                    {t("all_services")}
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="service-arrow">
+                                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </Link>
+                            </div>
+                        )}
 
                         <style>{`
                             .services-header {
@@ -316,6 +330,40 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
                                 text-align: right;
                             }
 
+                            .services-footer {
+                                display: flex;
+                                justify-content: center;
+                                margin-top: 3rem;
+                            }
+
+                            .services-view-all-btn {
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 0.75rem;
+                                padding: 1rem 2.5rem;
+                                background-color: #3d3a34;
+                                color: #f0ede6;
+                                font-size: 0.85rem;
+                                font-weight: 600;
+                                letter-spacing: 0.12em;
+                                text-transform: uppercase;
+                                text-decoration: none;
+                                border-radius: 0.375rem;
+                                border: none;
+                                cursor: pointer;
+                                transition: background-color 0.2s ease, transform 0.2s ease;
+                                box-shadow: 0 4px 14px rgba(74,69,64,0.15);
+                            }
+
+                            .services-view-all-btn:hover {
+                                background-color: #4a4540;
+                                transform: translateY(-2px);
+                            }
+
+                            [dir=rtl] .services-view-all-btn {
+                                letter-spacing: 0;
+                            }
+
                             .service-number {
                                 font-size: 0.875rem;
                                 font-family: var(--font-mono, monospace);
@@ -342,7 +390,7 @@ export function ServicesSection({ showAll }: ServicesSectionProps = {}) {
 
                             .service-link {
                                 margin-top: 2rem;
-                                opacity: 0;
+                                opacity: 0.7;
                                 transition: opacity 0.3s ease;
                             }
 

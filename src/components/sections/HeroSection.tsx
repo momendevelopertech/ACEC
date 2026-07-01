@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -21,6 +21,12 @@ interface HeroData {
   cta2_text: string | null;
   cta2_link: string | null;
   updated_at: string | null;
+  stat1_number: string | null;
+  stat1_label: string | null;
+  stat2_number: string | null;
+  stat2_label: string | null;
+  stat3_number: string | null;
+  stat3_label: string | null;
 }
 
 function buildImageUrl(path: string, v: string | null): string {
@@ -70,6 +76,12 @@ export function HeroSection() {
             cta2_text: d.cta2_text ?? null,
             cta2_link: d.cta2_link ?? null,
             updated_at: d.updated_at ?? null,
+            stat1_number: d.stat1_number ?? null,
+            stat1_label: d.stat1_label ?? null,
+            stat2_number: d.stat2_number ?? null,
+            stat2_label: d.stat2_label ?? null,
+            stat3_number: d.stat3_number ?? null,
+            stat3_label: d.stat3_label ?? null,
           });
         }
       })
@@ -129,79 +141,128 @@ export function HeroSection() {
 
   const hasImages = hero !== null && allImages.length > 0;
 
+  const defaultStats = [
+    { value: 500, label: isAr ? "مشروع منجز" : "Projects Delivered" },
+    { value: 25, label: isAr ? "سنة خبرة" : "Years of Practice" },
+    { value: 300, label: isAr ? "عميل" : "Trusted Clients" },
+  ];
+  const stats = [
+    { value: parseInt(hero?.stat1_number || "") || defaultStats[0].value, label: hero?.stat1_label || defaultStats[0].label },
+    { value: parseInt(hero?.stat2_number || "") || defaultStats[1].value, label: hero?.stat2_label || defaultStats[1].label },
+    { value: parseInt(hero?.stat3_number || "") || defaultStats[2].value, label: hero?.stat3_label || defaultStats[2].label },
+  ];
+
   return (
-    <section className="hero-section relative min-h-[92vh] flex items-center justify-center overflow-hidden py-24">
-      <div className="hero-bg absolute inset-0 z-0">
-        {hasImages && imagesReady ? (
-          allImages.map((src, i) => (
-            <img
-              key={`${src}-${i}`}
-              src={src}
-              alt=""
-              loading="eager"
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out"
-              style={{
-                opacity: i === slideIndex ? 0.45 : 0,
-                transform: "scale(1.05)",
-                willChange: "opacity",
-              }}
-            />
-          ))
-        ) : (
-          <div className="absolute inset-0" style={{ background: "#2e2b26" }}>
-            <div className="loading-spinner" style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "32px",
-              height: "32px",
-            }} />
+    <section className="hero-section relative overflow-hidden">
+      <div className={`flex flex-col-reverse lg:flex-row min-h-[92vh] ${isAr ? 'lg:flex-row-reverse' : ''}`}>
+
+        <div className="w-full lg:w-1/2 flex items-center py-24 px-6 lg:px-12 xl:px-16" style={{ backgroundColor: "#f0ede6" }}>
+          <div className="w-full max-w-2xl mx-auto lg:mx-0">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div variants={fadeUpVariant} className="eyebrow mb-6" style={{ color: "#8a8278" }}>
+                {eyebrow}
+              </motion.div>
+
+              <motion.h1 variants={fadeUpVariant} className="display-1 text-[#2e2b26] tracking-tight mb-8">
+                {title}<br />
+                <strong className="font-serif italic font-normal" style={{ color: "#8a7a5a" }}>{enduringWord}</strong> {outcomes}
+              </motion.h1>
+
+              <p className="text-lg md:text-xl text-[#4a4540] max-w-2xl leading-relaxed mb-4">
+                {description}
+              </p>
+              <p className="text-base md:text-lg text-[#8a7a5a] max-w-2xl leading-relaxed mb-10 font-semibold">
+                {subtitle}
+              </p>
+
+              <motion.div variants={fadeUpVariant} className="flex flex-wrap gap-4 items-center mb-12">
+                <Link
+                  href={cta1Link}
+                  className="bg-[#3d3a34] text-[#f0ede6] hover:bg-[#4a4540] border-none shadow-lg px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
+                >
+                  {cta1Text}
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="rtl:rotate-180">
+                    <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+                <Link
+                  href={cta2Link}
+                  className="border border-[#4a4540] text-[#4a4540] hover:bg-[#4a4540] hover:text-[#f0ede6] px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
+                >
+                  {cta2Text}
+                </Link>
+              </motion.div>
+
+              <motion.div variants={fadeUpVariant} className="grid grid-cols-3 gap-6 border-t border-[#e0dcd4] pt-8">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="flex flex-col items-start gap-1">
+                    <span className="text-2xl md:text-3xl font-serif" style={{ color: "#2e2b26", lineHeight: 1 }}>
+                      {stat.value}<span style={{ color: "#8a7a5a" }}>+</span>
+                    </span>
+                    <span className="text-[0.65rem] tracking-[0.15em] uppercase" style={{ color: "#8a8278" }}>
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
-        )}
-      </div>
-      <div className="hero-overlay absolute inset-0 z-0" />
+        </div>
 
-      <div className="container-edit relative z-10 w-full">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          className="hero-content max-w-4xl text-left rtl:text-right"
-        >
-          <motion.div variants={fadeUpVariant} className="eyebrow mb-6" style={{ color: "#8a8278" }}>
-            {eyebrow}
-          </motion.div>
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-6" style={{ backgroundColor: "#f0ede6" }}>
+          <div className="relative w-full aspect-[4/3] lg:aspect-[5/4] max-h-[80vh] rounded-sm overflow-hidden shadow-lg">
+            {hasImages && imagesReady ? (
+              allImages.map((src, i) => (
+                <img
+                  key={`${src}-${i}`}
+                  src={src}
+                  alt=""
+                  loading="eager"
+                  className="absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-out"
+                  style={{
+                    opacity: i === slideIndex ? 1 : 0,
+                    willChange: "opacity",
+                  }}
+                />
+              ))
+            ) : (
+              <div className="absolute inset-0" style={{ background: "#2e2b26" }}>
+                <div className="loading-spinner" style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "32px",
+                  height: "32px",
+                }} />
+              </div>
+            )}
 
-          <motion.h1 variants={fadeUpVariant} className="display-1 text-[#2e2b26] tracking-tight mb-8">
-            {title}<br />
-            <strong className="font-serif italic font-normal" style={{ color: "#8a7a5a" }}>{enduringWord}</strong> {outcomes}
-          </motion.h1>
-
-          <p className="text-lg md:text-xl text-[#4a4540] max-w-2xl leading-relaxed mb-4">
-            {description}
-          </p>
-          <p className="text-base md:text-lg text-[#8a7a5a] max-w-2xl leading-relaxed mb-10 font-semibold">
-            {subtitle}
-          </p>
-
-          <motion.div variants={fadeUpVariant} className="hero-cta flex flex-wrap gap-4 items-center">
-            <Link
-              href={cta1Link}
-              className="bg-[#3d3a34] text-[#f0ede6] hover:bg-[#4a4540] border-none shadow-lg px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
-            >
-              {cta1Text}
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="rtl:rotate-180">
-                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-            <Link
-              href={cta2Link}
-              className="border border-[#4a4540] text-[#4a4540] hover:bg-[#4a4540] hover:text-[#f0ede6] px-8 py-4 text-[0.9rem] tracking-wider rounded font-medium no-underline inline-flex items-center gap-2 transition-colors duration-200"
-            >
-              {cta2Text}
-            </Link>
-          </motion.div>
-        </motion.div>
+            {allImages.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
+                {allImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSlideIndex(i)}
+                    className="transition-all duration-300 rounded-full"
+                    style={{
+                      width: i === slideIndex ? "28px" : "8px",
+                      height: "8px",
+                      backgroundColor: i === slideIndex ? "#8a7a5a" : "rgba(138,130,120,0.35)",
+                      cursor: "pointer",
+                      border: "none",
+                      padding: 0,
+                    }}
+                    aria-label={`Slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <motion.div
